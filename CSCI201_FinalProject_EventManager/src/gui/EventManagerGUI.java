@@ -17,7 +17,7 @@ public class EventManagerGUI extends JFrame {
 		lp = new LoginPanel();
 		lp.setVisible(true);
 		add(lp, BorderLayout.CENTER);
-		
+	
 		
 		
 		
