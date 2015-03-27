@@ -18,9 +18,6 @@ public class EventManagerGUI extends JFrame {
 		lp.setVisible(true);
 		add(lp, BorderLayout.CENTER);
 		
-		
-		
-		
 	}
 
 	public static void main(String[] args) {
