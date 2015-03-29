@@ -5,12 +5,14 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class LoginPanel extends JPanel {
 	
 	private JLabel welcomeLabel, errorLabel, usernameLabel, passwordLabel;
-	private JTextField usernameJTF, passwordJTF;
+	private JTextField usernameJTF;
+	private JPasswordField passwordJTF;
 	private JButton loginButton, createNewAccountButton;
 	private JPanel usernamePanel, passwordPanel;
 
@@ -18,14 +20,14 @@ public class LoginPanel extends JPanel {
 	public LoginPanel(){
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		welcomeLabel = new JLabel("Welcome");
+		welcomeLabel = new JLabel("Welcome to the Event Manager App!");
 		errorLabel = new JLabel("Invalid username/password");
 		errorLabel.setVisible(false);
 		
 		usernameLabel = new JLabel("username: ");
 		passwordLabel = new JLabel("password: ");
 		usernameJTF = new JTextField(20);
-		passwordJTF = new JTextField(20);
+		passwordJTF = new JPasswordField(20);
 		usernamePanel = new JPanel();
 		passwordPanel = new JPanel();
 		usernamePanel.add(usernameLabel);
