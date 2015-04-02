@@ -16,17 +16,14 @@ public class EventManagerGUI extends JFrame {
 		setTitle ("My Profile");
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-<<<<<<< HEAD
 		mpp = new MyProfilePanel();
 		add(mpp);
 	
 		
 		
-=======
 		lp = new LoginPanel();
 		lp.setVisible(true);
 		add(lp, BorderLayout.CENTER);
->>>>>>> a34738dad3a9a499eeeb6a1656a0a9669b986dc3
 		
 	}
 
