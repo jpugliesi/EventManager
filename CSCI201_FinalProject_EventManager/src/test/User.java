@@ -1,8 +1,12 @@
 package test;
 
+import java.io.Serializable;
 import java.util.Vector;
 
-public class User {
+public class User implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
 	private int userID, profilePictureID;
 	private String fullName, userName, password;
 	private boolean isAdmin;
@@ -24,6 +28,14 @@ public class User {
 	
 	public Vector<Event> getEventVector(){
 		return eventVector;
+	}
+	
+	public String getUserName(){
+		return userName;
+	}
+	
+	public String getPassword(){
+		return password;
 	}
 	
 
