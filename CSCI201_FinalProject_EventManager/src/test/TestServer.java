@@ -2,6 +2,7 @@ package test;
 
 
 import java.io.BufferedReader;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
@@ -74,8 +75,8 @@ class ServerThread extends Thread {
 		this.ts = ts;
 		this.s = s;
 		try {
-			ois = new ObjectInputStream(s.getInputStream());
 			oos = new ObjectOutputStream(s.getOutputStream());
+			ois = new ObjectInputStream(s.getInputStream());
 		} catch (IOException ioe) {
 			System.out.println("IOE in ServerThread constructor: " + ioe.getMessage());
 		}
@@ -106,6 +107,8 @@ class ServerThread extends Thread {
 			c = (String) ois.readObject();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
+		} catch(EOFException eofe){
+			//dont print
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -113,7 +116,7 @@ class ServerThread extends Thread {
 	}
 	
 	private User getUser(){
-		User u = new User();
+		User u = null;
 		
 		try{
 			u = (User) ois.readObject();
@@ -140,7 +143,15 @@ class ServerThread extends Thread {
 	}
 	
 	private boolean userValid(User u){
-		return true;
+		if(u == null){
+			return false;
+		}
+		
+		if(u.getUserName().equals("joeb") && u.getPassword().equals("password")){
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	private boolean registerUser(User u){//returns true if user creation worked
@@ -154,6 +165,11 @@ class ServerThread extends Thread {
 	private Vector<Event> getEventVector(){
 		Vector<Event> v = new Vector<Event>();
 		
+		v.add(new Event(0, "Event 1", "Bovard Auditorium", "9:00am", "An event at Bovard!"));
+		v.add(new Event(0, "Event 2", "SAL 101", "10:00am", "A club event at Sal!"));
+		v.add(new Event(0, "Event 3", "Galen Center", "11:00am", "Club Basketball Game!"));
+		v.add(new Event(0, "Event 4", "VKC 201", "12:00pm", "Club Meeting!"));
+		v.add(new Event(0, "Event 5", "Leavy Library", "9:30pm", "Study Club!"));
 		return v;
 	}
 	
@@ -186,7 +202,6 @@ class ServerThread extends Thread {
 					User u = getUser();
 					oos.writeObject(userValid(u)); //valid
 					oos.flush();
-					
 				}
 				else if (line.equals("2")){ //create user	
 					User newUser = getUser();
