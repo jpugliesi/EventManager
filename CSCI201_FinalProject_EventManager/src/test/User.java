@@ -37,6 +37,11 @@ public class User implements Serializable{
 	public String getPassword(){
 		return password;
 	}
-	
+
+	public void testAttendedEvents() {
+		this.eventVector.add(new Event(0,1, "Event 4", "VKC 201", "12:00pm", "Club Meeting!"));
+		this.eventVector.add(new Event(0,2, "Event 5", "Leavy Library", "9:30pm", "Study Club!"));
+		
+	}
 
 }

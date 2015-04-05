@@ -165,11 +165,11 @@ class ServerThread extends Thread {
 	private Vector<Event> getEventVector(){
 		Vector<Event> v = new Vector<Event>();
 		
-		v.add(new Event(0, "Event 1", "Bovard Auditorium", "9:00am", "An event at Bovard!"));
-		v.add(new Event(0, "Event 2", "SAL 101", "10:00am", "A club event at Sal!"));
-		v.add(new Event(0, "Event 3", "Galen Center", "11:00am", "Club Basketball Game!"));
-		v.add(new Event(0, "Event 4", "VKC 201", "12:00pm", "Club Meeting!"));
-		v.add(new Event(0, "Event 5", "Leavy Library", "9:30pm", "Study Club!"));
+		v.add(new Event(0,1, "Event 1", "Bovard Auditorium", "9:00am", "An event at Bovard!"));
+		v.add(new Event(0,1, "Event 2", "SAL 101", "10:00am", "A club event at Sal!"));
+		v.add(new Event(0,1, "Event 3", "Galen Center", "11:00am", "Club Basketball Game!"));
+		v.add(new Event(0,1, "Event 4", "VKC 201", "12:00pm", "Club Meeting!"));
+		v.add(new Event(0,1, "Event 5", "Leavy Library", "9:30pm", "Study Club!"));
 		return v;
 	}
 	
@@ -236,6 +236,7 @@ class ServerThread extends Thread {
 				}
 				else if (line.equals("7")){ //get event vector for a given user
 					User u = getUser();
+					u.testAttendedEvents();
 					oos.writeObject(u.getEventVector());
 					oos.flush();
 				}
