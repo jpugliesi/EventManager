@@ -205,7 +205,7 @@ class ServerThread extends Thread {
 				}
 				else if (line.equals("2")){ //create user	
 					User newUser = getUser();
-					oos.writeObject(registerUser(newUser));
+					oos.writeObject(registerUser(newUser)); //whether registration was successful or not
 					oos.flush();
 				}
 				else if (line.equals("3")){ //get events

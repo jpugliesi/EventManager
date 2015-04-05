@@ -16,7 +16,6 @@ public class Test {
 	private User invalidUserWrongPassword;
 	private User invalidUserWrongUsername;
 	private Vector<Event> testEvents;
-	private Vector<Chat> chatHistory;
 	
 	public Test(){
 		try {
@@ -51,15 +50,7 @@ public class Test {
 		return events;
 	}
 
-	private Vector<Chat> getChatHistory() {
-		chatHistory = new Vector<Chat>();
 
-		chatHistory.add(new Chat(0,1,"What is up there!"));
-		chatHistory.add(new Chat(1,0,"nothing much, how about you."));
-		chatHistory.add(new Chat(0,1,"I'm planning to check out your party tonight.."));
-		chatHistory.add(new Chat(1,0,"That'd be awesome, it is on Ellendale, the third house to your right."));
-	}
-	
 	public boolean testLogin(){
 		boolean response = false;
 		try{
@@ -143,30 +134,35 @@ public class Test {
 			outputStream.writeObject("4");
 			outputStream.flush();
 
-			Event newEvent = new Event(5,1, "Event 6", "Ground Zero Cafe", "7:00pm", "Singing Contest"));
+			Event newEvent = new Event(5,1, "Event 6", "Ground Zero Cafe", "7:00pm", "Singing Contest");
 			outputStream.writeObject(newEvent);
 			outputStream.flush();
 
-			response = true;
+			response = inputStream.readBoolean();
 		} catch(IOException ioe) {
 			System.out.println(ioe.getMessage());
-		} catch(ClassNotFoundException cnfe){
-			System.out.println(cnfe.getMessage());
-		}
-
+		} 
 		return response;
 	}
 
-
+ 
 	public boolean testLoadChatHistory() {
 		boolean response = false;
 		try{
+			User u1 = new User();
+			User u2 = new User();
 			
 			outputStream.writeObject("5");
 			outputStream.flush();
-
-			Vector<Chat> chats = (Vector<Chat>) inputStream.readObject();
-			if(chats.size() != 0){
+			
+			outputStream.writeObject(u1);//sender
+			outputStream.flush();
+			outputStream.writeObject(u2);//receiver
+			outputStream.flush();
+			
+			Vector<String> history = (Vector<String>) inputStream.readObject();
+			
+			if (history.size() != 0){
 				response = true;
 			}
 			
@@ -179,23 +175,27 @@ public class Test {
 	}
 
 	public boolean testSendChatMessage() {
-		boolean response;
+		boolean response = false;
 		try {
 
 			outputStream.writeObject("6");
 			outputStream.flush();
 
-			Chat newMessage = new Chat(0,1,"I think i know which house you are talking about, is the house red?");
+			User sender = new User();
+			User receiver = new User();
+			String message  = "hello";
 
-			outputStream.writeObject(newMessage);
+			outputStream.writeObject(sender);
 			outputStream.flush();
-			resposne = true;
-
+			outputStream.writeObject(receiver);
+			outputStream.flush();
+			outputStream.writeObject(message);
+			outputStream.flush();
+			response = inputStream.readBoolean();
+			
 		} catch(IOException ioe){
 			System.out.println(ioe.getMessage());
-		} catch(ClassNotFoundException cnfe){
-			System.out.println(cnfe.getMessage());
-		}
+		} 
 
 		return response;
 	}
@@ -210,9 +210,10 @@ public class Test {
 			outputStream.writeObject(validUser); 
 			
 			Vector<Event> users_events = (Vector<Event>)inputStream.readObject();
-			response = true;
-			
-			
+			if (users_events.size() != 0){
+				response = true;
+			}
+				
 		} catch(IOException ioe){
 			System.out.println(ioe.getMessage());
 		} catch(ClassNotFoundException cnfe){
