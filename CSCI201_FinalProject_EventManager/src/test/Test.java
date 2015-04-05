@@ -16,6 +16,7 @@ public class Test {
 	private User invalidUserWrongPassword;
 	private User invalidUserWrongUsername;
 	private Vector<Event> testEvents;
+	private Vector<Chat> chatHistory;
 	
 	public Test(){
 		try {
@@ -48,6 +49,15 @@ public class Test {
 		events.add(new Event(4,1, "Event 5", "Leavy Library", "9:30pm", "Study Club!"));
 		
 		return events;
+	}
+
+	private Vector<Chat> getChatHistory() {
+		chatHistory = new Vector<Chat>();
+
+		chatHistory.add(new Chat(0,1,"What is up there!"));
+		chatHistory.add(new Chat(1,0,"nothing much, how about you."));
+		chatHistory.add(new Chat(0,1,"I'm planning to check out your party tonight.."));
+		chatHistory.add(new Chat(1,0,"That'd be awesome, it is on Ellendale, the third house to your right."));
 	}
 	
 	public boolean testLogin(){
@@ -127,8 +137,69 @@ public class Test {
 	}
 	
 	public boolean testCreateEvent(){
-		return true;
+		boolean response = false;
+		try {
+
+			outputStream.writeObject("4");
+			outputStream.flush();
+
+			Event newEvent = new Event(5,1, "Event 6", "Ground Zero Cafe", "7:00pm", "Singing Contest"));
+			outputStream.writeObject(newEvent);
+			outputStream.flush();
+
+			response = true;
+		} catch(IOException ioe) {
+			System.out.println(ioe.getMessage());
+		} catch(ClassNotFoundException cnfe){
+			System.out.println(cnfe.getMessage());
+		}
+
+		return response;
 	}
+
+
+	public boolean testLoadChatHistory() {
+		boolean response = false;
+		try{
+			
+			outputStream.writeObject("5");
+			outputStream.flush();
+
+			Vector<Chat> chats = (Vector<Chat>) inputStream.readObject();
+			if(chats.size() != 0){
+				response = true;
+			}
+			
+		} catch(IOException ioe){
+			System.out.println(ioe.getMessage());
+		} catch(ClassNotFoundException cnfe){
+			System.out.println(cnfe.getMessage());
+		}
+		return response;
+	}
+
+	public boolean testSendChatMessage() {
+		boolean response;
+		try {
+
+			outputStream.writeObject("6");
+			outputStream.flush();
+
+			Chat newMessage = new Chat(0,1,"I think i know which house you are talking about, is the house red?");
+
+			outputStream.writeObject(newMessage);
+			outputStream.flush();
+			resposne = true;
+
+		} catch(IOException ioe){
+			System.out.println(ioe.getMessage());
+		} catch(ClassNotFoundException cnfe){
+			System.out.println(cnfe.getMessage());
+		}
+
+		return response;
+	}
+
 	public boolean testGetUserEventVector(){
 		boolean response = false;
 		try{
