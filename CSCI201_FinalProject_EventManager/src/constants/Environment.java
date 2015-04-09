@@ -1,4 +1,4 @@
-package Constants;
+package constants;
 
 import java.net.Socket;
 import java.net.URL;
