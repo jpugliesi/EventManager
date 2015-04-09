@@ -12,6 +12,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Vector;
 
+import main.Event;
+import main.User;
+
 public class TestServer {
 	private Vector<ServerThread> stVector = new Vector<ServerThread>();
 	public TestServer() {

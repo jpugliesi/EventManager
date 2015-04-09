@@ -6,6 +6,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Vector;
 
+import main.Event;
+import main.User;
+
 public class Test {
 	
 	private Socket socket;
