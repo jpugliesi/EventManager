@@ -34,6 +34,15 @@ public class Database {
         
 	}
 	
+	public void shutdownDB(){
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			System.out.println("Error shuting down the database in shutdownDB()");
+			e.printStackTrace();
+		}
+	}
+	
 	public void createDatabaseIfDNE(){
         
         try {
@@ -52,6 +61,7 @@ public class Database {
             	}
             }
             
+            
             //create the EventMangerDB if it doesnt exist
             int creationResult = 2;
             if(!dbExists){
@@ -66,7 +76,9 @@ public class Database {
             } else if(creationResult == 2){
             	System.out.println("EventManagerDB already Exists");
             }
-               
+             
+            dbsFound.close();
+            statement.close();
 		} catch (SQLException sqle){
 			System.out.println("SQLException in Database Constructor");
 			sqle.printStackTrace();
@@ -103,7 +115,8 @@ public class Database {
 			sql = "ALTER TABLE user_event_junction ADD CONSTRAINT eventRef FOREIGN KEY (fk_event_id) REFERENCES events (event_id)";
 			statement.addBatch(sql);
 			
-			//statement.executeBatch();
+			statement.executeBatch();
+			statement.close();
 			
 			System.out.println("Created Table Relation constraints");
 			
@@ -119,8 +132,8 @@ public class Database {
 			
 			String sql = "CREATE TABLE events " +
 	                   "(" +
-	                   "event_id INT AUTO_INCREMENT NOT_NULL, " +
-	                   "title VARCHAR(200) NOT_NULL, " +
+	                   "event_id INT AUTO_INCREMENT NOT NULL, " +
+	                   "title VARCHAR(200) NOT NULL, " +
 	                   "club VARCHAR(200), " +
 	                   "location VARCHAR(200), " +
 	                   "num_attending INT, " +
@@ -129,6 +142,7 @@ public class Database {
 	                   ")";
 			
 			statement.executeUpdate(sql);
+			statement.close();
 		    System.out.println("Created events table");
 		    
 		} catch (SQLException e) {
@@ -144,15 +158,16 @@ public class Database {
 			
 			String sql = "CREATE TABLE users " +
 	                   "(" +
-	                   "user_id INT AUTO_INCREMENT NOT_NULL, " +
-	                   "username VARCHAR(20) NOT_NULL, " +
-	                   "password_hash VARCHAR(256) NOT_NULL, " +
-	                   "full_name VARCHAR(100) NOT_NULL, " +
+	                   "user_id INT AUTO_INCREMENT NOT NULL, " +
+	                   "username VARCHAR(20) NOT NULL, " +
+	                   "password_hash VARCHAR(256) NOT NULL, " +
+	                   "full_name VARCHAR(100) NOT NULL, " +
 	                   "fk_profile_picture INT, " +
 	                   "PRIMARY KEY (user_id)" +
 	                   ")";
 			
 			statement.executeUpdate(sql);
+			statement.close();
 		    System.out.println("Created users table");
 		    
 		} catch (SQLException e) {
@@ -172,6 +187,7 @@ public class Database {
 						")";
 			
 			statement.executeUpdate(sql);
+			statement.close();
 			System.out.println("Created user_event_junction table");
 				
 		} catch (SQLException e) {
@@ -189,10 +205,11 @@ public class Database {
 					"message TEXT, " +
 					"fk_sender_id INT NOT NULL, " +
 					"fk_receiver_id INT NOT NULL, " +
-					"time INT NOT_NULL" +
+					"time INT NOT NULL" +
 					")";
 			
 			statement.executeUpdate(sql);
+			statement.close();
 			System.out.println("Created chat_history table");
 			
 		} catch (SQLException e) {
@@ -213,6 +230,7 @@ public class Database {
 					")";
 		
 			statement.executeUpdate(sql);
+			statement.close();
 			System.out.println("Created profile_pictures table");
 			
 		} catch (SQLException e) {
@@ -222,7 +240,8 @@ public class Database {
 	}
 	
 	public static void main(String [] args){
-		new Database();
+		Database db = new Database();
+		db.shutdownDB();
 	}
 	
 	
