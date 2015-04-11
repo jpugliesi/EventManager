@@ -1,15 +1,13 @@
 package test;
 
 
-import java.io.BufferedReader;
 import java.io.EOFException;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.GregorianCalendar;
 import java.util.Vector;
 
 import main.Event;
@@ -168,11 +166,12 @@ class ServerThread extends Thread {
 	private Vector<Event> getEventVector(){
 		Vector<Event> v = new Vector<Event>();
 		
-		v.add(new Event(0,1, "Event 1", "Bovard Auditorium", "9:00am", "An event at Bovard!"));
-		v.add(new Event(0,1, "Event 2", "SAL 101", "10:00am", "A club event at Sal!"));
-		v.add(new Event(0,1, "Event 3", "Galen Center", "11:00am", "Club Basketball Game!"));
-		v.add(new Event(0,1, "Event 4", "VKC 201", "12:00pm", "Club Meeting!"));
-		v.add(new Event(0,1, "Event 5", "Leavy Library", "9:30pm", "Study Club!"));
+		v.add(new Event("Event 1", "Bovard Auditorium", new GregorianCalendar(2009, 1, 1, 9, 55).getTime(), "Club1", "An event at Bovard!", 0, 1));
+		v.add(new Event("Event 2", "SAL 101", new GregorianCalendar(2010, 2, 1, 10, 55).getTime(), "Club2", "A club event at Sal!", 0, 1));
+		v.add(new Event("Event 3", "Galen Center", new GregorianCalendar(2015, 1, 1, 11, 55).getTime(), "Club3", "Club Basketball Game!", 0, 1));
+		v.add(new Event("Event 4", "VKC 201", new GregorianCalendar(2015, 3, 13, 14, 0).getTime(), "Club4", "Club Meeting!", 0, 1));
+		v.add(new Event("Event 5", "Leavy Library", new GregorianCalendar(2015, 6, 1, 10, 0).getTime(), "Club5", "Study Club!", 0, 1));
+
 		return v;
 	}
 	
