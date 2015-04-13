@@ -9,26 +9,34 @@ import java.net.Socket;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
+import constants.Constants;
+import db.Database;
 import test.TestServer;
 
 public class Server {
 	private Vector<ServerThread> stVector = new Vector<ServerThread>();
-
+	private Database db;
+	
+	
 	public Server(){
 		ServerSocket ss = null;
 		try{
+			db = new Database("localhost");
 			System.out.println("Starting Server");
 			ss = new ServerSocket(6789);
 			while(true){
 				System.out.println("Waiting for client to connect...");
 				Socket s = ss.accept();
 				System.out.println("Client " + s.getInetAddress() + ":" + s.getPort() + " connected");
-				ServerThread st = new ServerThread(s, this);
+				ServerThread st = new ServerThread(s, this, db);
 				stVector.add(st);
 				st.start();
 			}
 			
-		} catch(IOException ioe){
+		} catch (LoginException le){
+			
+		}
+		catch(IOException ioe){
 			System.out.println("IOE in server constructor: " + ioe.getMessage());
 		} finally {
 			if (ss != null) {
@@ -75,9 +83,13 @@ class ServerThread extends Thread {
 	private Server server;
 	private Socket s;
 	private String username;
-	public ServerThread(Socket s, Server server) {
+	private Database db;
+	
+	private int errorCode;
+	public ServerThread(Socket s, Server server, Database db) {
 		this.server = server;
 		this.s = s;
+		this.db = db;
 		try {
 			oos = new ObjectOutputStream(s.getOutputStream());
 			ois = new ObjectInputStream(s.getInputStream());
@@ -155,16 +167,18 @@ class ServerThread extends Thread {
 		return e;
 	}
 	
-	private boolean userValid(User u){
-		if(u == null){
-			return false;
+	private User userValid(String username, String pass){
+		User u = null;
+		try{
+			 u = db.checkLogin(username, pass);
+
+		} catch (LoginException le){
+			errorCode = le.getErrorCode();
 		}
 		
-		if(u.getUserName().equals("joeb") && u.getPassword().equals("password")){
-			return true;
-		} else {
-			return false;
-		}
+		return u;
+		
+		
 	}
 	
 	private boolean registerUser(User u){//returns true if user creation worked
@@ -178,12 +192,7 @@ class ServerThread extends Thread {
 	private Vector<Event> getEventVector(){
 		Vector<Event> v = new Vector<Event>();
 		
-		v.add(new Event("Event 1", "Bovard Auditorium", new GregorianCalendar(2009, 1, 1, 9, 55).getTime(), "Club1", "An event at Bovard!", 0, 1));
-		v.add(new Event("Event 2", "SAL 101", new GregorianCalendar(2010, 2, 1, 10, 55).getTime(), "Club2", "A club event at Sal!", 0, 1));
-		v.add(new Event("Event 3", "Galen Center", new GregorianCalendar(2015, 1, 1, 11, 55).getTime(), "Club3", "Club Basketball Game!", 0, 1));
-		v.add(new Event("Event 4", "VKC 201", new GregorianCalendar(2015, 3, 13, 14, 0).getTime(), "Club4", "Club Meeting!", 0, 1));
-		v.add(new Event("Event 5", "Leavy Library", new GregorianCalendar(2015, 6, 1, 10, 0).getTime(), "Club5", "Study Club!", 0, 1));
-
+	
 		return v;
 	}
 	
@@ -213,9 +222,20 @@ class ServerThread extends Thread {
 			while(true){
 				String line = getCommand();
 				if(line.equals("1")){ //login
-					User u = getUser();
-					oos.writeObject(userValid(u)); //valid
+					String userName = getCommand();
+					String pass = getCommand();
+					//hash password first
+					User u = userValid(userName, pass);
+					oos.writeObject(u); //valid
 					oos.flush();
+					if (u != null){
+						oos.writeObject(Constants.SERVER_LOGIN_SUCCESS);
+					}
+					else{
+						oos.writeObject(errorCode);
+						oos.flush();
+					}
+					
 				}
 				else if (line.equals("2")){ //create user	
 					User newUser = getUser();
