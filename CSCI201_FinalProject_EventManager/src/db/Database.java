@@ -18,7 +18,7 @@ public class Database {
 	
 	private static String jdbcDriver = "com.mysql.jdbc.Driver";
 	private static String dbAddress = "jdbc:mysql://";
-	private static int dbPort = 3306;
+	private static int dbPort = 6790;
     private static String dbName = "EventManagerDB";
     private static String dbUser = "root";
     private static String dbPassword = "";
@@ -51,6 +51,10 @@ public class Database {
         
 	}
 	
+	/*
+	 * Returns a User if successful login
+	 * throws LoginException with corresponding error code if username, or password is incorrect
+	 */
 	public User checkLogin(String username, String password_hash) throws LoginException{
 		User user = null;
 		
@@ -136,6 +140,10 @@ public class Database {
 		
 	}
 	
+	/*
+	 * PARAM: User object
+	 * RETURNS: Error/Success code
+	 */
 	public int registerUser(User user){
 
 		try{
@@ -192,6 +200,10 @@ public class Database {
 		return Constants.SERVER_REGISTRATION_SUCCESS;
 	}
 	
+	/*
+	 * PARAM: Event object
+	 * RETURNS: Error/Success code
+	 */
 	public int createEvent(Event event){
 		try {
 			String sql = "INSERT INTO events " + 
@@ -221,6 +233,10 @@ public class Database {
 		return Constants.SERVER_CREATE_EVENT_SUCCESS;
 	}
 	
+	/*
+	 * PARAMS: User object, Event object
+	 * RETURNS: error/success code
+	 */
 	public int rsvp(User user, Event event){
 		try{
 			String sql = "INSERT INTO user_event_junction VALUES(?, ?)";
@@ -243,8 +259,65 @@ public class Database {
 	}
 	
 	/*
-	 * Setup functions
+	 * getUserEventVector(User)
+	 * Retrieves a Vector<Event> for all of a user's rsvp'd events
 	 * 
+	 * Throws GetUserEventsException if error
+	 * 
+	 * PARAMS: User object
+	 * RETURNS: Vector<Event>
+	 * 
+	 */
+	
+	/*
+	 * getEventFeed()
+	 * Returns a Vector<Event> of 10 most recent events
+	 * PARAMS: none
+	 * RETURNS: Vector<Event>
+	 */
+	
+	/*
+	 * getEvent(int event_id)
+	 * Given an Event's event_id, returns an Event object populated with the appropriate information
+	 * 
+	 * Throws GetEventException if error
+	 * 
+	 * PARAMS: int event_id
+	 * RETURNS: Event
+	 */
+	
+	/*
+	 * getChatHistory(User sender, User receiver)
+	 * Returns a Vector<ChatMessage> of all messages between users
+	 * PARAMS: User sender object, User receiver object
+	 * RETURNS: Vector<ChatMessage>
+	 */
+	
+	/*
+	 * writeChatMessage(ChatMessage message)
+	 * Writes a new chat message to the database, using the ChatMessage instance's values
+	 * PARMS: ChatMessage object
+	 * RETURNS: int error/success code
+	 */
+	
+	/*
+	 * getAdmins()
+	 * Returns a Vector<User> who are all admins
+	 * PARAMS: none
+	 * RETURNS: Vector<User>
+	 */
+	
+	/*
+	 * updateUser(User user)
+	 * Updates an existing user's information based on the new User object's fields
+	 * PARAMS: User to update
+	 * RETURNS: error/success code
+	 */
+	
+	
+	
+	/*
+	 * Setup functions
 	 */
 	
 	public void shutdownDB(){
