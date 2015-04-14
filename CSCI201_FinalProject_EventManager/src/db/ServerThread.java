@@ -12,7 +12,75 @@ import main.LoginException;
 import main.User;
 import constants.Constants;
 
+<<<<<<< HEAD:CSCI201_FinalProject_EventManager/src/db/ServerThread.java
 public class ServerThread extends Thread {
+=======
+public class Server {
+	private Vector<ServerThread> stVector = new Vector<ServerThread>();
+	private Database db;
+	
+	
+	public Server(){
+		ServerSocket ss = null;
+		try{
+			db = new Database("localhost", false);
+			System.out.println("Starting Server");
+			ss = new ServerSocket(6789);
+			while(true){
+				System.out.println("Waiting for client to connect...");
+				Socket s = ss.accept();
+				System.out.println("Client " + s.getInetAddress() + ":" + s.getPort() + " connected");
+				ServerThread st = new ServerThread(s, this, db);
+				stVector.add(st);
+				st.start();
+			}
+			
+		} catch (LoginException le){
+			
+		}
+		catch(IOException ioe){
+			System.out.println("IOE in server constructor: " + ioe.getMessage());
+		} finally {
+			if (ss != null) {
+				try {
+					ss.close();
+				} catch (IOException ioe) {
+					System.out.println("IOE closing ServerSocket: " + ioe.getMessage());
+				}
+			}
+		}
+		
+		
+	}
+	
+	public void removeServerThread(ServerThread st) {
+		stVector.remove(st);
+	}
+	public void sendMessageToClients(ServerThread st, String str) {
+		for (ServerThread st1 : stVector) {
+			if (!st.equals(st1)) {
+				st1.sendMessage(str);
+			}
+		}
+	}
+	
+	public Vector<String> getOnlineFriends(){
+		Vector<String> ret = new Vector<String>();
+		
+		for(ServerThread st : stVector){
+			ret.add(st.getUsername());
+		}
+		
+		return ret;
+	}
+
+	public static void main(String [] args) {
+		new Server();
+	}
+}
+
+class ServerThread extends Thread {
+>>>>>>> db083f2202c596bcdf961d28fb8da164f07347ea:CSCI201_FinalProject_EventManager/src/main/Server.java
 	private ObjectInputStream ois;
 	private ObjectOutputStream oos;
 	private EMServer server;
