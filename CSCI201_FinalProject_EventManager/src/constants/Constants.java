@@ -3,7 +3,7 @@ package constants;
 public class Constants {
 	
 	//Login Codes
-	//Database.checkLogin(User) returns int
+	//Database.checkLogin(String username, String password_hash) returns User
 	public static int CLIENT_LOGIN = 1;
 	public static int SERVER_LOGIN_INCORRECT_USER = 1;
 	public static int SERVER_LOGIN_INCORRECT_PASSWORD = 2;
@@ -15,7 +15,7 @@ public class Constants {
 	public static int CLIENT_REGISTER = 2;
 	public static int SERVER_REGISTRATION_SUCCESS = 1;
 	public static int SERVER_REGISTRATION_USERNAME_FAIL = 0; //username already taken
-	public static int SERVER_REGISTRATION_PASSWORD_FAIL = 2; //non-matching passwords
+	public static int SERVER_REGISTRATION_PASSWORD_FAIL = 2; //non-matching passwords (should be checked on the server side)
 	
 	//Event Feed Retrieval Codes
 	//Database.getEventFeed();
@@ -44,6 +44,7 @@ public class Constants {
 	public static int SERVER_GET_USER_EVENTS_FAIL = 0;
 	
 	//Send an RSVP
+	//Database.rsvp(User, Event)
 	public static int CLIENT_RSVP = 8;
 	public static int SERVER_RSVP_SUCCESS = 1;
 	public static int SERVER_RSVP_FAIL = 0;

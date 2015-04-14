@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.GregorianCalendar;
 import java.util.Vector;
 
 import main.Event;
@@ -32,9 +33,10 @@ public class Test {
 			
 			//create a test user for use across each test case
 			testEvents = getTestEvents();
-			validUser = new User(0, 0, "Joe Blow", "joeb", "password", false, testEvents);
-			invalidUserWrongPassword = new User(0, 0, "Joe Blow", "joeb", "pord", false, testEvents); 
-			invalidUserWrongUsername = new User(0, 0, "Joe Blow", "jb", "password", false, testEvents);
+			validUser = new User("Joe Blow", "joeb", "password", false, 1);
+			validUser.setEvents(testEvents);
+			invalidUserWrongPassword = new User("Joe Blow", "joeb", "pord", false, 2); 
+			invalidUserWrongUsername = new User("Joe Blow", "jb", "password", false, 3);
 			
 		} catch (IOException e) {
 			System.out.println("Error in Test creating socket: " + e.getMessage());
@@ -42,15 +44,15 @@ public class Test {
 	}
 	
 	private Vector<Event> getTestEvents(){
-		Vector<Event> events = new Vector<Event>();
+		Vector<Event> v = new Vector<Event>();
 		
-		events.add(new Event(0,1, "Event 1", "Bovard Auditorium", "9:00am", "An event at Bovard!"));
-		events.add(new Event(1,1, "Event 2", "SAL 101", "10:00am", "A club event at Sal!"));
-		events.add(new Event(2,1, "Event 3", "Galen Center", "11:00am", "Club Basketball Game!"));
-		events.add(new Event(3,1, "Event 4", "VKC 201", "12:00pm", "Club Meeting!"));
-		events.add(new Event(4,1, "Event 5", "Leavy Library", "9:30pm", "Study Club!"));
+		v.add(new Event("Event 1", "Bovard Auditorium", new GregorianCalendar(2009, 1, 1, 9, 55).getTime(), "Club1", "An event at Bovard!", 0, 1));
+		v.add(new Event("Event 2", "SAL 101", new GregorianCalendar(2010, 2, 1, 10, 55).getTime(), "Club2", "A club event at Sal!", 0, 1));
+		v.add(new Event("Event 3", "Galen Center", new GregorianCalendar(2015, 1, 1, 11, 55).getTime(), "Club3", "Club Basketball Game!", 0, 1));
+		v.add(new Event("Event 4", "VKC 201", new GregorianCalendar(2015, 3, 13, 14, 0).getTime(), "Club4", "Club Meeting!", 0, 1));
+		v.add(new Event("Event 5", "Leavy Library", new GregorianCalendar(2015, 6, 1, 10, 0).getTime(), "Club5", "Study Club!", 0, 1));
 		
-		return events;
+		return v;
 	}
 
 
@@ -137,7 +139,7 @@ public class Test {
 			outputStream.writeObject("4");
 			outputStream.flush();
 
-			Event newEvent = new Event(5,1, "Event 6", "Ground Zero Cafe", "7:00pm", "Singing Contest");
+			Event newEvent = new Event("Event 6", "Ground Zero Cafe", new GregorianCalendar(2015, 6, 1, 10, 0).getTime(), "Singing Club", "Singing Contest", 15, 1);
 			outputStream.writeObject(newEvent);
 			outputStream.flush();
 
@@ -231,7 +233,7 @@ public class Test {
 			
 			outputStream.writeObject("8");
 			outputStream.flush();
-			Event newEvent= new Event(0,0, "Event 1", "Bovard Auditorium", "9:00am", "An event at Bovard!");
+			Event newEvent= new Event("Another Event 6", "Ground Zero Cafe", new GregorianCalendar(2015, 6, 8, 10, 0).getTime(), "Singing Club", " Another Singing Contest", 15, 1);
 			outputStream.writeObject(newEvent);
 			outputStream.flush();
 			outputStream.writeObject(validUser);
