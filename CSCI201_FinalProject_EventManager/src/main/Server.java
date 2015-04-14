@@ -21,7 +21,7 @@ public class Server {
 	public Server(){
 		ServerSocket ss = null;
 		try{
-			db = new Database("localhost");
+			db = new Database("localhost", false);
 			System.out.println("Starting Server");
 			ss = new ServerSocket(6789);
 			while(true){
