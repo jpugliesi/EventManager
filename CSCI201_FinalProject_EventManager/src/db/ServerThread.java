@@ -1,92 +1,27 @@
-package main;
+package db;
 
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.GregorianCalendar;
 import java.util.Vector;
 
+import main.Event;
+import main.LoginException;
+import main.User;
 import constants.Constants;
-import db.Database;
-import test.TestServer;
 
-public class Server {
-	private Vector<ServerThread> stVector = new Vector<ServerThread>();
-	private Database db;
-	
-	
-	public Server(){
-		ServerSocket ss = null;
-		try{
-			db = new Database("localhost");
-			System.out.println("Starting Server");
-			ss = new ServerSocket(6789);
-			while(true){
-				System.out.println("Waiting for client to connect...");
-				Socket s = ss.accept();
-				System.out.println("Client " + s.getInetAddress() + ":" + s.getPort() + " connected");
-				ServerThread st = new ServerThread(s, this, db);
-				stVector.add(st);
-				st.start();
-			}
-			
-		} catch (LoginException le){
-			
-		}
-		catch(IOException ioe){
-			System.out.println("IOE in server constructor: " + ioe.getMessage());
-		} finally {
-			if (ss != null) {
-				try {
-					ss.close();
-				} catch (IOException ioe) {
-					System.out.println("IOE closing ServerSocket: " + ioe.getMessage());
-				}
-			}
-		}
-		
-		
-	}
-	
-	public void removeServerThread(ServerThread st) {
-		stVector.remove(st);
-	}
-	public void sendMessageToClients(ServerThread st, String str) {
-		for (ServerThread st1 : stVector) {
-			if (!st.equals(st1)) {
-				st1.sendMessage(str);
-			}
-		}
-	}
-	
-	public Vector<String> getOnlineFriends(){
-		Vector<String> ret = new Vector<String>();
-		
-		for(ServerThread st : stVector){
-			ret.add(st.getUsername());
-		}
-		
-		return ret;
-	}
-
-	public static void main(String [] args) {
-		new Server();
-	}
-}
-
-class ServerThread extends Thread {
+public class ServerThread extends Thread {
 	private ObjectInputStream ois;
 	private ObjectOutputStream oos;
-	private Server server;
+	private EMServer server;
 	private Socket s;
 	private String username;
 	private Database db;
 	
 	private int errorCode;
-	public ServerThread(Socket s, Server server, Database db) {
+	public ServerThread(Socket s, EMServer server, Database db) {
 		this.server = server;
 		this.s = s;
 		this.db = db;
@@ -126,7 +61,7 @@ class ServerThread extends Thread {
 		}
 	}
 	
-	private String getCommand(){
+	private String getString(){
 		String c = "";
 		try {
 			c = (String) ois.readObject();
@@ -181,8 +116,9 @@ class ServerThread extends Thread {
 		
 	}
 	
-	private boolean registerUser(User u){//returns true if user creation worked
-		return true;
+	private int registerUser(User u){//returns true if user creation worked
+		
+		return db.registerUser(u);
 	}
 	
 	private boolean createEvent(Event e){
@@ -220,10 +156,10 @@ class ServerThread extends Thread {
 		try {
 			
 			while(true){
-				String line = getCommand();
+				String line = getString();
 				if(line.equals("1")){ //login
-					String userName = getCommand();
-					String pass = getCommand();
+					String userName = getString();
+					String pass = getString();
 					//hash password first
 					User u = userValid(userName, pass);
 					oos.writeObject(u); //valid
@@ -239,7 +175,7 @@ class ServerThread extends Thread {
 				}
 				else if (line.equals("2")){ //create user	
 					User newUser = getUser();
-					oos.writeObject(registerUser(newUser)); //whether registration was successful or not
+					oos.writeObject(registerUser(newUser)); //sends int of success code
 					oos.flush();
 				}
 				else if (line.equals("3")){ //get events
@@ -263,7 +199,7 @@ class ServerThread extends Thread {
 				else if (line.equals("6")){ //send message
 					User sender = getUser();
 					User receiver = getUser();
-					String message = getCommand();
+					String message = getString();
 					
 					oos.writeObject(sendMessage(sender, receiver, message));
 					oos.flush();	
@@ -281,7 +217,7 @@ class ServerThread extends Thread {
 					oos.flush();
 				}
 				else if (line.equals("9")){ //get event
-					int id = Integer.parseInt(getCommand());
+					int id = Integer.parseInt(getString());
 					oos.writeObject(sendEvent(id));
 					oos.flush();
 				}
