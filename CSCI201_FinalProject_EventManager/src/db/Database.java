@@ -59,6 +59,7 @@ public class Database {
 				    stmt.executeUpdate(sql);
 				    stmt.close();
 	            }
+	            dbsFound.close();
 			}
 			createDatabaseIfDNE();
 			conn.setCatalog(dbName);
@@ -640,8 +641,6 @@ public class Database {
             	System.out.println("EventManagerDB already Exists");
             }
             
-            
-             
             dbsFound.close();
             statement.close();
 		} catch (SQLException sqle){
