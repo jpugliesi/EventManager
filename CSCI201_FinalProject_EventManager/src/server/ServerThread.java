@@ -17,13 +17,13 @@ import db.Database;
 public class ServerThread extends Thread {
 	private ObjectInputStream ois;
 	private ObjectOutputStream oos;
-	private EMServer server;
+	private Server server;
 	private Socket s;
 	private String username;
 	private Database db;
 	
 	private int errorCode;
-	public ServerThread(Socket s, EMServer server, Database db) {
+	public ServerThread(Socket s, Server server, Database db) {
 		this.server = server;
 		this.s = s;
 		this.db = db;

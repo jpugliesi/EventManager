@@ -14,16 +14,16 @@ import constants.Constants;
 import db.Database;
 import test.TestServer;
 
-public class EMServer {
+public class Server {
 	
 	private Vector<ServerThread> stVector = new Vector<ServerThread>();
 	private Database db;
 	
 	
-	public EMServer(){
+	public Server(){
 		ServerSocket ss = null;
 		try{
-			db = new Database("localhost", false);
+			db = new Database("localhost", true);
 			System.out.println("Starting Server");
 			ss = new ServerSocket(6789);
 			while(true){
@@ -75,7 +75,7 @@ public class EMServer {
 	}
 	
 	public static void main(String [] args){
-		new EMServer();
+		new Server();
 	}
 
 }
