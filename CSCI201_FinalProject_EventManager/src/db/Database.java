@@ -41,11 +41,24 @@ public class Database {
 			conn = DriverManager.getConnection(dbFullAddress, dbUser, dbPassword);
 
 			if(reseed){
-				Statement stmt = conn.createStatement();
-			      
-			    String sql = "DROP DATABASE EventManagerDB";
-			    stmt.executeUpdate(sql);
-			    stmt.close();
+				//Search for existing databases
+	            ResultSet dbsFound = conn.getMetaData().getCatalogs();
+	            boolean dbExists = false;
+	            while(dbsFound.next())
+	            {	        
+	            	//EventManagerDB exists
+	            	String databaseName = dbsFound.getString(1);
+	            	if(databaseName.equals(dbName)){
+	            		dbExists = true;
+	            	}
+	            }
+	            if(dbExists){
+					Statement stmt = conn.createStatement();
+				      
+				    String sql = "DROP DATABASE EventManagerDB";
+				    stmt.executeUpdate(sql);
+				    stmt.close();
+	            }
 			}
 			createDatabaseIfDNE();
 			conn.setCatalog(dbName);
