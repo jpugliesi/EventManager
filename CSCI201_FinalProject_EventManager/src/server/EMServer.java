@@ -1,4 +1,4 @@
-package db;
+package server;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -11,13 +11,10 @@ import java.util.Vector;
 
 import main.LoginException;
 import constants.Constants;
+import db.Database;
 import test.TestServer;
 
 public class EMServer {
-	
-	public static void main(String [] args){
-		new EMServer();
-	}
 	
 	private Vector<ServerThread> stVector = new Vector<ServerThread>();
 	private Database db;
@@ -26,7 +23,7 @@ public class EMServer {
 	public EMServer(){
 		ServerSocket ss = null;
 		try{
-			db = new Database("localhost");
+			db = new Database("localhost", false);
 			System.out.println("Starting Server");
 			ss = new ServerSocket(6789);
 			while(true){
@@ -75,6 +72,10 @@ public class EMServer {
 		}
 		
 		return ret;
+	}
+	
+	public static void main(String [] args){
+		new EMServer();
 	}
 
 }

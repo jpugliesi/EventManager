@@ -966,10 +966,4 @@ public class Database {
 		
 	}
 	
-<<<<<<< HEAD
-	
-	
-	
-=======
->>>>>>> db083f2202c596bcdf961d28fb8da164f07347ea
 }
