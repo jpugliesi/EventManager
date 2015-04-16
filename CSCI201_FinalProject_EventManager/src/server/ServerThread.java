@@ -48,9 +48,9 @@ public class ServerThread extends Thread {
 	}
 	 
 
-	public void sendMessage(String str) {
+	public void sendCode(int n) {
 		try {
-			oos.writeObject(str);
+			oos.writeObject(n);
 			oos.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -257,6 +257,8 @@ public class ServerThread extends Thread {
 					Event newEvent = getEvent();
 					oos.writeObject(createEvent(newEvent));
 					oos.flush();
+					
+					server.sendMessageToClients(55);
 	
 				}
 				else if (command == Constants.CLIENT_GET_CHAT_HISTORY){ //load chat history
@@ -280,7 +282,9 @@ public class ServerThread extends Thread {
 					ChatMessage cm = getChatMessage();
 					
 					oos.writeObject(db.writeChatMessage(cm));
-					oos.flush();	
+					oos.flush();
+					
+					server.sendMessageToClients(56);
 				}
 				else if (command == Constants.CLIENT_GET_USER_EVENTS){ //get event vector for a given user
 					User u = getUser();

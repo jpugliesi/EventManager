@@ -56,14 +56,12 @@ public class Server {
 	public void removeServerThread(ServerThread st) {
 		stVector.remove(st);
 	}
-	public void sendMessageToClients(ServerThread st, String str) {
+	public void sendMessageToClients(int n) {
 		for (ServerThread st1 : stVector) {
-			if (!st.equals(st1)) {
-				st1.sendMessage(str);
-			}
+			st1.sendCode(n);	
 		}
 	}
-	
+		
 	public Vector<String> getConnectedClients(){
 		Vector<String> ret = new Vector<String>();
 		
