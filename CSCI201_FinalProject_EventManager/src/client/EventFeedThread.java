@@ -17,6 +17,10 @@ public class EventFeedThread extends Thread{
 	
 	
 	public EventFeedThread() {
+	
+	}
+	
+	public void run() {
 		try {
 			socket = new Socket(Constants.SERVER_IP, 6789);
 			

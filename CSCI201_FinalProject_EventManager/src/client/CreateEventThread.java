@@ -16,6 +16,10 @@ public class CreateEventThread extends Thread {
 	private Event e;
 	
 	public CreateEventThread() {
+	
+	}
+	
+	public void run() {
 		try {
 			socket = new Socket(Constants.SERVER_IP, 6789);
 		
