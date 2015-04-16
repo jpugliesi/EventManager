@@ -5,6 +5,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+
+import main.User;
 import constants.Constants;
 
 
@@ -15,6 +19,7 @@ public class LoginThread extends Thread{
 	private ObjectOutputStream outputStream;
 	private String username;
 	private String password;
+	private User u;
 	
 	
 	public LoginThread(String username, String password) {
@@ -38,11 +43,52 @@ public class LoginThread extends Thread{
 		outputStream.writeObject(password);
 		outputStream.flush();
 		
-		} catch (IOException ioe) {
+		u = (User) inputStream.readObject();
 			
+		int code = (Integer)inputStream.readObject();
+		//received User object is not null, log in success
+		if (code == Constants.SERVER_LOGIN_SUCCESS) {
+			//TODO
+			//Move to the User's Event Page 
 		}
 		
+		//received User object have problem, log in fail cases
+		else if (code == Constants.SERVER_LOGIN_INCORRECT_USER) {
+			JDialog jd = new JDialog();
+			jd.setSize(300,250);
+			jd.setLocation(400,100);
+			jd.setTitle("Invalid Login");
+			JLabel label = new JLabel("Incorrect Username, Please try again.");
+			jd.add(label);		
+			jd.setModal(true);
+			jd.setVisible(true);
+		}
+		else if (code == Constants.SERVER_LOGIN_INCORRECT_PASSWORD) {
+			JDialog jd = new JDialog();
+			jd.setSize(300,250);
+			jd.setLocation(400,100);
+			jd.setTitle("Invalid Login");
+			JLabel label = new JLabel("Incorrect Password, Please try again.");
+			jd.add(label);		
+			jd.setModal(true);
+			jd.setVisible(true);
+		}
+		else if (code == Constants.SERVER_LOGIN_INCORRECT_IP) {
+			JDialog jd = new JDialog();
+			jd.setSize(300,250);
+			jd.setLocation(400,100);
+			jd.setTitle("Invalid Login");
+			JLabel label = new JLabel("Incorrect IP_Address, Please try again.");
+			jd.add(label);		
+			jd.setModal(true);
+			jd.setVisible(true);
+		}
 		
-		
+		} catch (IOException ioe) {
+			System.out.println(ioe.getMessage());
+		} catch (ClassNotFoundException e) {
+			System.out.println(e.getMessage());
+		}
+				
 	}
 }
