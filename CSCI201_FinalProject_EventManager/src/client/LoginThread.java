@@ -1,10 +1,14 @@
 package client;
 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 
@@ -49,7 +53,7 @@ public class LoginThread extends Thread{
 		//received User object is not null, log in success
 		if (code == Constants.SERVER_LOGIN_SUCCESS) {
 			//TODO
-			//Move to the User's Event Page 
+			//Move to the User's Event Page , pass User u
 		}
 		
 		//received User object have problem, log in fail cases
@@ -59,7 +63,14 @@ public class LoginThread extends Thread{
 			jd.setLocation(400,100);
 			jd.setTitle("Invalid Login");
 			JLabel label = new JLabel("Incorrect Username, Please try again.");
-			jd.add(label);		
+			JButton button = new JButton("Got it!");
+			button.addActionListener(new ActionListener() {
+				public void actionPerformed (ActionEvent ae) {
+					jd.dispose();
+				}
+			});
+			jd.add(label);	
+			jd.add(button, BorderLayout.SOUTH);
 			jd.setModal(true);
 			jd.setVisible(true);
 		}
@@ -69,7 +80,14 @@ public class LoginThread extends Thread{
 			jd.setLocation(400,100);
 			jd.setTitle("Invalid Login");
 			JLabel label = new JLabel("Incorrect Password, Please try again.");
-			jd.add(label);		
+			JButton button = new JButton("Got it!");
+			button.addActionListener(new ActionListener() {
+				public void actionPerformed (ActionEvent ae) {
+					jd.dispose();
+				}
+			});
+			jd.add(label);
+			jd.add(button, BorderLayout.SOUTH);
 			jd.setModal(true);
 			jd.setVisible(true);
 		}
@@ -79,7 +97,14 @@ public class LoginThread extends Thread{
 			jd.setLocation(400,100);
 			jd.setTitle("Invalid Login");
 			JLabel label = new JLabel("Incorrect IP_Address, Please try again.");
-			jd.add(label);		
+			JButton button = new JButton("Got it!");
+			button.addActionListener(new ActionListener() {
+				public void actionPerformed (ActionEvent ae) {
+					jd.dispose();
+				}
+			});
+			jd.add(label);	
+			jd.add(button, BorderLayout.SOUTH);
 			jd.setModal(true);
 			jd.setVisible(true);
 		}
@@ -89,6 +114,7 @@ public class LoginThread extends Thread{
 		} catch (ClassNotFoundException e) {
 			System.out.println(e.getMessage());
 		}
-				
+		
+
 	}
 }
