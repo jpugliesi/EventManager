@@ -7,7 +7,11 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Vector;
 
+import main.ChatMessage;
 import main.Event;
+import main.GetAdminsException;
+import main.GetChatHistoryException;
+import main.GetEventException;
 import main.LoginException;
 import main.User;
 import constants.Constants;
@@ -104,6 +108,30 @@ public class ServerThread extends Thread {
 		return e;
 	}
 	
+	private int getInt(){
+		int n = -1;
+		try{
+			n = (int)ois.readInt();
+		}catch (IOException ioe){
+			System.out.println("IOE in serverthread.getInt(): " + ioe.getMessage());
+		}
+		return n;
+	}
+	
+	private ChatMessage getChatMessage(){
+		ChatMessage cm = null;
+		
+		try{
+			cm = (ChatMessage)ois.readObject();
+		} catch (ClassNotFoundException cnfe){
+			System.out.println("CNFE in serverthread.getChatMessage(): " + cnfe.getMessage());
+		} catch (IOException ioe){
+			System.out.println("IOE in serverthread.getChatMessage(): " + ioe.getMessage());
+		}
+		
+		return cm;
+	}
+	
 	private User userValid(String username, String pass){
 		User u = null;
 		try{
@@ -118,35 +146,75 @@ public class ServerThread extends Thread {
 		
 	}
 	
-	private int registerUser(User u){//returns true if user creation worked
+	private int registerUser(User u){
 		
 		return db.registerUser(u);
 	}
 	
-	private boolean createEvent(Event e){
-		return true;
+	private int createEvent(Event e){
+		return db.createEvent(e);
 	}
 	
 	private Vector<Event> getEventVector(){
-		Vector<Event> v = new Vector<Event>();
-		
+		Vector<Event> v = null;
+		try{
+			v = db.getEventFeed();
+		}catch (GetEventException gee){
+			errorCode = gee.getErrorCode();
+		}
 	
 		return v;
 	}
 	
 	//implement the collection of historic messages
-	private Vector<String> getChatHistory(User sender, User receiver){
-		Vector<String> history = new Vector<String>();
-		
+	private Vector<ChatMessage> getChatHistory(User sender, User receiver){
+		Vector<ChatMessage> history = null;
+		try{
+			history = db.getChatHistory(sender, receiver);
+		} catch (GetChatHistoryException gche){
+			errorCode = gche.getErrorCode();
+		}
 		return history;
 	}
 	
-	private boolean sendMessage(User sender, User receiver, String message){
-		return true;
+
+	private Vector<Event> getUserEventVector(User u){
+		Vector<Event> v = null;
+		
+		try{
+			v = db.getUserEventVector(u);
+		} catch (GetEventException gee){
+			errorCode = gee.getErrorCode();
+		}
+		
+		return v;
 	}
 	
-	private boolean rsvp(Event e, User u){
-		return true;
+	private int rsvp(Event e, User u){
+		return db.rsvp(u,e);
+	}
+	
+	private Event getEvent(int id){
+		Event e = null;
+		
+		try{
+			e = db.getEvent(id);
+		} catch (GetEventException gee){
+			errorCode = gee.getErrorCode();
+		}
+		
+		return e;
+	}
+	
+	private Vector<User> getAdmins(){
+		Vector<User> admins = null;
+		try{
+			admins = db.getAdmins();
+		} catch (GetAdminsException gae){
+			errorCode = gae.getErrorCode();
+		}
+		
+		return admins;
 	}
 	
 	private Event sendEvent(int id){
@@ -158,8 +226,8 @@ public class ServerThread extends Thread {
 		try {
 			
 			while(true){
-				String line = getString();
-				if(line.equals("1")){ //login
+				int command = getInt();
+				if(command == Constants.CLIENT_LOGIN){ //login
 					String userName = getString();
 					String pass = getString();
 					//hash password first
@@ -168,6 +236,7 @@ public class ServerThread extends Thread {
 					oos.flush();
 					if (u != null){
 						oos.writeObject(Constants.SERVER_LOGIN_SUCCESS);
+						oos.flush();
 					}
 					else{
 						oos.writeObject(errorCode);
@@ -175,53 +244,98 @@ public class ServerThread extends Thread {
 					}
 					
 				}
-				else if (line.equals("2")){ //create user	
+				else if (command == Constants.CLIENT_REGISTER){ //create user	
 					User newUser = getUser();
 					oos.writeObject(registerUser(newUser)); //sends int of success code
 					oos.flush();
 				}
-				else if (line.equals("3")){ //get events
-					oos.writeObject(getEventVector());
+				else if (command == Constants.CLIENT_GET_EVENT_FEED){ //get events
+					oos.writeObject(getEventVector()); //sends the event feed vector
 					oos.flush();
 				}
-				else if (line.equals("4")){ //create Event
+				else if (command == Constants.CLIENT_CREATE_EVENT){ //create Event
 					Event newEvent = getEvent();
 					oos.writeObject(createEvent(newEvent));
 					oos.flush();
 	
 				}
-				else if (line.equals("5")){ //load chat history
+				else if (command == Constants.CLIENT_GET_CHAT_HISTORY){ //load chat history
 					User sender = getUser();
 					User receiver = getUser();
-					
-					oos.writeObject(getChatHistory(sender, receiver));
+					Vector<ChatMessage> ch = getChatHistory(sender, receiver);
+					oos.writeObject(ch);
 					oos.flush();
+					if(ch != null){
+						oos.writeObject(Constants.SERVER_GET_CHAT_HISTORY_SUCCESS);
+						oos.flush();
+					}else{
+						oos.writeObject(errorCode);
+						oos.flush();
+					}
+					
 					
 				}
-				else if (line.equals("6")){ //send message
-					User sender = getUser();
-					User receiver = getUser();
-					String message = getString();
+				else if (command == Constants.CLIENT_SEND_MESSAGE){ //send message
 					
-					oos.writeObject(sendMessage(sender, receiver, message));
+					ChatMessage cm = getChatMessage();
+					
+					oos.writeObject(db.writeChatMessage(cm));
 					oos.flush();	
 				}
-				else if (line.equals("7")){ //get event vector for a given user
+				else if (command == Constants.CLIENT_GET_USER_EVENTS){ //get event vector for a given user
 					User u = getUser();
-					u.testAttendedEvents();
-					oos.writeObject(u.getEventVector());
+					Vector<Event> ev = getUserEventVector(u);
+					oos.writeObject(ev);
 					oos.flush();
+					if(ev != null){
+						oos.writeObject(Constants.SERVER_GET_USER_EVENTS_SUCCESS);
+						oos.flush();
+					}
+					else{
+						oos.writeObject(errorCode);
+						oos.flush();
+					}
 				}
-				else if (line.equals("8")){ //rsvp 
-					Event e = getEvent();
+				else if (command == Constants.CLIENT_RSVP){ //rsvp 
 					User u = getUser();
+					Event e = getEvent();
 					oos.writeObject(rsvp(e,u));
 					oos.flush();
 				}
-				else if (line.equals("9")){ //get event
-					int id = Integer.parseInt(getString());
-					oos.writeObject(sendEvent(id));
+				else if (command == Constants.CLIENT_GET_EVENT){ //get event
+					int id = getInt();
+					Event e = getEvent(id);
+					oos.writeObject(e);
 					oos.flush();
+					if (e != null){
+						oos.writeObject(Constants.SERVER_GET_EVENT_SUCCESS);
+						oos.flush();
+					} else{
+						oos.writeObject(errorCode);
+						oos.flush();
+					}
+					
+				}
+				else if (command == Constants.CLIENT_GET_ADMINS){
+					Vector<User> admins = getAdmins();
+					oos.writeObject(admins);
+					oos.flush();
+					if (admins != null){
+						oos.writeObject(Constants.SERVER_GET_ADMINS_SUCCESS);
+						oos.flush();
+					}else{
+						oos.writeObject(errorCode);
+						oos.flush();
+					}
+				}
+				else if (command == Constants.CLIENT_UPDATE_PROFILE){
+					User newUser = getUser();
+					
+					oos.writeObject(db.updateUser(newUser));
+					oos.flush();
+				}
+				else if(command == Constants.SHUTDOWN){
+					db.shutdownDB();
 				}
 	
 			}

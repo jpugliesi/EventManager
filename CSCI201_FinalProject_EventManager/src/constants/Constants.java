@@ -71,9 +71,6 @@ public class Constants {
 	//close the database
 	public static int SHUTDOWN = 12;
 	
-	//update gui because of db change
-	public static int UPDATE_GUI = 13;
-	
 	//server ip address
 	public static String SERVER_IP = "";
 	
