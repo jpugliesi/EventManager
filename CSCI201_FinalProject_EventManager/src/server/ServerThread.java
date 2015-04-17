@@ -266,10 +266,11 @@ public class ServerThread extends Thread {
 					User sender = getUser();
 					User receiver = getUser();
 					Vector<ChatMessage> ch = getChatHistory(sender, receiver);
-					oos.writeObject(ch);
-					oos.flush();
+			
 					if(ch != null){
 						oos.writeObject(Constants.SERVER_GET_CHAT_HISTORY_SUCCESS);
+						oos.flush();
+						oos.writeObject(ch);
 						oos.flush();
 					}else{
 						oos.writeObject(errorCode);
@@ -290,10 +291,11 @@ public class ServerThread extends Thread {
 				else if (command == Constants.CLIENT_GET_USER_EVENTS){ //get event vector for a given user
 					User u = getUser();
 					Vector<Event> ev = getUserEventVector(u);
-					oos.writeObject(ev);
-					oos.flush();
+					
 					if(ev != null){
 						oos.writeObject(Constants.SERVER_GET_USER_EVENTS_SUCCESS);
+						oos.flush();
+						oos.writeObject(ev);
 						oos.flush();
 					}
 					else{
@@ -310,10 +312,11 @@ public class ServerThread extends Thread {
 				else if (command == Constants.CLIENT_GET_EVENT){ //get event
 					int id = getInt();
 					Event e = getEvent(id);
-					oos.writeObject(e);
-					oos.flush();
+					
 					if (e != null){
 						oos.writeObject(Constants.SERVER_GET_EVENT_SUCCESS);
+						oos.flush();
+						oos.writeObject(e);
 						oos.flush();
 					} else{
 						oos.writeObject(errorCode);
@@ -323,10 +326,11 @@ public class ServerThread extends Thread {
 				}
 				else if (command == Constants.CLIENT_GET_ADMINS){
 					Vector<User> admins = getAdmins();
-					oos.writeObject(admins);
-					oos.flush();
+					
 					if (admins != null){
 						oos.writeObject(Constants.SERVER_GET_ADMINS_SUCCESS);
+						oos.flush();
+						oos.writeObject(admins);
 						oos.flush();
 					}else{
 						oos.writeObject(errorCode);
