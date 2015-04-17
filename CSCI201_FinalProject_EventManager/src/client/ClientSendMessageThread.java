@@ -8,14 +8,14 @@ import java.net.Socket;
 import main.ChatMessage;
 import constants.Constants;
 
-public class SendMessageThread extends Thread{
+public class ClientSendMessageThread extends Thread{
 	
 	private Socket socket;
 	private ObjectInputStream inputStream;
 	private ObjectOutputStream outputStream;
 	ChatMessage msg;
 	
-	public SendMessageThread(ChatMessage msg) {
+	public ClientSendMessageThread(ChatMessage msg) {
 		this.msg = msg;
 	}
 	

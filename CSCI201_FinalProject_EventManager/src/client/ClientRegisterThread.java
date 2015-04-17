@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 import constants.Constants;
 
 
-public class RegisterThread extends Thread {
+public class ClientRegisterThread extends Thread {
 
 	private Socket socket;
 	private ObjectInputStream inputStream;
@@ -23,7 +23,7 @@ public class RegisterThread extends Thread {
 	private String username;
 	private String password;
 	
-	public RegisterThread(String username, String password) {
+	public ClientRegisterThread(String username, String password) {
 		this.username = username;
 		this.password = password;
 	}

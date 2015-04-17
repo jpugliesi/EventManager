@@ -4,35 +4,38 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Vector;
 
-import main.Event;
 import constants.Constants;
 
-public class EventFeedThread extends Thread{
+public class ClientCreateEventThread extends Thread {
+
 	private Socket socket;
 	private ObjectInputStream inputStream;
 	private ObjectOutputStream outputStream;
-	private Vector<Event> v;
 	
-	
-	public EventFeedThread() {
+	public ClientCreateEventThread() {
 	
 	}
 	
 	public void run() {
 		try {
 			socket = new Socket(Constants.SERVER_IP, 6789);
-			
+		
 			//setup input and output stream
 			outputStream = new ObjectOutputStream(socket.getOutputStream());
 			inputStream = new ObjectInputStream(socket.getInputStream());
 
-			outputStream.writeObject(Constants.CLIENT_GET_EVENT_FEED);
+			outputStream.writeObject(Constants.CLIENT_CREATE_EVENT);
 			outputStream.flush();
 			
-			v = (Vector<Event>) inputStream.readObject();
-				
+			int code = (Integer) inputStream.readObject();
+			
+			if (code == Constants.SERVER_CREATE_EVENT_SUCCESS) {
+				System.out.println("Success created event");
+			}
+			else if (code == Constants.SERVER_CREATE_EVENT_FAIL) {
+				System.out.println("Fail created event");
+			}			
 			
 		} catch (IOException ioe) {
 			System.out.println(ioe.getMessage());
@@ -40,4 +43,5 @@ public class EventFeedThread extends Thread{
 			System.out.println(e.getMessage());
 		}
 	}
+	
 }

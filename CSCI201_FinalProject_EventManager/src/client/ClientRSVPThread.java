@@ -16,14 +16,14 @@ import main.Event;
 import main.User;
 import constants.Constants;
 
-public class RSVPThread extends Thread{
+public class ClientRSVPThread extends Thread{
 	private Socket socket;
 	private ObjectInputStream inputStream;
 	private ObjectOutputStream outputStream;
 	private User u;
 	private Event e;
 	
-	public RSVPThread(User u, Event e) {
+	public ClientRSVPThread(User u, Event e) {
 		this.u = u;
 		this.e = e;
 	}

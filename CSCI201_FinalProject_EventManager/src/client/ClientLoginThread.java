@@ -16,7 +16,7 @@ import main.User;
 import constants.Constants;
 
 
-public class LoginThread extends Thread{
+public class ClientLoginThread extends Thread{
 
 	private Socket socket;
 	private ObjectInputStream inputStream;
@@ -26,7 +26,7 @@ public class LoginThread extends Thread{
 	private User u;
 	
 	
-	public LoginThread(String username, String password) {
+	public ClientLoginThread(String username, String password) {
 		this.username = username;
 		this.password = password;		
 	}

@@ -6,49 +6,54 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Vector;
 
-import main.Event;
+import main.ChatMessage;
 import main.User;
 import constants.Constants;
 
-public class GetUserThread extends Thread{
+public class ClientGetChatHistoryThread extends Thread{
 	
 	private Socket socket;
 	private ObjectInputStream inputStream;
 	private ObjectOutputStream outputStream;
-	private User u;
-	private Vector<Event> ev;
+	User sender;
+	User receiver;
+	Vector<ChatMessage> v;
 	
-	public GetUserThread(User u) {
-		this.u = u;
+	public ClientGetChatHistoryThread(User sender, User receiver) {
+		this.sender = sender;
+		this.receiver = receiver;
 	}
 	
 	public void run() {
 		try {
 			socket = new Socket(Constants.SERVER_IP, 6789);
-		
+			
 			//setup input and output stream
 			outputStream = new ObjectOutputStream(socket.getOutputStream());
 			inputStream = new ObjectInputStream(socket.getInputStream());
 
-			outputStream.writeObject(Constants.CLIENT_GET_USER_EVENTS);
+			outputStream.writeObject(Constants.CLIENT_GET_CHAT_HISTORY);
 			outputStream.flush();
 			
-			outputStream.writeObject(u);
+			outputStream.writeObject(sender);
 			outputStream.flush();
+			
+			outputStream.writeObject(receiver);
+			outputStream.flush();			
 			
 			int code = (Integer) inputStream.readObject();
 			//success case
-			if (code == Constants.SERVER_GET_USER_EVENTS_SUCCESS) {
-				ev = (Vector<Event>) inputStream.readObject();
-				System.out.println("Success get user event vector");
-				//TODO
-				//populate the GUI with event vector
+			if (code == Constants.SERVER_GET_CHAT_HISTORY_SUCCESS) {
+				v = (Vector<ChatMessage>) inputStream.readObject();
+				System.out.println("success loading chat history");
 			}
-			//fail case
-			else if (code == Constants.SERVER_GET_USER_EVENTS_FAIL) {
-				System.out.println("Fail get user event vector");
-			}			
-		
+			else if (code == Constants.SERVER_GET_CHAT_HISTORY_FAIL) {
+				System.out.println("fail loading chat history");
+			}
+			
+			//TODO
+			//populate the chat board with ChatMessage vector
+			
 		} catch (IOException ioe) {
 			System.out.println(ioe.getMessage());
 		} catch (ClassNotFoundException e) {
