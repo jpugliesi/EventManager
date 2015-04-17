@@ -47,13 +47,15 @@ public class LoginThread extends Thread{
 		outputStream.writeObject(password);
 		outputStream.flush();
 		
-		u = (User) inputStream.readObject();
+		
 			
 		int code = (Integer)inputStream.readObject();
 		//received User object is not null, log in success
 		if (code == Constants.SERVER_LOGIN_SUCCESS) {
+			u = (User) inputStream.readObject();
 			//TODO
 			//Move to the User's Event Page , pass User u
+			constants.Environment.currentUser = u;
 		}
 		
 		//received User object have problem, log in fail cases

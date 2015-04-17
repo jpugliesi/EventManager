@@ -7,9 +7,9 @@ import main.User;
 
 public class Environment {
 	
-	public User currentUser;
-	public Socket socket;
-	public URL ipAddress;
+	public static User currentUser;
+	public static Socket socket;
+	public static URL ipAddress;
 	
 	public Environment(User user, Socket socket, URL ipAddress){
 		this.currentUser = user;
