@@ -232,10 +232,11 @@ public class ServerThread extends Thread {
 					String pass = getString();
 					//hash password first
 					User u = userValid(userName, pass);
-					oos.writeObject(u); //valid
-					oos.flush();
+					
 					if (u != null){
 						oos.writeObject(Constants.SERVER_LOGIN_SUCCESS);
+						oos.flush();
+						oos.writeObject(u); //valid
 						oos.flush();
 					}
 					else{

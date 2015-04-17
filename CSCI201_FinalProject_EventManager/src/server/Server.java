@@ -56,6 +56,8 @@ public class Server {
 	public void removeServerThread(ServerThread st) {
 		stVector.remove(st);
 	}
+	
+	//needs to be changed - send code only to the client(s) listening
 	public void sendMessageToClients(int n) {
 		for (ServerThread st1 : stVector) {
 			st1.sendCode(n);	
