@@ -39,13 +39,12 @@ public class ChatHistoryThread extends Thread{
 			outputStream.flush();
 			
 			outputStream.writeObject(receiver);
-			outputStream.flush();
-			
-			v = (Vector<ChatMessage>) inputStream.readObject();
+			outputStream.flush();			
 			
 			int code = (Integer) inputStream.readObject();
 			//success case
 			if (code == Constants.SERVER_GET_CHAT_HISTORY_SUCCESS) {
+				v = (Vector<ChatMessage>) inputStream.readObject();
 				System.out.println("success loading chat history");
 			}
 			else if (code == Constants.SERVER_GET_CHAT_HISTORY_FAIL) {
