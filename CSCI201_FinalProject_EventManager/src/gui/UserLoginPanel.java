@@ -171,7 +171,7 @@ public class UserLoginPanel extends JFrame  {
 		            {
 		            	//makes sure jtf2 and jtf3 are the same pass
 		            	//pull the username and one of the password textfields and before it closes
-		            	new UserEventPanel().setVisible(true);
+		            	new UserTabFrame().setVisible(true);
 		            	dispose();
 		                jd.dispose();
 		            
