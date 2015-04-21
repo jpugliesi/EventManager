@@ -2,10 +2,15 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -27,91 +32,59 @@ public class UserEventPanel extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UserEventPanel frame = new UserEventPanel();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					UserEventPanel frame = new UserEventPanel();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
 	public UserEventPanel() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 356, 480);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
+
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
-		
+
 		JPanel panel = new JPanel();
-		tabbedPane.addTab("Event Feed", null, panel, null);
 		panel.setLayout(null);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(21, 46, 349, 136);
-		panel.add(scrollPane);
-		
-		ImageIcon eventIcon = new ImageIcon("icon.gif");
-		JPanel cellIndex= new JPanel(new BorderLayout()); 
-		//cellIndex.setLayout(new FlowLayout());
-		cellIndex.add(new JLabel(eventIcon), BorderLayout.LINE_END);
-	//	cellIndex.add(new JLabel(eventIcon));
-		//cellIndex.add(new JLabel("This is an oversimplified description"));
-	
-		JPanel	listData[] =
-			{
-				cellIndex,cellIndex,cellIndex
-			};
-		JList list = new JList(listData);
-		scrollPane.setViewportView(list);
-		
-		JPanel panel_1 = new JPanel();
-		tabbedPane.addTab("New tab", null, panel_1, null);
-		panel_1.setLayout(null);
-		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBounds(62, 40, 211, 73);
-		panel_1.add(panel_3);
-		panel_3.setLayout(null);
-		
-		JLabel lblHell = new JLabel("Hell");
-		lblHell.setBounds(80, 29, 62, 38);
-		panel_3.add(lblHell);
-		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBounds(150, 138, 129, 78);
-		panel_1.add(panel_4);
-		
+
+		String[] nameList = { "BlackStone LaunchPad", "Google USC Hiring Workshop", "HACKSC", "UX Designathon", "USC Grief Entrepreneur MeetUp sdaakjsdfaslkjfhaslkjdhfalhfas",
+		"CS201 Presentations" };
+		JList list = new JList(nameList); 
+		UserEventFeedPanel firstPanel= new UserEventFeedPanel(nameList, list);
+		firstPanel.setBounds(20, 6, 285, 349);
+		panel.add(firstPanel);
+		tabbedPane.addTab("Event Feed", null, panel, null);
+
+		JPanel panel2 = new JPanel();
+		panel2.setLayout(null);
+		String[] nameList2 = { "Kieran Strolorz", "John Pugliesi", "Zack Kim", "Vincent Jin", "Jeffrey Miller",
+		"Ryan Chase" };
+		JList list2 = new JList(nameList2); 
+		UserChatPanel secondPanel = new UserChatPanel(nameList2,list2);
+		secondPanel.setBounds(20, 6, 285, 349);
+		panel2.add(secondPanel);
+		tabbedPane.addTab("Chat", null, panel2, null);
+
 		JPanel panel_2 = new JPanel();
-		tabbedPane.addTab("New tab", null, panel_2, null);
-}
+		tabbedPane.addTab("My Profile", null, panel_2, null);
+	}
+
 	
-//	public class MarioListRenderer extends DefaultListCellRenderer {
-//
-//	    Font font = new Font("helvitica", Font.BOLD, 24);
-//
-//	    @Override
-//	    public Component getListCellRendererComponent(
-//	            JList list, Object value, int index,
-//	            boolean isSelected, boolean cellHasFocus) {
-//
-//	        JLabel label = (JLabel) super.getListCellRendererComponent(
-//	                list, value, index, isSelected, cellHasFocus);
-//	        label.setIcon(imageMap.get((String) value));
-//	        label.setHorizontalTextPosition(JLabel.RIGHT);
-//	        label.setFont(font);
-//	        return label;
-//	    }
-//	}
+
+
 }

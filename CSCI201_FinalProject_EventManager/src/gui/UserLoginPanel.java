@@ -88,7 +88,8 @@ public class UserLoginPanel extends JFrame  {
 		            	//makes sure jtf2 and jtf3 are the same pass
 		            	//pull the username and one of the password textfields and before it closes
 		            	if(jtf2.getText().equals(jtf3.getText() ) && !jtf2.getText().equals("")&& !username.getText().equals("")&& !name.getText().equals("")){
-		                jd.dispose();
+		                
+		            	jd.dispose();
 		            	}
 		            
 		            }
@@ -170,6 +171,8 @@ public class UserLoginPanel extends JFrame  {
 		            {
 		            	//makes sure jtf2 and jtf3 are the same pass
 		            	//pull the username and one of the password textfields and before it closes
+		            	new UserEventPanel().setVisible(true);
+		            	dispose();
 		                jd.dispose();
 		            
 		            }
