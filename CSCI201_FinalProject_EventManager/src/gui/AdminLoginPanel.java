@@ -189,77 +189,7 @@ class AdminMainPanel extends JFrame{
 	            public void actionPerformed(ActionEvent e)
 	            {
 	                //Execute when button is pressed
-	            	final JDialog jd = new JDialog();
-					jd.setTitle("Create Event");
-					jd.setSize(700,700);
-					jd.setLocationRelativeTo(null);
-					jd.setResizable(false);
-					
-					JPanel centerPanel= new JPanel(); 
-					centerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-					jd.setLayout(new BorderLayout());
-					JLabel username= new JLabel("User Name:    ");
-					JLabel pass= new JLabel("Password:      ");
-					JLabel pass2= new JLabel("Re enter Pass:");
-					JTextField jtf1= new JTextField(15);
-					//JTextField jtf2= new JTextField(15);
-					JPasswordField jtf2= new JPasswordField(15);
-					JPasswordField jtf3= new JPasswordField(15);
-			
-					JButton okButton= new JButton("OK");
-				//	okButton.setHorizontalAlignment(SwingConstants.RIGHT);
-					okButton.addActionListener(new ActionListener() {
-						 
-			            public void actionPerformed(ActionEvent e)
-			            {
-			            	//makes sure jtf2 and jtf3 are the same pass
-			            	//pull the username and one of the password textfields and before it closes
-			                jd.dispose();
-			            
-			            }
-			        }); 
-					JButton cancelButton= new JButton("Cancel");
-					cancelButton.addActionListener(new ActionListener() {
-						 
-			            public void actionPerformed(ActionEvent e)
-			            {
-			                jd.dispose();
-			            
-			            }
-			        }); 
-					JPanel buttonPanel2 = new JPanel();
-					buttonPanel2.setLayout(new BorderLayout());
-					JPanel buttonPanel = new JPanel();
-					buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-					
-					
-					buttonPanel.add(cancelButton);
-					buttonPanel.add(okButton);
-					buttonPanel2.add(buttonPanel,BorderLayout.SOUTH);
-					
-					BufferedImage image = null;
-					JLabel dTitle=new JLabel();
-					
-					 try {
-						 image = ImageIO.read(getClass().getResource("Title.jpeg"));
-						 image= resizeImage( image, 325, 100, image.TYPE_INT_RGB);
-						 dTitle.setIcon(new ImageIcon(image));
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					
-					centerPanel.add(dTitle);
-					centerPanel.add(username);
-					centerPanel.add(jtf1);
-					centerPanel.add(new JPanel());
-					centerPanel.add(pass);
-					centerPanel.add(jtf2);
-					centerPanel.add(pass2);
-					centerPanel.add(jtf3);
-					centerPanel.add(new JPanel());
-					jd.add(centerPanel, BorderLayout.CENTER);
-					jd.add(buttonPanel2,BorderLayout.SOUTH);
+	            	final createEventDialog jd= new createEventDialog();
 					jd.setVisible(true);
 	            }
 	        }); 
