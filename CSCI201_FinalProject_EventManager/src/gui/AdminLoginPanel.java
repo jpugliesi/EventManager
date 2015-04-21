@@ -190,8 +190,8 @@ class AdminMainPanel extends JFrame{
 	            {
 	                //Execute when button is pressed
 	            	final JDialog jd = new JDialog();
-					jd.setTitle("User Login");
-					jd.setSize(325,265);
+					jd.setTitle("Create Event");
+					jd.setSize(700,700);
 					jd.setLocationRelativeTo(null);
 					jd.setResizable(false);
 					
