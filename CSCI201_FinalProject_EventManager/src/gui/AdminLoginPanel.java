@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
@@ -284,6 +285,29 @@ class AdminMainPanel extends JFrame{
 	            }
 	        }); 
 			//Inbox -----------------------------------------------------------------------------
+			inboxButton.addActionListener(new ActionListener() {
+				 
+	            public void actionPerformed(ActionEvent e)
+	            {
+	                //Execute when button is pressed
+	            	final JDialog jd = new JDialog();
+					jd.setTitle("Chat Inbox");
+					jd.setSize(350,370);
+					jd.setLocationRelativeTo(null);
+					jd.setResizable(false);
+					
+					String[] nameList2 = { "Kieran Strolorz", "John Pugliesi", "Zack Kim", "Vincent Jin", "Jeffrey Miller",
+					"Ryan Chase" };
+					JList list2 = new JList(nameList2); 
+					JPanel chatPanel= new JPanel(); 
+					chatPanel.add(new UserChatPanel(nameList2,list2));
+					 
+					 
+					
+					jd.add(chatPanel);
+					jd.setVisible(true);
+	            }
+	        }); 
 		}
 		  public BufferedImage resizeImage(BufferedImage originalImage, int width, int height, int type) throws IOException {  
 		        BufferedImage resizedImage = new BufferedImage(width, height, type);  
