@@ -175,6 +175,7 @@ public class Database {
 	 */
 	public User registerUser(User user) throws LoginException{
 
+		
 		try{
 			String sql = "SELECT * FROM users WHERE username=?";
 					
