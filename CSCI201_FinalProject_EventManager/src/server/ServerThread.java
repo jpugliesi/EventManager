@@ -146,9 +146,15 @@ public class ServerThread extends Thread {
 		
 	}
 	
-	private int registerUser(User u){
+	private User registerUser(User u){
+		User user = null;
+		try{
+			user = db.registerUser(u);
+		}catch(LoginException le){
+			errorCode = le.getErrorCode();
+		}
 		
-		return db.registerUser(u);
+		return user;
 	}
 	
 	private int createEvent(Event e){
@@ -247,6 +253,16 @@ public class ServerThread extends Thread {
 				}
 				else if (command == Constants.CLIENT_REGISTER){ //create user	
 					User newUser = getUser();
+					User u = registerUser(newUser);
+					if(u!= null){
+						oos.writeObject(Constants.SERVER_REGISTRATION_SUCCESS);
+						oos.flush();
+						oos.writeObject(u);
+						oos.flush();
+					}else{
+						oos.writeObject(errorCode);
+						oos.flush();
+					}
 					oos.writeObject(registerUser(newUser)); //sends int of success code
 					oos.flush();
 				}
