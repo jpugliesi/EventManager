@@ -1,6 +1,7 @@
 package gui;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -183,6 +184,16 @@ class AdminMainPanel extends JFrame{
 		}
 		void addActionListeners(){ 
 			
+			
+			manageEventButton.addActionListener(new ActionListener() {
+				 
+	            public void actionPerformed(ActionEvent e)
+	            {
+	                //Execute when button is pressed
+	            	final createEventDialog jd= new createEventDialog();
+					jd.setVisible(true);
+	            }
+	        });
 		//CREATE EVENT -----------------------------------------------------------------------------
 			createEventButton.addActionListener(new ActionListener() {
 				 
@@ -200,52 +211,12 @@ class AdminMainPanel extends JFrame{
 	            {
 	                //Execute when button is pressed
 	            	final JDialog jd = new JDialog();
-					jd.setTitle("User Login");
-					jd.setSize(325,265);
+					jd.setTitle("My Profile");
+					jd.setSize(350,450);
 					jd.setLocationRelativeTo(null);
 					jd.setResizable(false);
 					
-					JPanel centerPanel= new JPanel(); 
-					centerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-					jd.setLayout(new BorderLayout());
-					JLabel username= new JLabel("User Name:    ");
-					JLabel pass= new JLabel("Password:      ");
-					JLabel pass2= new JLabel("Re enter Pass:");
-					JTextField jtf1= new JTextField(15);
-					//JTextField jtf2= new JTextField(15);
-					JPasswordField jtf2= new JPasswordField(15);
-					JPasswordField jtf3= new JPasswordField(15);
-			
-					JButton okButton= new JButton("OK");
-				//	okButton.setHorizontalAlignment(SwingConstants.RIGHT);
-					okButton.addActionListener(new ActionListener() {
-						 
-			            public void actionPerformed(ActionEvent e)
-			            {
-			            	//makes sure jtf2 and jtf3 are the same pass
-			            	//pull the username and one of the password textfields and before it closes
-			                jd.dispose();
-			            
-			            }
-			        }); 
-					JButton cancelButton= new JButton("Cancel");
-					cancelButton.addActionListener(new ActionListener() {
-						 
-			            public void actionPerformed(ActionEvent e)
-			            {
-			                jd.dispose();
-			            
-			            }
-			        }); 
-					JPanel buttonPanel2 = new JPanel();
-					buttonPanel2.setLayout(new BorderLayout());
-					JPanel buttonPanel = new JPanel();
-					buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 					
-					
-					buttonPanel.add(cancelButton);
-					buttonPanel.add(okButton);
-					buttonPanel2.add(buttonPanel,BorderLayout.SOUTH);
 					
 					BufferedImage image = null;
 					JLabel dTitle=new JLabel();
@@ -258,18 +229,57 @@ class AdminMainPanel extends JFrame{
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+					 
+					 
+					 
+					 
+					 
+					 
+					 
+					 	JPanel panel_2 = new JPanel();
+						panel_2.setLayout(null);
+						
+						JLabel profileName = new JLabel("Zack Kim");
+						profileName.setHorizontalAlignment(SwingConstants.LEFT);
+						profileName.setFont(new Font("Helvetica Neue", Font.BOLD, 21));
+						profileName.setBounds(17, 31, 124, 33);
+						panel_2.add(profileName);
+						
+						JLabel lblPicturePlaceholder = new JLabel("Picture PlaceHolder");
+						lblPicturePlaceholder.setIcon(new ImageIcon(UserTabFrame.class.getResource("/gui/icon.gif")));
+						lblPicturePlaceholder.setBounds(240, 20, 65, 44);
+						panel_2.add(lblPicturePlaceholder);
+						
+						JButton editProfileButton = new JButton("Edit Profile");
+						editProfileButton.setBounds(211, 76, 94, 29);
+						panel_2.add(editProfileButton);
+						
+						JButton btnLogout = new JButton("Logout");
+						btnLogout.setBounds(208, 367, 117, 29);
+						panel_2.add(btnLogout);
+						
+						JLabel lblEventsAttended = new JLabel("Events Hosting");
+						lblEventsAttended.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+						lblEventsAttended.setBounds(17, 120, 139, 16);
+						panel_2.add(lblEventsAttended);
+						
+						JScrollPane scrollPane = new JScrollPane();
+						scrollPane.setBounds(17, 148, 198, 207);
+						panel_2.add(scrollPane);
+						
+						JLabel descriptionLabel = new JLabel("<html>Sophomore Computer Science Major. Go Trojans!</html>");
+						descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
+						descriptionLabel.setFont(new Font("Helvetica Neue", Font.ITALIC, 11));
+						descriptionLabel.setVerticalAlignment(SwingConstants.TOP);
+						descriptionLabel.setBounds(17, 76, 166, 43);
+						panel_2.add(descriptionLabel);
+					 
+					 
+					 
+					 
 					
-					centerPanel.add(dTitle);
-					centerPanel.add(username);
-					centerPanel.add(jtf1);
-					centerPanel.add(new JPanel());
-					centerPanel.add(pass);
-					centerPanel.add(jtf2);
-					centerPanel.add(pass2);
-					centerPanel.add(jtf3);
-					centerPanel.add(new JPanel());
-					jd.add(centerPanel, BorderLayout.CENTER);
-					jd.add(buttonPanel2,BorderLayout.SOUTH);
+					jd.add(dTitle);
+					jd.add(panel_2);
 					jd.setVisible(true);
 	            }
 	        }); 

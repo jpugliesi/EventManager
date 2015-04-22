@@ -66,7 +66,7 @@ public class UserTabFrame extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 
-		String[] nameList = { "BlackStone LaunchPad", "Google USC Hiring Workshop", "HACKSC", "UX Designathon", "USC Grief Entrepreneur MeetUp sdaakjsdfaslkjfhaslkjdhfalhfas",
+		String[] nameList = { "BlackStone LaunchPad", "Google USC Hiring Workshop", "HACKSC", "UX Designathon", "<html>USC Grief Entrepreneur MeetUp sdaakjsdfaslkjfhaslkjdhfalhfas</html>",
 		"CS201 Presentations" };
 		JList list = new JList(nameList); 
 		UserEventFeedPanel firstPanel= new UserEventFeedPanel(nameList, list);

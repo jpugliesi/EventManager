@@ -34,7 +34,7 @@ public class UserEventFeedPanel extends JScrollPane {
 			map.put("Google USC Hiring Workshop", new ImageIcon(ImageIO.read(getClass().getResource("icon.gif"))) );
 			map.put("HACKSC", new ImageIcon(ImageIO.read(getClass().getResource("icon.gif"))));
 			map.put("UX Designathon", new ImageIcon(ImageIO.read(getClass().getResource("icon.gif"))));
-			map.put("USC Grief Entrepreneur MeetUp sdaakjsdfaslkjfhaslkjdhfalhfas", new ImageIcon(ImageIO.read(getClass().getResource("icon.gif"))));
+			map.put("<html>USC Grief Entrepreneur MeetUp sdaakjsdfaslkjfhaslkjdhfalhfas</html>", new ImageIcon(ImageIO.read(getClass().getResource("icon.gif"))));
 			map.put("CS201 Presentations", new ImageIcon(ImageIO.read(getClass().getResource("icon.gif"))));
 		} catch (Exception ex) {
 			ex.printStackTrace();
