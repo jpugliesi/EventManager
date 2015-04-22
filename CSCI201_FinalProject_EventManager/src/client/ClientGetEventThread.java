@@ -13,11 +13,10 @@ public class ClientGetEventThread extends Thread{
 	private ObjectInputStream inputStream;
 	private ObjectOutputStream outputStream;
 	private Integer id;
-	private Event e;
+	private Event e = null;
 	
-	public ClientGetEventThread(Integer id, Event e) {
-		this.id = id;
-		this.e = e;
+	public ClientGetEventThread(Event e) {
+		this.id = e.getID();
 	}
 	
 	public void run() {
@@ -34,13 +33,11 @@ public class ClientGetEventThread extends Thread{
 			outputStream.writeObject(id);
 			outputStream.flush();
 			
-			outputStream.writeObject(e);
-			outputStream.flush();
-			
 			int code = (Integer) inputStream.readObject();
 			//success case
 			if (code == Constants.SERVER_GET_EVENT_SUCCESS) {
 				System.out.println("Success get detail event");
+				e = (Event) inputStream.readObject();
 				//TODO
 				//direct GUI to the detailed page 
 			}
@@ -55,5 +52,9 @@ public class ClientGetEventThread extends Thread{
 		} catch (ClassNotFoundException e) {
 			System.out.println(e.getMessage());
 		}
+	}
+	
+	public Event getEvent(){
+		return e;
 	}
 }

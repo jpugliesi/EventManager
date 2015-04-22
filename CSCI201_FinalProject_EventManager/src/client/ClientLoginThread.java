@@ -116,7 +116,9 @@ public class ClientLoginThread extends Thread{
 		} catch (ClassNotFoundException e) {
 			System.out.println(e.getMessage());
 		}
-		
-
+	}
+	
+	public User getLoggedInUser(){
+		return u;
 	}
 }

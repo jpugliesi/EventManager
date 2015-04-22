@@ -14,6 +14,7 @@ public class ClientSendMessageThread extends Thread{
 	private ObjectInputStream inputStream;
 	private ObjectOutputStream outputStream;
 	ChatMessage msg;
+	private boolean success = false;
 	
 	public ClientSendMessageThread(ChatMessage msg) {
 		this.msg = msg;
@@ -37,19 +38,27 @@ public class ClientSendMessageThread extends Thread{
 			int code = (Integer) inputStream.readObject();
 			
 			if (code == Constants.SERVER_SEND_MESSAGE_SUCCESS) {
+				success = true;
 				System.out.println("Success send message");
 			}
 			else if (code == Constants.SERVER_SEND_MESSAGE_FAIL) {
+				success = false;
 				System.out.println("Fail send message");
 			}
 					
 			
 		} catch (IOException ioe) {
+			success = false;
 			System.out.println(ioe.getMessage());
 		} catch (ClassNotFoundException e) {
+			success = false;
 			System.out.println(e.getMessage());
 		} 
 		
+	}
+	
+	public boolean sendMessageSuccessful(){
+		return success;
 	}
 	
 }

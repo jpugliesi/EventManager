@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 
+import main.User;
 import constants.Constants;
 
 
@@ -20,12 +21,11 @@ public class ClientRegisterThread extends Thread {
 	private Socket socket;
 	private ObjectInputStream inputStream;
 	private ObjectOutputStream outputStream;
-	private String username;
-	private String password;
+	private User user;
+	private boolean success = false;
 	
-	public ClientRegisterThread(String username, String password) {
-		this.username = username;
-		this.password = password;
+	public ClientRegisterThread(User user) {
+		this.user = user;
 	}
 	
 	public void run() {
@@ -39,14 +39,14 @@ public class ClientRegisterThread extends Thread {
 
 			outputStream.writeObject(Constants.CLIENT_REGISTER);
 			outputStream.flush();
-			outputStream.writeObject(username);
-			outputStream.flush();
-			outputStream.writeObject(password);
+			outputStream.writeObject(user);
 			outputStream.flush();
 			
 			int code = (Integer) inputStream.readObject();
 			//success case
 			if (code == Constants.SERVER_REGISTRATION_SUCCESS) {
+				
+				success = true;
 				JDialog jd = new JDialog();
 				jd.setSize(300,250);
 				jd.setLocation(400,100);
@@ -66,6 +66,7 @@ public class ClientRegisterThread extends Thread {
 			
 			//fail cases
 			else if (code == Constants.SERVER_REGISTRATION_USERNAME_FAIL){
+				success = false;
 				JDialog jd = new JDialog();
 				jd.setSize(300,250);
 				jd.setLocation(400,100);
@@ -83,6 +84,7 @@ public class ClientRegisterThread extends Thread {
 				jd.setVisible(true);
 			}
 			else if (code == Constants.SERVER_REGISTRATION_PASSWORD_FAIL){
+				success = false;
 				JDialog jd = new JDialog();
 				jd.setSize(300,250);
 				jd.setLocation(400,100);
@@ -102,10 +104,16 @@ public class ClientRegisterThread extends Thread {
 			
 			
 		} catch (IOException ioe) {
+			success = false;
 			System.out.println(ioe.getMessage());
 		} catch (ClassNotFoundException e) {
+			success = false;
 			System.out.println(e.getMessage());
 		}
+	}
+	
+	public boolean registrationSuccessful(){
+		return success;
 	}
 	
 }

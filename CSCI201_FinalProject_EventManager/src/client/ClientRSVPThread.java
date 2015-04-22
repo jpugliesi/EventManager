@@ -22,6 +22,7 @@ public class ClientRSVPThread extends Thread{
 	private ObjectOutputStream outputStream;
 	private User u;
 	private Event e;
+	private boolean success = false;
 	
 	public ClientRSVPThread(User u, Event e) {
 		this.u = u;
@@ -48,6 +49,7 @@ public class ClientRSVPThread extends Thread{
 		int code = (Integer) inputStream.readObject();
 		//success case
 		if (code == Constants.SERVER_RSVP_SUCCESS) {
+			success = true;
 			JDialog jd = new JDialog();
 			jd.setSize(300,250);
 			jd.setLocation(400,100);
@@ -67,6 +69,7 @@ public class ClientRSVPThread extends Thread{
 		
 		//fail case
 		else if (code == Constants.SERVER_RSVP_FAIL) {
+			success = false;
 			JDialog jd = new JDialog();
 			jd.setSize(300,250);
 			jd.setLocation(400,100);
@@ -85,9 +88,15 @@ public class ClientRSVPThread extends Thread{
 		}
 		
 		} catch (IOException ioe) {
+			success = false;
 			System.out.println(ioe.getMessage());
 		} catch (ClassNotFoundException e) {
+			success = false;
 			System.out.println(e.getMessage());
 		} 
+	}
+	
+	public boolean rsvpSuccessful(){
+		return success;
 	}
 }

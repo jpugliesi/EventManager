@@ -55,4 +55,8 @@ public class ClientGetUserEventThread extends Thread{
 			System.out.println(e.getMessage());
 		} 
 	}
+	
+	public Vector<Event> getUserEvents(){
+		return ev;
+	}
 }

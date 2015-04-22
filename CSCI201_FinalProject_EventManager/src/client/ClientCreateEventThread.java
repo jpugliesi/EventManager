@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import main.Event;
 import constants.Constants;
 
 public class ClientCreateEventThread extends Thread {
@@ -12,9 +13,10 @@ public class ClientCreateEventThread extends Thread {
 	private Socket socket;
 	private ObjectInputStream inputStream;
 	private ObjectOutputStream outputStream;
+	private Event e;
 	
-	public ClientCreateEventThread() {
-	
+	public ClientCreateEventThread(Event e) {
+		this.e = e;
 	}
 	
 	public void run() {
@@ -26,6 +28,9 @@ public class ClientCreateEventThread extends Thread {
 			inputStream = new ObjectInputStream(socket.getInputStream());
 
 			outputStream.writeObject(Constants.CLIENT_CREATE_EVENT);
+			outputStream.flush();
+			
+			outputStream.writeObject(e);
 			outputStream.flush();
 			
 			int code = (Integer) inputStream.readObject();

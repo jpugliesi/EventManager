@@ -60,4 +60,10 @@ public class ClientGetChatHistoryThread extends Thread{
 			System.out.println(e.getMessage());
 		} 
 	}
+	
+	public Vector<ChatMessage> getMessageHistory(){
+		return v;
+	}
+	
+	
 }

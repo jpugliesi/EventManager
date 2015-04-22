@@ -40,4 +40,8 @@ public class ClientGetEventFeedThread extends Thread{
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	public Vector<Event> getEventFeed(){
+		return v;
+	}
 }

@@ -49,5 +49,9 @@ public class ClientGetAdminsThread extends Thread{
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	public Vector<User> getAdmins(){
+		return admins;
+	}
 		
 }

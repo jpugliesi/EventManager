@@ -20,6 +20,7 @@ public class ClientUpdateProfileThread extends Thread{
 	private ObjectInputStream inputStream;
 	private ObjectOutputStream outputStream;
 	private User newUser;
+	private boolean success = false;
 	
 	public ClientUpdateProfileThread(User newUser) {
 		this.newUser = newUser;
@@ -42,6 +43,7 @@ public class ClientUpdateProfileThread extends Thread{
 			int code = (Integer) inputStream.readObject();
 			//success case
 			if (code == Constants.SERVER_UPDATE_PROFILE_SUCCESS) {
+				success = true;
 				JDialog jd = new JDialog();
 				jd.setSize(300,250);
 				jd.setLocation(400,100);
@@ -60,6 +62,7 @@ public class ClientUpdateProfileThread extends Thread{
 			}
 			//fail case
 			else if (code == Constants.SERVER_GET_ADMINS_FAIL) {
+				success = false;
 				JDialog jd = new JDialog();
 				jd.setSize(300,250);
 				jd.setLocation(400,100);
@@ -78,9 +81,15 @@ public class ClientUpdateProfileThread extends Thread{
 			}	
 			
 		} catch (IOException ioe) {
+			success = false;
 			System.out.println(ioe.getMessage());
 		} catch (ClassNotFoundException e) {
+			success = false;
 			System.out.println(e.getMessage());
 		}
+	}
+	
+	public boolean updateSuccessful(){
+		return success;
 	}
 }
