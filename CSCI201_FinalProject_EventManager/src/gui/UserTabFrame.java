@@ -62,8 +62,8 @@ public class UserTabFrame extends JFrame {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 
-		JPanel panel = new JPanel();
-		panel.setLayout(null);
+		JPanel panel1 = new JPanel();
+		panel1.setLayout(null);
 
 		String[] nameList = {
 				"BlackStone LaunchPad",
@@ -75,8 +75,8 @@ public class UserTabFrame extends JFrame {
 		JList list = new JList(nameList);
 		UserEventFeedPanel firstPanel = new UserEventFeedPanel(nameList, list);
 		firstPanel.setBounds(20, 6, 285, 349);
-		panel.add(firstPanel);
-		tabbedPane.addTab("Event Feed", null, panel, null);
+		panel1.add(firstPanel);
+		tabbedPane.addTab("Event Feed", null, panel1, null);
 
 		JPanel panel2 = new JPanel();
 		panel2.setLayout(null);
@@ -88,38 +88,38 @@ public class UserTabFrame extends JFrame {
 		panel2.add(secondPanel);
 		tabbedPane.addTab("Chat", null, panel2, null);
 
-		JPanel panel_2 = new JPanel();
-		tabbedPane.addTab("My Profile", null, panel_2, null);
-		panel_2.setLayout(null);
+		JPanel panel3 = new JPanel();
+		tabbedPane.addTab("My Profile", null, panel3, null);
+		panel3.setLayout(null);
 
 		JLabel profileName = new JLabel("Zack Kim");
 		profileName.setHorizontalAlignment(SwingConstants.LEFT);
 		profileName.setFont(new Font("Helvetica Neue", Font.BOLD, 21));
 		profileName.setBounds(17, 31, 124, 33);
-		panel_2.add(profileName);
+		panel3.add(profileName);
 
 		JLabel lblPicturePlaceholder = new JLabel("Picture PlaceHolder");
 		lblPicturePlaceholder.setIcon(new ImageIcon(UserTabFrame.class
 				.getResource("/gui/icon.gif")));
 		lblPicturePlaceholder.setBounds(240, 20, 65, 44);
-		panel_2.add(lblPicturePlaceholder);
+		panel3.add(lblPicturePlaceholder);
 
 		JButton editProfileButton = new JButton("Edit Profile");
 		editProfileButton.setBounds(211, 76, 94, 29);
-		panel_2.add(editProfileButton);
+		panel3.add(editProfileButton);
 
 		JButton btnLogout = new JButton("Logout");
 		btnLogout.setBounds(208, 367, 117, 29);
-		panel_2.add(btnLogout);
+		panel3.add(btnLogout);
 
 		JLabel lblEventsAttended = new JLabel("Events Attended");
 		lblEventsAttended.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
 		lblEventsAttended.setBounds(17, 120, 139, 16);
-		panel_2.add(lblEventsAttended);
+		panel3.add(lblEventsAttended);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(17, 148, 198, 207);
-		panel_2.add(scrollPane);
+		panel3.add(scrollPane);
 
 		JLabel descriptionLabel = new JLabel(
 				"<html>Sophomore Computer Science Major. Go Trojans!</html>");
@@ -127,6 +127,6 @@ public class UserTabFrame extends JFrame {
 		descriptionLabel.setFont(new Font("Helvetica Neue", Font.ITALIC, 11));
 		descriptionLabel.setVerticalAlignment(SwingConstants.TOP);
 		descriptionLabel.setBounds(17, 76, 166, 43);
-		panel_2.add(descriptionLabel);
+		panel3.add(descriptionLabel);
 	}
 }
