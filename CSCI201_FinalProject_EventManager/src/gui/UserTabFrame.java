@@ -1,4 +1,3 @@
-
 package gui;
 
 import java.awt.BorderLayout;
@@ -36,18 +35,18 @@ public class UserTabFrame extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					UserEventPanel frame = new UserEventPanel();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	// public static void main(String[] args) {
+	// EventQueue.invokeLater(new Runnable() {
+	// public void run() {
+	// try {
+	// UserEventPanel frame = new UserEventPanel();
+	// frame.setVisible(true);
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// }
+	// });
+	// }
 
 	/**
 	 * Create the frame.
@@ -66,20 +65,25 @@ public class UserTabFrame extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 
-		String[] nameList = { "BlackStone LaunchPad", "Google USC Hiring Workshop", "HACKSC", "UX Designathon", "<html>USC Grief Entrepreneur MeetUp sdaakjsdfaslkjfhaslkjdhfalhfas</html>",
-		"CS201 Presentations" };
-		JList list = new JList(nameList); 
-		UserEventFeedPanel firstPanel= new UserEventFeedPanel(nameList, list);
+		String[] nameList = {
+				"BlackStone LaunchPad",
+				"Google USC Hiring Workshop",
+				"HACKSC",
+				"UX Designathon",
+				"<html>USC Grief Entrepreneur MeetUp sdaakjsdfaslkjfhaslkjdhfalhfas</html>",
+				"CS201 Presentations" };
+		JList list = new JList(nameList);
+		UserEventFeedPanel firstPanel = new UserEventFeedPanel(nameList, list);
 		firstPanel.setBounds(20, 6, 285, 349);
 		panel.add(firstPanel);
 		tabbedPane.addTab("Event Feed", null, panel, null);
 
 		JPanel panel2 = new JPanel();
 		panel2.setLayout(null);
-		String[] nameList2 = { "Kieran Strolorz", "John Pugliesi", "Zack Kim", "Vincent Jin", "Jeffrey Miller",
-		"Ryan Chase" };
-		JList list2 = new JList(nameList2); 
-		UserChatPanel secondPanel = new UserChatPanel(nameList2,list2);
+		String[] nameList2 = { "Kieran Strolorz", "John Pugliesi", "Zack Kim",
+				"Vincent Jin", "Jeffrey Miller", "Ryan Chase" };
+		JList list2 = new JList(nameList2);
+		UserChatPanel secondPanel = new UserChatPanel(nameList2, list2);
 		secondPanel.setBounds(20, 6, 285, 349);
 		panel2.add(secondPanel);
 		tabbedPane.addTab("Chat", null, panel2, null);
@@ -87,36 +91,38 @@ public class UserTabFrame extends JFrame {
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("My Profile", null, panel_2, null);
 		panel_2.setLayout(null);
-		
+
 		JLabel profileName = new JLabel("Zack Kim");
 		profileName.setHorizontalAlignment(SwingConstants.LEFT);
 		profileName.setFont(new Font("Helvetica Neue", Font.BOLD, 21));
 		profileName.setBounds(17, 31, 124, 33);
 		panel_2.add(profileName);
-		
+
 		JLabel lblPicturePlaceholder = new JLabel("Picture PlaceHolder");
-		lblPicturePlaceholder.setIcon(new ImageIcon(UserTabFrame.class.getResource("/gui/icon.gif")));
+		lblPicturePlaceholder.setIcon(new ImageIcon(UserTabFrame.class
+				.getResource("/gui/icon.gif")));
 		lblPicturePlaceholder.setBounds(240, 20, 65, 44);
 		panel_2.add(lblPicturePlaceholder);
-		
+
 		JButton editProfileButton = new JButton("Edit Profile");
 		editProfileButton.setBounds(211, 76, 94, 29);
 		panel_2.add(editProfileButton);
-		
+
 		JButton btnLogout = new JButton("Logout");
 		btnLogout.setBounds(208, 367, 117, 29);
 		panel_2.add(btnLogout);
-		
+
 		JLabel lblEventsAttended = new JLabel("Events Attended");
 		lblEventsAttended.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
 		lblEventsAttended.setBounds(17, 120, 139, 16);
 		panel_2.add(lblEventsAttended);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(17, 148, 198, 207);
 		panel_2.add(scrollPane);
-		
-		JLabel descriptionLabel = new JLabel("<html>Sophomore Computer Science Major. Go Trojans!</html>");
+
+		JLabel descriptionLabel = new JLabel(
+				"<html>Sophomore Computer Science Major. Go Trojans!</html>");
 		descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		descriptionLabel.setFont(new Font("Helvetica Neue", Font.ITALIC, 11));
 		descriptionLabel.setVerticalAlignment(SwingConstants.TOP);
