@@ -1,31 +1,24 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Vector;
 
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.JScrollBar;
+import javax.swing.border.EmptyBorder;
+
+import main.Event;
+import client.ClientGetEventFeedThread;
 
 public class UserTabFrame extends JFrame {
 
@@ -64,16 +57,18 @@ public class UserTabFrame extends JFrame {
 
 		JPanel panel1 = new JPanel();
 		panel1.setLayout(null);
-
-		String[] nameList = {
-				"BlackStone LaunchPad",
-				"Google USC Hiring Workshop",
-				"HACKSC",
-				"UX Designathon",
-				"<html>USC Grief Entrepreneur MeetUp sdaakjsdfaslkjfhaslkjdhfalhfas</html>",
-				"CS201 Presentations" };
-		JList list = new JList(nameList);
-		UserEventFeedPanel firstPanel = new UserEventFeedPanel(nameList, list);
+		
+		ClientGetEventFeedThread feedThread = new ClientGetEventFeedThread();
+		feedThread.start();
+		Vector<Event> eventFeed = feedThread.getEventFeed();
+		
+		DefaultListModel<Event> listModel = new DefaultListModel<>();
+		for(Event e : eventFeed){
+			listModel.addElement(e);
+		}
+		
+		JList<Event> list = new JList<Event>(listModel);
+		UserEventFeedPanel firstPanel = new UserEventFeedPanel(list);
 		firstPanel.setBounds(20, 6, 285, 349);
 		panel1.add(firstPanel);
 		tabbedPane.addTab("Event Feed", null, panel1, null);

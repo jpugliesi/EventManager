@@ -72,7 +72,7 @@ public class Constants {
 	public static int SHUTDOWN = 12;
 	
 	//server ip address
-	public static String SERVER_IP = "";
+	public static String SERVER_IP = "localhost";
 	
 	
 

@@ -111,9 +111,13 @@ public class ServerThread extends Thread {
 	private int getInt(){
 		int n = -1;
 		try{
-			n = (int)ois.readInt();
+			n = (Integer)ois.readObject();
 		}catch (IOException ioe){
-			System.out.println("IOE in serverthread.getInt(): " + ioe.getMessage());
+			//ioe.printStackTrace();
+			//System.out.println("IOE in serverthread.getInt(): " + ioe.getMessage());
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return n;
 	}
@@ -162,6 +166,7 @@ public class ServerThread extends Thread {
 	}
 	
 	private Vector<Event> getEventVector(){
+	
 		Vector<Event> v = null;
 		try{
 			v = db.getEventFeed();
@@ -267,7 +272,9 @@ public class ServerThread extends Thread {
 					oos.flush();
 				}
 				else if (command == Constants.CLIENT_GET_EVENT_FEED){ //get events
+					System.out.println("prompted for feed");
 					oos.writeObject(getEventVector()); //sends the event feed vector
+					
 					oos.flush();
 				}
 				else if (command == Constants.CLIENT_CREATE_EVENT){ //create Event
