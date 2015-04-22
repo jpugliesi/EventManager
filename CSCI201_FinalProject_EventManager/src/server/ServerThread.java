@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Vector;
 
 import main.ChatMessage;
@@ -25,6 +27,7 @@ public class ServerThread extends Thread {
 	private Socket s;
 	private String username;
 	private Database db;
+	private MessageDigest md;
 	
 	private int errorCode;
 	public ServerThread(Socket s, Server server, Database db) {
@@ -32,10 +35,13 @@ public class ServerThread extends Thread {
 		this.s = s;
 		this.db = db;
 		try {
+			this.md = MessageDigest.getInstance("SHA-256");
 			oos = new ObjectOutputStream(s.getOutputStream());
 			ois = new ObjectInputStream(s.getInputStream());
 		} catch (IOException ioe) {
 			System.out.println("IOE in ServerThread constructor: " + ioe.getMessage());
+		} catch (NoSuchAlgorithmException nsae){
+			System.out.println("NSAE in serverthread constructor: " + nsae.getMessage());
 		}
 	}
 	
@@ -241,6 +247,9 @@ public class ServerThread extends Thread {
 				if(command == Constants.CLIENT_LOGIN){ //login
 					String userName = getString();
 					String pass = getString();
+					md.update(pass.getBytes("UTF-8"));
+					byte[] hash = md.digest();
+					pass = hash.toString();
 					//hash password first
 					User u = userValid(userName, pass);
 					
