@@ -173,7 +173,7 @@ public class Database {
 	 * PARAM: User object
 	 * RETURNS: Error/Success code
 	 */
-	public int registerUser(User user){
+	public User registerUser(User user) throws LoginException{
 
 		try{
 			String sql = "SELECT * FROM users WHERE username=?";
@@ -190,7 +190,7 @@ public class Database {
 			
 			if(rowcount > 0){
 				//username already exists in the database
-				return Constants.SERVER_REGISTRATION_USERNAME_FAIL;
+				throw new LoginException(Constants.SERVER_REGISTRATION_USERNAME_FAIL);
 			}
 			
 			found_users.close();
@@ -225,10 +225,12 @@ public class Database {
 			//error in register user
 			System.out.println("SQLException in registerUser()");
 			e.printStackTrace();
-			return Constants.SERVER_CREATE_EVENT_FAIL;
+			throw new LoginException(Constants.SERVER_REGISTRATION_USERNAME_FAIL);
 		}
 		
-		return Constants.SERVER_REGISTRATION_SUCCESS;
+		User newUser = checkLogin(user.getUserName(), user.getPassword());
+		
+		return newUser;
 	}
 	
 	/*
@@ -683,9 +685,13 @@ public class Database {
 		}
 		
 		//Add Users
-		this.registerUser(new User("Joe Blow", "joeb", "password", false, 1));
-		this.registerUser(new User("Frank Smith", "fsmith", "password1", true, 2));
-		this.registerUser(new User("Tim Sloan", "tsloan", "password2", false, 3));
+		try {
+			this.registerUser(new User("Joe Blow", "joeb", "password", false, 1));
+			this.registerUser(new User("Frank Smith", "fsmith", "password1", true, 2));
+			this.registerUser(new User("Tim Sloan", "tsloan", "password2", false, 3));
+		} catch (LoginException e) {
+			e.printStackTrace();
+		}
 		
 		//Add Events
 		this.createEvent(new Event("Event 1", "Bovard Auditorium", new GregorianCalendar(2009, 1, 1, 9, 55).getTime(), "Club1", "An event at Bovard!", 0, 1));
