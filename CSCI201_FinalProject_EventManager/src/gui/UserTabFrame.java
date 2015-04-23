@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import constants.Environment;
 import main.Event;
 import main.User;
 import client.ClientGetAdminsThread;
@@ -107,15 +108,14 @@ public class UserTabFrame extends JFrame {
 		tabbedPane.addTab("My Profile", null, panel3, null);
 		panel3.setLayout(null);
 
-		JLabel profileName = new JLabel("Zack Kim");
+		JLabel profileName = new JLabel(Environment.currentUser.getFullName());
 		profileName.setHorizontalAlignment(SwingConstants.LEFT);
 		profileName.setFont(new Font("Helvetica Neue", Font.BOLD, 21));
 		profileName.setBounds(17, 31, 124, 33);
 		panel3.add(profileName);
 
 		JLabel lblPicturePlaceholder = new JLabel("Picture PlaceHolder");
-		lblPicturePlaceholder.setIcon(new ImageIcon(UserTabFrame.class
-				.getResource("/gui/icon.gif")));
+		lblPicturePlaceholder.setIcon(Environment.currentUser.getProfilePicture());
 		lblPicturePlaceholder.setBounds(240, 20, 65, 44);
 		panel3.add(lblPicturePlaceholder);
 
