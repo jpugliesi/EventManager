@@ -42,8 +42,7 @@ public class ClientListenForUpdateThread extends Thread{
 		} catch(ClassNotFoundException cnfe){
 			
 		}
-		
-		
+			
 	}
 	
 	public User getUserToUpdate(){

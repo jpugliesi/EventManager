@@ -182,8 +182,12 @@ public class UserLoginPanel extends JFrame {
 						{
 							ClientLoginThread loginThread= new ClientLoginThread(jtf1.getText(),jtf2.getText());
 							loginThread.start(); 
+							while(!loginThread.finished()){
+
+							}
+
 							
-							
+						
 							if(loginThread.loginSuccessful()){
 							new UserTabFrame().setVisible(true);
 							dispose();

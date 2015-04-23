@@ -49,7 +49,7 @@ public class Server {
 			db = new Database("localhost", true);
 			System.out.println("Starting Server");
 			ss = new ServerSocket(6789);
-			ListenServerThread lst = new ListenServerThread(this);
+			//ListenServerThread lst = new ListenServerThread(this);
 			//lst.start(); - unnecessary
 			while(true){
 				System.out.println("Waiting for client to connect...");

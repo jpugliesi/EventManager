@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Vector;
 
 import main.ChatMessage;
@@ -27,7 +25,6 @@ public class ServerThread extends Thread {
 	private Socket s;
 	private String username;
 	private Database db;
-	private MessageDigest md;
 	
 	private int errorCode;
 	public ServerThread(Socket s, Server server, Database db) {
@@ -35,14 +32,13 @@ public class ServerThread extends Thread {
 		this.s = s;
 		this.db = db;
 		try {
-			this.md = MessageDigest.getInstance("SHA-256");
 			oos = new ObjectOutputStream(s.getOutputStream());
+			oos.flush();
 			ois = new ObjectInputStream(s.getInputStream());
+
 		} catch (IOException ioe) {
 			System.out.println("IOE in ServerThread constructor: " + ioe.getMessage());
-		} catch (NoSuchAlgorithmException nsae){
-			System.out.println("NSAE in serverthread constructor: " + nsae.getMessage());
-		}
+		} 
 	}
 	
 	private void addName(String name){
@@ -256,19 +252,20 @@ public class ServerThread extends Thread {
 				if(command == Constants.CLIENT_LOGIN){ //login
 					String userName = getString();
 					String pass = getString();
-					//hash password first
-					md.update(pass.getBytes("UTF-8"));
-					byte[] hash = md.digest();
-					pass = hash.toString();
+					
+				
 					User u = userValid(userName, pass);
 					
+					
 					if (u != null){
+						System.out.println("login successful!");
 						oos.writeObject(Constants.SERVER_LOGIN_SUCCESS);
 						oos.flush();
 						oos.writeObject(u); //valid
 						oos.flush();
 					}
 					else{
+						System.out.println("invalid login");
 						oos.writeObject(errorCode);
 						oos.flush();
 					}
@@ -276,7 +273,6 @@ public class ServerThread extends Thread {
 				}
 				else if (command == Constants.CLIENT_REGISTER){ //create user	
 					User newUser = getUser();
-					newUser.hashPass();
 					User u = registerUser(newUser);
 					if(u!= null){
 						oos.writeObject(Constants.SERVER_REGISTRATION_SUCCESS);
