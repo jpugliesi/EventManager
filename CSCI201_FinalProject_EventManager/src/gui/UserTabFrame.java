@@ -193,7 +193,11 @@ public class UserTabFrame extends JFrame {
 		btnLogout.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
+				Environment.currentUser = null;
 				
+				new UserLoginPanel();
+				dispose();
+
 			}
 			
 		});
