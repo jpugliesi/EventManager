@@ -3,25 +3,23 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JTextArea;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 public class createEventDialog extends JDialog {
 
@@ -44,6 +42,9 @@ public class createEventDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
+	//create event
+	//public Event(String eventName, String eventLocation, 
+	//Date eventTime, String eventClub, String eventDesc, int peopleAttending, int adminID)
 	public createEventDialog() {
 		setTitle("Create Event");
 		setBounds(100, 100, 450, 398);
@@ -153,8 +154,10 @@ public class createEventDialog extends JDialog {
 			}
 		}
 	}
+	
+	//manage event
 	public createEventDialog(String eventTitle, String eventDescription) {
-		setTitle("Create Event");
+		setTitle("Manage Event");
 		setBounds(100, 100, 450, 398);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
