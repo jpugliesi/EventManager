@@ -695,22 +695,22 @@ public class Database {
 			String sql = "INSERT INTO profile_pictures VALUES (0, 'src/profile_pictures/boy1')";
 			statement.addBatch(sql);
 			
-			sql = "INSERT INTO profile_pictures VALUES (0, 'src/profile_pictures/boy2')";
+			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/boy2')";
 			statement.addBatch(sql);
 			
-			sql = "INSERT INTO profile_pictures VALUES (0, 'src/profile_pictures/man1')";
+			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/man1')";
 			statement.addBatch(sql);
 			
-			sql = "INSERT INTO profile_pictures VALUES (0, 'src/profile_pictures/man2')";
+			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/man2')";
 			statement.addBatch(sql);
 			
-			sql = "INSERT INTO profile_pictures VALUES (0, 'src/profile_pictures/woman1')";
+			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/woman1')";
 			statement.addBatch(sql);
 			
-			sql = "INSERT INTO profile_pictures VALUES (0, 'src/profile_pictures/woman2')";
+			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/woman2')";
 			statement.addBatch(sql);
 			
-			sql = "INSERT INTO profile_pictures VALUES (0, 'src/profile_pictures/woman3')";
+			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/woman3')";
 			statement.addBatch(sql);
 			
 			statement.executeBatch();
