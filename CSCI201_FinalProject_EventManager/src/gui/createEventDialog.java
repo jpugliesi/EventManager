@@ -11,13 +11,17 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import javax.swing.JRadioButton;
 
 public class createEventDialog extends JDialog {
 
@@ -42,14 +46,14 @@ public class createEventDialog extends JDialog {
 	 */
 	public createEventDialog() {
 		setTitle("Create Event");
-		setBounds(100, 100, 450, 376);
+		setBounds(100, 100, 450, 398);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
 			JLabel lblEventName = new JLabel("Event Title");
-			lblEventName.setBounds(39, 120, 77, 22);
+			lblEventName.setBounds(16, 120, 77, 22);
 			contentPanel.add(lblEventName);
 		}
 		
@@ -59,7 +63,7 @@ public class createEventDialog extends JDialog {
 		textField.setColumns(10);
 		
 		JLabel lblEventDescription = new JLabel("Description");
-		lblEventDescription.setBounds(39, 182, 117, 16);
+		lblEventDescription.setBounds(16, 182, 117, 16);
 		contentPanel.add(lblEventDescription);
 		
 		JTextArea textArea = new JTextArea();
@@ -70,19 +74,19 @@ public class createEventDialog extends JDialog {
 			String months[] = { "January", "February", "March", "April", "May", "June", "July", "August","September", "October","November", "December"};
 			
 			JComboBox comboBox = new JComboBox(months);
-			comboBox.setBounds(165, 268, 117, 27);
+			comboBox.setBounds(127, 268, 117, 27);
 			contentPanel.add(comboBox);
 			
 		}
 		{
 			JLabel lblDateAndTime = new JLabel("Date and Time");
-			lblDateAndTime.setBounds(35, 272, 107, 16);
+			lblDateAndTime.setBounds(16, 272, 107, 16);
 			contentPanel.add(lblDateAndTime);
 		}
 		{
 			String days[] = { "1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
 			JComboBox daycomboBox = new JComboBox(days);
-			daycomboBox.setBounds(281, 268, 66, 27);
+			daycomboBox.setBounds(239, 268, 66, 27);
 			contentPanel.add(daycomboBox);
 		}
 		{
@@ -99,6 +103,29 @@ public class createEventDialog extends JDialog {
 			}
 			contentPanel.add(logoIcon);
 		}
+		{
+			String hours[] = { "1","2","3","4","5","6","7","8","9","10","11", "12"};
+			JComboBox hourComboBox = new JComboBox(hours);
+			hourComboBox.setBounds(317, 268, 61, 27);
+			contentPanel.add(hourComboBox);
+		}
+		{
+			String minute[] = { "00","15","30","45"};
+			JComboBox minuteComboBox = new JComboBox(minute);
+			minuteComboBox.setBounds(378, 268, 66, 27);
+			contentPanel.add(minuteComboBox);
+		}
+		ButtonGroup group= new ButtonGroup();
+		JRadioButton am = new JRadioButton("AM");
+		am.setBounds(342, 307, 52, 23);
+		contentPanel.add(am);
+		
+		JRadioButton pm = new JRadioButton("PM");
+		pm.setBounds(389, 307, 52, 23);
+		
+		group.add(am);
+		group.add(pm);
+		contentPanel.add(pm);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
