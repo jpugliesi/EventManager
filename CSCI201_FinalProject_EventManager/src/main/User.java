@@ -53,6 +53,7 @@ public class User implements Serializable{
 		}
 		else if (profilePictureID == 5){
 			profilePicture = Constants.WOMAN1;
+			
 		}
 		else if (profilePictureID == 6){
 			profilePicture = Constants.WOMAN2;
@@ -60,6 +61,8 @@ public class User implements Serializable{
 		else if (profilePictureID == 7){
 			profilePicture = Constants.WOMAN3;
 		}
+		
+		
 	}
 	
 	public Vector<Event> getEventVector(){
