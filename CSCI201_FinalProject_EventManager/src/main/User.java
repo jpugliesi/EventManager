@@ -1,6 +1,9 @@
 package main;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.Vector;
 
@@ -12,6 +15,8 @@ public class User implements Serializable{
 	private String fullName, userName, password;
 	private boolean isAdmin;
 	private Vector<Event> eventVector;
+	private MessageDigest md;
+
 	
 	public User(String fullName, String userName, String password, boolean isAdmin, int profilePictureID){
 		this.fullName = fullName;
@@ -20,6 +25,11 @@ public class User implements Serializable{
 		this.isAdmin = isAdmin;
 		this.profilePictureID = profilePictureID;
 		this.eventVector = new Vector<Event>();
+		try{
+			this.md = MessageDigest.getInstance("SHA-256");
+		} catch (NoSuchAlgorithmException nsae){
+			
+		}
 	}
 	
 	public User(){
@@ -70,6 +80,16 @@ public class User implements Serializable{
 		this.addEvent(new Event("Event 4", "VKC 201", new Date(System.currentTimeMillis()), "ACM", "Club Meeting!", 10, 1));
 		this.addEvent(new Event("Event 5", "Leavy Library", new Date(System.currentTimeMillis()), "SAS", "Study Club!", 18, 1));
 		
+	}
+	
+	public void hashPass(){
+		try {
+			md.update(this.password.getBytes("UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		byte[] digest = md.digest();
+		this.password = digest.toString();
 	}
 
 }

@@ -247,10 +247,10 @@ public class ServerThread extends Thread {
 				if(command == Constants.CLIENT_LOGIN){ //login
 					String userName = getString();
 					String pass = getString();
+					//hash password first
 					md.update(pass.getBytes("UTF-8"));
 					byte[] hash = md.digest();
 					pass = hash.toString();
-					//hash password first
 					User u = userValid(userName, pass);
 					
 					if (u != null){
@@ -267,6 +267,7 @@ public class ServerThread extends Thread {
 				}
 				else if (command == Constants.CLIENT_REGISTER){ //create user	
 					User newUser = getUser();
+					
 					User u = registerUser(newUser);
 					if(u!= null){
 						oos.writeObject(Constants.SERVER_REGISTRATION_SUCCESS);
