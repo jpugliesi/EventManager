@@ -166,7 +166,6 @@ public class ClientLoginThread extends Thread{
 	}
 	
 	public boolean finished(){
-		System.out.println("returning: " + finished);
 		return finished;
 	}
 	
