@@ -259,13 +259,14 @@ public class UserLoginPanel extends JFrame {
 								&& !jtf2.getText().equals("")
 								&& !username.getText().equals("")) 
 						{
-							ClientLoginThread loginThread= new ClientLoginThread(jtf1.getText(),jtf2.getText());
+							ClientLoginThread loginThread= new ClientLoginThread(jtf1.getText(),jtf2.getText(), false);
 							loginThread.start(); 
 							while(!loginThread.finished()){
 
 							}
-							System.out.println("past while");
 
+							
+		
 							if(loginThread.loginSuccessful()){
 								new UserTabFrame().setVisible(true);
 								dispose();

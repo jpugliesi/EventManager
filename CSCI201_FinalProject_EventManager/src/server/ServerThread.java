@@ -141,10 +141,10 @@ public class ServerThread extends Thread {
 		return cm;
 	}
 	
-	private User userValid(String username, String pass){
+	private User userValid(String username, String pass, boolean isAdmin){
 		User u = null;
 		try{
-			 u = db.checkLogin(username, pass);
+			 u = db.checkLogin(username, pass, isAdmin);
 
 		} catch (LoginException le){
 			errorCode = le.getErrorCode();
@@ -257,6 +257,19 @@ public class ServerThread extends Thread {
 		Event e = new Event();
 		return e;
 	}
+	
+	private boolean getBool(){
+		boolean b = false;
+		
+		try{
+			b = (boolean)ois.readObject();
+		} catch (ClassNotFoundException cnfe) {
+			cnfe.printStackTrace();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+		return b;
+	}
 
 	public void run() {
 		try {
@@ -266,9 +279,10 @@ public class ServerThread extends Thread {
 				if(command == Constants.CLIENT_LOGIN){ //login
 					String userName = getString();
 					String pass = getString();
+					boolean isAdmin = getBool();
 					
 				
-					User u = userValid(userName, pass);
+					User u = userValid(userName, pass, isAdmin);
 					
 					
 					if (u != null){

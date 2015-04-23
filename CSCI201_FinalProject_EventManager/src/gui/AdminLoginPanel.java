@@ -29,6 +29,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
+import client.ClientLoginThread;
+
 public class AdminLoginPanel extends JFrame {
 	static AdminMainPanel mainPanel;
 
@@ -52,8 +54,24 @@ public class AdminLoginPanel extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				// go to next screen
-				setVisible(false);
-				new AdminMainPanel();
+				if (
+					!jtf2.getText().equals("")
+						&& !jtf1.getText().equals("")) 
+				{
+					
+					ClientLoginThread lt = new ClientLoginThread(jtf1.getText(), jtf2.getText(), true);
+					lt.start();
+					while(!lt.finished()){
+						
+					}
+					
+					
+					if(lt.loginSuccessful()){
+						setVisible(false);
+						new AdminMainPanel();
+					}
+					
+				}
 			}
 		});
 

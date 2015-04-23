@@ -31,12 +31,13 @@ public class ClientLoginThread extends Thread{
 	private Condition signal = lock.newCondition();
 	private int received = 0;
 	private volatile boolean finished = false;
+	private boolean isAdmin;
 	
 	
-	
-	public ClientLoginThread(String username, String password) {
+	public ClientLoginThread(String username, String password, boolean isAdmin) {
 		this.username = username;
 		this.password = password;		
+		this.isAdmin = isAdmin;
 	}
 	
 	public void run() {
@@ -56,6 +57,8 @@ public class ClientLoginThread extends Thread{
 		outputStream.writeObject(username);
 		outputStream.flush();
 		outputStream.writeObject(password);
+		outputStream.flush();
+		outputStream.writeObject(isAdmin);
 		outputStream.flush();
 		
 		
