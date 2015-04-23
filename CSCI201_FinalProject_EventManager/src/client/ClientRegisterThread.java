@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -22,7 +24,10 @@ public class ClientRegisterThread extends Thread {
 	private ObjectInputStream inputStream;
 	private ObjectOutputStream outputStream;
 	private User user;
+	private User registeredUser = null;
 	private boolean success = false;
+	private volatile boolean finished = false;
+	private int code;
 	
 	public ClientRegisterThread(User user) {
 		this.user = user;
@@ -42,64 +47,23 @@ public class ClientRegisterThread extends Thread {
 			outputStream.writeObject(user);
 			outputStream.flush();
 			
-			int code = (Integer) inputStream.readObject();
+			code = (Integer) inputStream.readObject();
 			//success case
 			if (code == Constants.SERVER_REGISTRATION_SUCCESS) {
 				
 				success = true;
-				JDialog jd = new JDialog();
-				jd.setSize(300,250);
-				jd.setLocation(400,100);
-				jd.setTitle("Registration successed!You can now Login.");
-				JLabel label = new JLabel("Incorrect IP_Address, Please try again.");
-				JButton button = new JButton("Got it!");
-				button.addActionListener(new ActionListener() {
-					public void actionPerformed (ActionEvent ae) {
-						jd.dispose();
-					}
-				});
-				jd.add(label);
-				jd.add(button, BorderLayout.SOUTH);
-				jd.setModal(true);
-				jd.setVisible(true);
+				registeredUser = (User) inputStream.readObject();
+				
 			}
 			
 			//fail cases
 			else if (code == Constants.SERVER_REGISTRATION_USERNAME_FAIL){
 				success = false;
-				JDialog jd = new JDialog();
-				jd.setSize(300,250);
-				jd.setLocation(400,100);
-				jd.setTitle("Invalid Login");
-				JLabel label = new JLabel("Invalid Username, Please try again.");
-				JButton button = new JButton("Got it!");
-				button.addActionListener(new ActionListener() {
-					public void actionPerformed (ActionEvent ae) {
-						jd.dispose();
-					}
-				});
-				jd.add(label);	
-				jd.add(button, BorderLayout.SOUTH);
-				jd.setModal(true);
-				jd.setVisible(true);
+				
 			}
 			else if (code == Constants.SERVER_REGISTRATION_PASSWORD_FAIL){
 				success = false;
-				JDialog jd = new JDialog();
-				jd.setSize(300,250);
-				jd.setLocation(400,100);
-				jd.setTitle("Invalid Login");
-				JLabel label = new JLabel("Invalid password, Please try again.");
-				JButton button = new JButton("Got it!");
-				button.addActionListener(new ActionListener() {
-					public void actionPerformed (ActionEvent ae) {
-						jd.dispose();
-					}
-				});
-				jd.add(label);	
-				jd.add(button, BorderLayout.SOUTH);
-				jd.setModal(true);
-				jd.setVisible(true);
+				
 			}
 			
 			
@@ -110,10 +74,24 @@ public class ClientRegisterThread extends Thread {
 			success = false;
 			System.out.println(e.getMessage());
 		}
+		
+		finished = true;
 	}
 	
 	public boolean registrationSuccessful(){
 		return success;
+	}
+	
+	public User getRegisteredUser(){
+		return registeredUser;
+	}
+	
+	public boolean finished(){
+		return finished;
+	}
+	
+	public int getErrorCode(){
+		return code;
 	}
 	
 }

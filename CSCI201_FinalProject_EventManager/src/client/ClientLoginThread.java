@@ -62,7 +62,6 @@ public class ClientLoginThread extends Thread{
 		
 		inputStream = new ObjectInputStream(socket.getInputStream());
 			
-		
 		int code = (Integer)inputStream.readObject();
 		//received User object is not null, log in success
 		System.out.println("received code " + code);

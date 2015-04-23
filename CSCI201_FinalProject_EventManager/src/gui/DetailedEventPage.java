@@ -20,30 +20,19 @@ import java.io.IOException;
 import javax.swing.Box;
 import javax.swing.JButton;
 
+import main.Event;
+
 public class DetailedEventPage extends JFrame {
 
 	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					DetailedEventPage frame = new DetailedEventPage();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private Event event;
 
 	/**
 	 * Create the frame.
 	 */
-	public DetailedEventPage() {
+	public DetailedEventPage(Event event) {
+		super();
+		this.event = event;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -67,11 +56,11 @@ public class DetailedEventPage extends JFrame {
 		eventImage.setBounds(33, 41, 71, 43);
 		contentPane.add(eventImage);
 		
-		JLabel lblEventNamePlaceholder = new JLabel("<html>Event Name PlaceHolder</html>");
-		lblEventNamePlaceholder.setFont(new Font("Helvetica Neue", Font.PLAIN, 18));
-		lblEventNamePlaceholder.setVerticalAlignment(SwingConstants.TOP);
-		lblEventNamePlaceholder.setBounds(253, 27, 165, 60);
-		contentPane.add(lblEventNamePlaceholder);
+		JLabel event_name = new JLabel(event.getName());
+		event_name.setFont(new Font("Helvetica Neue", Font.PLAIN, 18));
+		event_name.setVerticalAlignment(SwingConstants.TOP);
+		event_name.setBounds(253, 27, 165, 60);
+		contentPane.add(event_name);
 		
 		JLabel lblHksajdfhasklfhalkshfaklshfkalshfsalkhfkalshfasdlkhfklsahdfkaslfhalska = new JLabel("<html>hksajd fhasklfh alkshfaklshfka lshfsalkhfkal shfasdlkhfk lsahdfkaslfha lska</html>");
 		lblHksajdfhasklfhalkshfaklshfkalshfsalkhfkalshfasdlkhfklsahdfkaslfhalska.setFont(new Font("Helvetica Neue", Font.PLAIN, 13));

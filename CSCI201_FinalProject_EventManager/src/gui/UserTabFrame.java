@@ -2,8 +2,14 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
+<<<<<<< Updated upstream
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+=======
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+>>>>>>> Stashed changes
 import java.util.Vector;
 
 import javax.swing.BoxLayout;
@@ -32,6 +38,8 @@ public class UserTabFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
+	
+	private JList<Event> event_feed_list;
 
 	/**
 	 * Launch the application.
@@ -76,8 +84,13 @@ public class UserTabFrame extends JFrame {
 			listModel.addElement(e);
 		}
 		
-		JList<Event> list = new JList<Event>(listModel);
-		UserEventFeedPanel firstPanel = new UserEventFeedPanel(list);
+		event_feed_list = new JList<Event>(listModel);
+		
+		//add listener for list
+		addEventFeedListeners();
+		
+		
+		UserEventFeedPanel firstPanel = new UserEventFeedPanel(event_feed_list);
 		firstPanel.setBounds(20, 6, 285, 349);
 		panel1.add(firstPanel);
 		tabbedPane.addTab("Event Feed", null, panel1, null);
@@ -193,5 +206,21 @@ public class UserTabFrame extends JFrame {
 		descriptionLabel.setVerticalAlignment(SwingConstants.TOP);
 		descriptionLabel.setBounds(17, 76, 166, 43);
 		panel3.add(descriptionLabel);
+	}
+	
+	private void addEventFeedListeners(){
+		
+		event_feed_list.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		        if (evt.getClickCount() == 2) {
+
+		            // Double-click detected
+		            int index = event_feed_list.locationToIndex(evt.getPoint());
+		            Event e = event_feed_list.getSelectedValue();
+		            new DetailedEventPage(e).setVisible(true);;
+		        }
+		    }
+		});
+		
 	}
 }
