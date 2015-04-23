@@ -5,6 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Vector;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
 import main.Event;
 import main.User;
@@ -16,7 +18,10 @@ public class ClientGetUserEventThread extends Thread{
 	private ObjectInputStream inputStream;
 	private ObjectOutputStream outputStream;
 	private User u;
-	private Vector<Event> ev;
+	private Vector<Event> ev = null;
+	private ReentrantLock lock = new ReentrantLock();
+	private Condition signal = lock.newCondition();
+	
 	
 	public ClientGetUserEventThread(User u) {
 		this.u = u;
@@ -39,8 +44,14 @@ public class ClientGetUserEventThread extends Thread{
 			int code = (Integer) inputStream.readObject();
 			//success case
 			if (code == Constants.SERVER_GET_USER_EVENTS_SUCCESS) {
-				ev = (Vector<Event>) inputStream.readObject();
-				System.out.println("Success get user event vector");
+				try{
+					lock.lock();
+					ev = (Vector<Event>) inputStream.readObject();
+					signal.signalAll();
+				} finally{
+					lock.unlock();
+				}
+				//System.out.println("Success get user event vector");
 				//TODO
 				//populate the GUI with event vector
 			}
@@ -57,6 +68,16 @@ public class ClientGetUserEventThread extends Thread{
 	}
 	
 	public Vector<Event> getUserEvents(){
+		lock.lock();
+		try{
+			if (ev == null){
+				signal.await();
+			}
+		} catch(InterruptedException ie){
+			ie.printStackTrace();
+		} finally{
+			lock.unlock();
+		}
 		return ev;
 	}
 }

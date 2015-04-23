@@ -30,6 +30,7 @@ import main.Event;
 import main.User;
 import client.ClientGetAdminsThread;
 import client.ClientGetEventFeedThread;
+import client.ClientGetUserEventThread;
 import client.ClientUpdateProfileThread;
 
 public class UserTabFrame extends JFrame {
@@ -192,9 +193,21 @@ public class UserTabFrame extends JFrame {
 		lblEventsAttended.setBounds(17, 120, 139, 16);
 		panel3.add(lblEventsAttended);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(17, 148, 198, 207);
-		panel3.add(scrollPane);
+		ClientGetUserEventThread uet = new ClientGetUserEventThread(Environment.currentUser);
+		uet.start();
+		
+		Vector<Event> vec = uet.getUserEvents();
+		
+		DefaultListModel<Event> listModel3 = new DefaultListModel<Event>();
+		for(Event e : vec){
+		
+			listModel3.addElement(e);
+		}
+		JList<Event> jlist3 = new JList<Event>(listModel3);
+		
+		UserEventsPanel uep = new UserEventsPanel(jlist3);
+		uep.setBounds(17, 148, 198, 207);
+		panel3.add(uep);
 
 		JLabel descriptionLabel = new JLabel(
 				"<html>Sophomore Computer Science Major. Go Trojans!</html>");
