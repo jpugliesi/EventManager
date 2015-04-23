@@ -187,6 +187,16 @@ public class UserTabFrame extends JFrame {
 		JButton btnLogout = new JButton("Logout");
 		btnLogout.setBounds(208, 367, 117, 29);
 		panel3.add(btnLogout);
+		
+		
+		//TODO add the code to logout, and spawn a new login window
+		btnLogout.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+			
+		});
 
 		JLabel lblEventsAttended = new JLabel("Events Attended");
 		lblEventsAttended.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
@@ -209,6 +219,8 @@ public class UserTabFrame extends JFrame {
 		uep.setBounds(17, 148, 198, 207);
 		panel3.add(uep);
 
+		
+		/*
 		JLabel descriptionLabel = new JLabel(
 				"<html>Sophomore Computer Science Major. Go Trojans!</html>");
 		descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -216,6 +228,8 @@ public class UserTabFrame extends JFrame {
 		descriptionLabel.setVerticalAlignment(SwingConstants.TOP);
 		descriptionLabel.setBounds(17, 76, 166, 43);
 		panel3.add(descriptionLabel);
+		
+		*/
 	}
 	
 	private void addEventFeedListeners(){
