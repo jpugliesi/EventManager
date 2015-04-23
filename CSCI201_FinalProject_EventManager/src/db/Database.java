@@ -1,5 +1,6 @@
 package db;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,11 +11,15 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
 import main.ChatMessage;
 import main.Event;
 import main.GetAdminsException;
 import main.GetChatHistoryException;
 import main.GetEventException;
+import main.GetProfilePictureException;
 import main.LoginException;
 import main.User;
 import constants.Constants;
@@ -339,6 +344,36 @@ public class Database {
 		}
 		
 		return events;
+	}
+	
+	public ImageIcon getProfilePicture(User user) throws GetProfilePictureException{
+		ImageIcon pic = null;
+		try{
+			String sql = "SELECT * FROM profile_pictures WHERE pic_id = ?";
+			PreparedStatement find_pic = conn.prepareStatement(sql);
+			find_pic.setInt(1, user.getProfilePictureID());
+			ResultSet profile_pic_found = find_pic.executeQuery();
+			
+			profile_pic_found.next();
+			int pic_id = profile_pic_found.getInt("pic_id");
+			String pic_path = profile_pic_found.getString("file_path");
+			
+			try {
+				pic = new ImageIcon(ImageIO.read(getClass().getResource(pic_path)));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+						
+			profile_pic_found.close();
+			find_pic.close();
+			
+		} catch(SQLException sqle){
+			System.out.println("SQLException retieving user's events");
+			sqle.printStackTrace();
+			throw new GetProfilePictureException(Constants.SERVER_GET_PROFILE_PICTURE_FAIL);
+		}
+		
+		return pic;
 	}
 	
 	/*

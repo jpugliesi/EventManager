@@ -68,6 +68,11 @@ public class Constants {
 	public static int SERVER_UPDATE_PROFILE_SUCCESS = 1;
 	public static int SERVER_UPDATE_PROFILE_FAIL = 0;
 	
+	//Profile Picture
+	public static int CLIENT_GET_PROFILE_PICTURE = 12;
+	public static int SERVER_GET_PROFILE_PICTURE_SUCCESS = 1;
+	public static int SERVER_GET_PROFILE_PICTURE_FAIL = 0;
+	
 	//close the database
 	public static int SHUTDOWN = 12;
 	
