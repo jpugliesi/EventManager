@@ -179,7 +179,7 @@ class AdminMainPanel extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				// Execute when button is pressed
-				final createEventDialog jd = new createEventDialog();
+				final createEventDialog jd = new createEventDialog("This is a fake title", "this is my really long description");
 				jd.setVisible(true);
 			}
 		});
