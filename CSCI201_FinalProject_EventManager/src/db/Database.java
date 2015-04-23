@@ -622,6 +622,29 @@ public class Database {
 		
 	}
 	
+	public int updateEvent(Event event){
+		try{
+		    String sql = "UPDATE events SET name=?, location=?, time=?, description=? WHERE event_id=?";
+		    PreparedStatement ps = conn.prepareStatement(sql);
+		    
+			ps.setString(1, event.getName());
+			ps.setString(2, event.getLocation());
+			ps.setLong(3, event.getTime().getTime());
+			ps.setString(4, event.getDescription());
+			ps.setInt(5, event.getID());
+		      
+		    ps.executeUpdate();
+			
+			ps.close();
+			
+		} catch(SQLException sqle){
+			sqle.printStackTrace();
+			return Constants.SERVER_UPDATE_EVENT_FAIL;
+		}
+		
+		return Constants.SERVER_UPDATE_EVENT_SUCCESS;
+	}
+	
 	
 	/*
 	 * Setup functions
