@@ -287,6 +287,30 @@ public class Database {
 			ps.executeUpdate();
 			ps.close();
 			
+			
+			sql = "SELECT * FROM events WHERE event_id=?";
+			PreparedStatement find_events_ps = conn.prepareStatement(sql);
+			find_events_ps.setInt(1, event.getID());
+			ResultSet users_events = find_events_ps.executeQuery();
+			
+			users_events.next();
+			int event_id = users_events.getInt("event_id");
+			String event_title = users_events.getString("name");
+			String event_club = users_events.getString("club");
+			String event_location = users_events.getString("location");
+			long event_epoch_time = users_events.getLong("time");
+			String event_description = users_events.getString("description");
+			int event_attending = users_events.getInt("num_attending");
+			int event_admin_id = users_events.getInt("fk_admin");
+			
+			
+			Date event_time = new Date(event_epoch_time);
+			Event found_event = new Event(event_title, event_location, event_time, event_club, event_description, event_attending, event_admin_id);
+			found_event.setID(event_id);
+			
+			updateEvent(found_event);
+			
+			
 		} catch (SQLException e) {
 			//error in register user
 			System.out.println("SQLException in rsvp()");
@@ -624,14 +648,15 @@ public class Database {
 	
 	public int updateEvent(Event event){
 		try{
-		    String sql = "UPDATE events SET name=?, location=?, time=?, description=? WHERE event_id=?";
+		    String sql = "UPDATE events SET name=?, location=?, time=?, description=?, num_attending=? WHERE event_id=?";
 		    PreparedStatement ps = conn.prepareStatement(sql);
 		    
 			ps.setString(1, event.getName());
 			ps.setString(2, event.getLocation());
 			ps.setLong(3, event.getTime().getTime());
 			ps.setString(4, event.getDescription());
-			ps.setInt(5, event.getID());
+			ps.setInt(5, event.getNumAttending());
+			ps.setInt(6, event.getID());
 		      
 		    ps.executeUpdate();
 			

@@ -60,5 +60,9 @@ public class Event implements Serializable{
 	public int getAdminID(){
 		return this.eventAdminID;
 	}
+	
+	public void setNumAttending(int numattending){
+		this.peopleAttending = numattending;
+	}
 
 }

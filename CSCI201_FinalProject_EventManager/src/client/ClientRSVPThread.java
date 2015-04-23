@@ -23,6 +23,7 @@ public class ClientRSVPThread extends Thread{
 	private User u;
 	private Event e;
 	private boolean success = false;
+	private volatile boolean finished = false; 
 	
 	public ClientRSVPThread(User u, Event e) {
 		this.u = u;
@@ -50,41 +51,11 @@ public class ClientRSVPThread extends Thread{
 		//success case
 		if (code == Constants.SERVER_RSVP_SUCCESS) {
 			success = true;
-			JDialog jd = new JDialog();
-			jd.setSize(300,250);
-			jd.setLocation(400,100);
-			jd.setTitle("RSVP");
-			JLabel label = new JLabel("Success RSVP.Thank you!");
-			JButton button = new JButton("Got it!");
-			button.addActionListener(new ActionListener() {
-				public void actionPerformed (ActionEvent ae) {
-					jd.dispose();
-				}
-			});
-			jd.add(label);	
-			jd.add(button, BorderLayout.SOUTH);
-			jd.setModal(true);
-			jd.setVisible(true);
 		}
 		
 		//fail case
 		else if (code == Constants.SERVER_RSVP_FAIL) {
 			success = false;
-			JDialog jd = new JDialog();
-			jd.setSize(300,250);
-			jd.setLocation(400,100);
-			jd.setTitle("RSVP");
-			JLabel label = new JLabel("Error. Please try again.");
-			JButton button = new JButton("OK");
-			button.addActionListener(new ActionListener() {
-				public void actionPerformed (ActionEvent ae) {
-					jd.dispose();
-				}
-			});
-			jd.add(label);	
-			jd.add(button, BorderLayout.SOUTH);
-			jd.setModal(true);
-			jd.setVisible(true);
 		}
 		
 		} catch (IOException ioe) {
@@ -94,9 +65,14 @@ public class ClientRSVPThread extends Thread{
 			success = false;
 			System.out.println(e.getMessage());
 		} 
+		finished = true;
 	}
 	
 	public boolean rsvpSuccessful(){
 		return success;
+	}
+	
+	public boolean finished(){
+		return finished;
 	}
 }
