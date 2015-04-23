@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
@@ -21,6 +23,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import main.Event;
+import client.ClientCreateEventThread;
 
 public class createEventDialog extends JDialog {
 
@@ -57,6 +62,7 @@ public class createEventDialog extends JDialog {
 		JComboBox<String> dayComboBox;
 		JComboBox<String> hourComboBox;
 		JComboBox<String> minuteComboBox;
+		JButton okButton;
 		
 		contentPanel.setLayout(null);
 		{
@@ -167,12 +173,8 @@ public class createEventDialog extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
-				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						dispose();
-					}
-				});
+				okButton = new JButton("OK");
+				
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
@@ -188,12 +190,8 @@ public class createEventDialog extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
-		//public Event(String eventName, String eventLocation, 
-		//Date eventTime, String eventClub, String eventDesc, int peopleAttending, int adminID)
-		//{ "January", "February", "March", "April", "May", "June", "July", 
-		//"August","September", "October","November", "December"}
 		
-		Integer month;
+		Integer month = 1;
 		String m = (String) comboBox.getSelectedItem();
 		//convert string month to integer month
 		if (m.equals("January"))
@@ -220,18 +218,31 @@ public class createEventDialog extends JDialog {
 			month = 11;
 		else if (m.equals("December"))
 			month = 12;
-		//Date eventTime = new GregorianCalendar(2015, , 1, 9, 55).getTime();
-		String d = (String) dayComboBox.getSelectedItem();
 		
-			
+		String d = (String) dayComboBox.getSelectedItem();
+		Integer day = Integer.parseInt(d);
+		
+		String h = (String) hourComboBox.getSelectedItem();
+		Integer hour = Integer.parseInt(h);
+		
+		String mi = (String) minuteComboBox.getSelectedItem();
+		Integer minute = Integer.parseInt(mi);
+		Date eventTime = new GregorianCalendar(2015, month , day, hour, minute).getTime();	
 		String eventName = textField.getText();
 		String eventLocation = textField_1.getText();
 		String eventClub = clubNameTF.getText();
 		String eventDesc = textArea.getText();
-	
 		
-		
-		
+		//create the event's Event object
+		Event ne = new Event(eventName, eventLocation, eventTime, eventClub, eventDesc, 0, 1);
+		//initiate create event thread
+		okButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ClientCreateEventThread createThread = new ClientCreateEventThread(ne);
+				createThread.start();
+				dispose();
+			}
+		});		
 	}
 	
 	//manage event
