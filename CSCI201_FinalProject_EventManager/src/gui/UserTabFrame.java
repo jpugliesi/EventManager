@@ -61,6 +61,7 @@ public class UserTabFrame extends JFrame {
 		ClientGetEventFeedThread feedThread = new ClientGetEventFeedThread();
 		feedThread.start();
 		Vector<Event> eventFeed = feedThread.getEventFeed();
+		constants.Environment.eventFeed = eventFeed;
 		
 		DefaultListModel<Event> listModel = new DefaultListModel<>();
 		for(Event e : eventFeed){
