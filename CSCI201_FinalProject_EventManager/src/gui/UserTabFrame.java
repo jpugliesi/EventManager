@@ -2,8 +2,11 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Vector;
 
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -22,6 +26,7 @@ import main.Event;
 import main.User;
 import client.ClientGetAdminsThread;
 import client.ClientGetEventFeedThread;
+import client.ClientUpdateProfileThread;
 
 public class UserTabFrame extends JFrame {
 
@@ -60,13 +65,12 @@ public class UserTabFrame extends JFrame {
 
 		JPanel panel1 = new JPanel();
 		panel1.setLayout(null);
-		
-		ClientGetEventFeedThread feedThread = new ClientGetEventFeedThread(); //creates a new thread, gets the events from the thread,
-																	    		//and adds it to our local listmodel
+		//creates a new thread, gets the events from the thread
+		ClientGetEventFeedThread feedThread = new ClientGetEventFeedThread(); 																    		
 		feedThread.start(); 
 		Vector<Event> eventFeed = feedThread.getEventFeed();
 		constants.Environment.eventFeed = eventFeed;
-		
+		//and adds it to our local listmodel
 		DefaultListModel<Event> listModel = new DefaultListModel<>();
 		for(Event e : eventFeed){
 			listModel.addElement(e);
@@ -116,7 +120,57 @@ public class UserTabFrame extends JFrame {
 		panel3.add(lblPicturePlaceholder);
 
 		JButton editProfileButton = new JButton("Edit Profile");
+		
 		editProfileButton.setBounds(211, 76, 94, 29);
+		editProfileButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				JDialog jd = new JDialog();
+				jd.setSize(350,300);
+				jd.setLocation(400,50);
+				jd.setTitle("Edit Profile");
+				JLabel label1 = new JLabel("fullname");
+				JLabel label2 = new JLabel("username");
+				JLabel label3 = new JLabel("password");
+				JTextField jtf1 = new JTextField(20);
+				JTextField jtf2 = new JTextField(20);
+				JTextField jtf3 = new JTextField(20);
+				JPanel jp1 = new JPanel();
+				JPanel jp2 = new JPanel();
+				JPanel jp3 = new JPanel();
+				jp1.add(label1); jp1.add(jtf1);
+				jp1.add(label2); jp1.add(jtf2);
+				jp1.add(label3); jp1.add(jtf3);
+				
+				JPanel mainPanel = new JPanel();
+				mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+				mainPanel.add(jp1);
+				mainPanel.add(jp2);
+				mainPanel.add(jp3);
+				
+				JButton bt = new JButton("Submit");
+				//upon clicking the "Submit" button, update GUI and initiate thread
+				bt.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent ae){
+						String fullname = jtf1.getText();
+						String username = jtf2.getText();
+						String password = jtf3.getText();
+						//update GUI
+						profileName.setText(fullname);
+						//create new User
+						User newUser = new User(fullname, username, password, false, 1);
+						//initiate update thread
+						ClientUpdateProfileThread updateThread = new ClientUpdateProfileThread(newUser);
+						updateThread.start();
+						jd.dispose();
+					}
+				});
+				jd.add(mainPanel);
+				jd.add(bt, BorderLayout.SOUTH);
+				
+				jd.setModal(true);
+				jd.setVisible(true);
+			}
+		});
 		panel3.add(editProfileButton);
 
 		JButton btnLogout = new JButton("Logout");

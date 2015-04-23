@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 
 import main.User;
 import constants.Constants;
+import constants.Environment;
 
 public class ClientUpdateProfileThread extends Thread{
 	private Socket socket;
@@ -44,6 +45,7 @@ public class ClientUpdateProfileThread extends Thread{
 			//success case
 			if (code == Constants.SERVER_UPDATE_PROFILE_SUCCESS) {
 				success = true;
+				Environment.currentUser = newUser;
 				JDialog jd = new JDialog();
 				jd.setSize(300,250);
 				jd.setLocation(400,100);
