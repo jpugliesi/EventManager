@@ -30,7 +30,7 @@ public class ClientLoginThread extends Thread{
 	private ReentrantLock lock = new ReentrantLock();
 	private Condition signal = lock.newCondition();
 	private int received = 0;
-	private boolean finished = false;
+	private volatile boolean finished = false;
 	
 	
 	

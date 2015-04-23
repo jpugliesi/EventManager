@@ -185,13 +185,13 @@ public class UserLoginPanel extends JFrame {
 							while(!loginThread.finished()){
 
 							}
+							System.out.println("past while");
 
-							
-						
 							if(loginThread.loginSuccessful()){
-							new UserTabFrame().setVisible(true);
-							dispose();
-							jd.dispose();
+								
+								new UserTabFrame().setVisible(true);
+								dispose();
+								jd.dispose();
 							}
 	
 						}
