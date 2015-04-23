@@ -273,6 +273,7 @@ public class ServerThread extends Thread {
 				}
 				else if (command == Constants.CLIENT_REGISTER){ //create user	
 					User newUser = getUser();
+
 					User u = registerUser(newUser);
 					if(u!= null){
 						oos.writeObject(Constants.SERVER_REGISTRATION_SUCCESS);

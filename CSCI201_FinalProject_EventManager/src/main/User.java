@@ -14,6 +14,7 @@ public class User implements Serializable{
 	private boolean isAdmin;
 	private Vector<Event> eventVector;
 
+
 	
 	public User(String fullName, String userName, String password, boolean isAdmin, int profilePictureID){
 		this.fullName = fullName;
@@ -22,7 +23,8 @@ public class User implements Serializable{
 		this.isAdmin = isAdmin;
 		this.profilePictureID = profilePictureID;
 		this.eventVector = new Vector<Event>();
-		
+
+
 	}
 	
 	public User(){
@@ -74,6 +76,7 @@ public class User implements Serializable{
 		this.addEvent(new Event("Event 5", "Leavy Library", new Date(System.currentTimeMillis()), "SAS", "Study Club!", 18, 1));
 		
 	}
+
 
 
 }
