@@ -1,6 +1,5 @@
 package db;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,7 +10,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import main.ChatMessage;
@@ -599,7 +597,7 @@ public class Database {
 		
 		try{
 			
-		    String sql = "UPDATE users SET full_name=?, username=?, password_hash=?, is_admin=?, fk_profile_picture=?, WHERE user_id=?";
+		    String sql = "UPDATE users SET full_name=?, username=?, password_hash=?, is_admin=?, fk_profile_picture=? WHERE user_id=?";
 		    PreparedStatement ps = conn.prepareStatement(sql);
 		    
 			ps.setString(1, user.getFullName());
