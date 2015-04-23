@@ -1,28 +1,25 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-
-import java.awt.Font;
-import java.awt.Component;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 import main.Event;
 
-public class DetailedEventPage extends JFrame {
+public class DetailedEventPage extends JDialog {
 
 	private JPanel contentPane;
 	private Event event;
@@ -33,8 +30,8 @@ public class DetailedEventPage extends JFrame {
 	public DetailedEventPage(Event event) {
 		super();
 		this.event = event;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 500, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -62,24 +59,38 @@ public class DetailedEventPage extends JFrame {
 		event_name.setBounds(253, 27, 165, 60);
 		contentPane.add(event_name);
 		
-		JLabel lblHksajdfhasklfhalkshfaklshfkalshfsalkhfkalshfasdlkhfklsahdfkaslfhalska = new JLabel("<html>hksajd fhasklfh alkshfaklshfka lshfsalkhfkal shfasdlkhfk lsahdfkaslfha lska</html>");
-		lblHksajdfhasklfhalkshfaklshfkalshfsalkhfkalshfasdlkhfklsahdfkaslfhalska.setFont(new Font("Helvetica Neue", Font.PLAIN, 13));
-		lblHksajdfhasklfhalkshfaklshfkalshfsalkhfkalshfasdlkhfklsahdfkaslfhalska.setBounds(18, 110, 165, 143);
-		contentPane.add(lblHksajdfhasklfhalkshfaklshfkalshfsalkhfkalshfasdlkhfklsahdfkaslfhalska);
+		JLabel event_desc = new JLabel("<html>" + event.getDescription() + "<br>" + event.getClub() + "</html>");
+		event_desc.setFont(new Font("Helvetica Neue", Font.PLAIN, 13));
+		event_desc.setBounds(18, 110, 165, 143);
+		contentPane.add(event_desc);
 		
-		JLabel lblDate = new JLabel("Date");
+		Date d = event.getTime();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		int month = cal.get(Calendar.MONTH);
+		int date = cal.get(Calendar.DATE);
+		int year = cal.get(Calendar.YEAR);
+		int hours = cal.get(Calendar.HOUR) + 1;
+		int minute = cal.get(Calendar.MINUTE);
+		String am_pm = "";
+		if (cal.get(Calendar.AM_PM) == Calendar.PM) {
+			am_pm = "PM";
+		} else {
+			am_pm = "AM";
+		}
+		JLabel lblDate = new JLabel("Date: " + month + "/" + date + "/" + year);
 		lblDate.setFont(new Font("Helvetica Neue", Font.PLAIN, 13));
-		lblDate.setBounds(302, 149, 61, 16);
+		lblDate.setBounds(302, 149, 200, 16);
 		contentPane.add(lblDate);
 		
-		JLabel lblTime = new JLabel("Time");
+		JLabel lblTime = new JLabel("Time: " + hours + ":" + minute + " " + am_pm);
 		lblTime.setFont(new Font("Helvetica Neue", Font.PLAIN, 13));
-		lblTime.setBounds(302, 177, 61, 16);
+		lblTime.setBounds(302, 177, 200, 16);
 		contentPane.add(lblTime);
 		
-		JLabel lblLocation = new JLabel("Location");
+		JLabel lblLocation = new JLabel("Location: " + event.getLocation());
 		lblLocation.setFont(new Font("Helvetica Neue", Font.PLAIN, 13));
-		lblLocation.setBounds(302, 205, 61, 26);
+		lblLocation.setBounds(302, 205, 200, 26);
 		contentPane.add(lblLocation);
 		
 		JButton btnRsvpNow = new JButton("RSVP");
