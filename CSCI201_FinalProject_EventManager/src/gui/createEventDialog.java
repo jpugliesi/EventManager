@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +21,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import java.awt.Font;
 
 public class createEventDialog extends JDialog {
 
@@ -46,14 +46,18 @@ public class createEventDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	//create event
-	//public Event(String eventName, String eventLocation, 
-	//Date eventTime, String eventClub, String eventDesc, int peopleAttending, int adminID)
 	public createEventDialog() {
 		setTitle("Create Event");
 		setBounds(100, 100, 450, 511);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		
+		JComboBox<String> comboBox;
+		JComboBox<String> dayComboBox;
+		JComboBox<String> hourComboBox;
+		JComboBox<String> minuteComboBox;
+		
 		contentPanel.setLayout(null);
 		{
 			JLabel lblEventName = new JLabel("Event Title");
@@ -79,7 +83,7 @@ public class createEventDialog extends JDialog {
 		{
 			String months[] = { "January", "February", "March", "April", "May", "June", "July", "August","September", "October","November", "December"};
 			
-			JComboBox comboBox = new JComboBox(months);
+			comboBox = new JComboBox(months);
 			comboBox.setBounds(122, 386, 117, 27);
 			contentPanel.add(comboBox);
 			
@@ -91,9 +95,9 @@ public class createEventDialog extends JDialog {
 		}
 		{
 			String days[] = { "1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
-			JComboBox daycomboBox = new JComboBox(days);
-			daycomboBox.setBounds(244, 386, 66, 27);
-			contentPanel.add(daycomboBox);
+			dayComboBox = new JComboBox(days);
+			dayComboBox.setBounds(244, 386, 66, 27);
+			contentPanel.add(dayComboBox);
 		}
 		{
 			JLabel logoIcon = new JLabel("");
@@ -110,14 +114,15 @@ public class createEventDialog extends JDialog {
 			contentPanel.add(logoIcon);
 		}
 		{
-			String hours[] = { "1","2","3","4","5","6","7","8","9","10","11", "12"};
-			JComboBox hourComboBox = new JComboBox(hours);
+			String hours[] = { "1","2","3","4","5","6","7","8","9","10","11", "12", "13","14", "15","16","17",
+					"18", "19","20", "21", "22", "23", "24"};
+			hourComboBox = new JComboBox(hours);
 			hourComboBox.setBounds(322, 386, 61, 27);
 			contentPanel.add(hourComboBox);
 		}
 		{
 			String minute[] = { "00","15","30","45"};
-			JComboBox minuteComboBox = new JComboBox(minute);
+			minuteComboBox = new JComboBox(minute);
 			minuteComboBox.setBounds(378, 386, 66, 27);
 			contentPanel.add(minuteComboBox);
 		}
@@ -183,6 +188,50 @@ public class createEventDialog extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+		//public Event(String eventName, String eventLocation, 
+		//Date eventTime, String eventClub, String eventDesc, int peopleAttending, int adminID)
+		//{ "January", "February", "March", "April", "May", "June", "July", 
+		//"August","September", "October","November", "December"}
+		
+		Integer month;
+		String m = (String) comboBox.getSelectedItem();
+		//convert string month to integer month
+		if (m.equals("January"))
+			month = 1;
+		else if (m.equals("February"))
+			month = 2;
+		else if (m.equals("March"))
+			month = 3;
+		else if (m.equals("April"))
+			month = 4;
+		else if (m.equals("May"))
+			month = 5;
+		else if (m.equals("June"))
+			month = 6;
+		else if (m.equals("July"))
+			month = 7;
+		else if (m.equals("August"))
+			month = 8;
+		else if (m.equals("September"))
+			month = 9;
+		else if (m.equals("October"))
+			month = 10;
+		else if (m.equals("November"))
+			month = 11;
+		else if (m.equals("December"))
+			month = 12;
+		//Date eventTime = new GregorianCalendar(2015, , 1, 9, 55).getTime();
+		String d = (String) dayComboBox.getSelectedItem();
+		
+			
+		String eventName = textField.getText();
+		String eventLocation = textField_1.getText();
+		String eventClub = clubNameTF.getText();
+		String eventDesc = textArea.getText();
+	
+		
+		
+		
 	}
 	
 	//manage event
@@ -246,7 +295,8 @@ public class createEventDialog extends JDialog {
 			contentPanel.add(logoIcon);
 		}
 		{
-			String hours[] = { "1","2","3","4","5","6","7","8","9","10","11", "12"};
+			String hours[] = { "1","2","3","4","5","6","7","8","9","10","11", "12","13","14", "15","16","17",
+					"18", "19","20", "21", "22", "23", "24"};
 			JComboBox hourComboBox = new JComboBox(hours);
 			hourComboBox.setBounds(317, 268, 61, 27);
 			contentPanel.add(hourComboBox);
