@@ -10,6 +10,7 @@ import java.util.GregorianCalendar;
 import java.util.Vector;
 
 import main.LoginException;
+import main.User;
 import constants.Constants;
 import db.Database;
 import test.TestServer;
@@ -85,6 +86,12 @@ public class Server {
 	public void sendMessageToClients(int n) {
 		for (ServerThread st1 : updateVector) {
 			st1.sendCode(n);	
+		}
+	}
+	
+	public void sendUserToClient(User u){
+		for (ServerThread st1 : updateVector){
+			st1.sendUser(u);
 		}
 	}
 		
