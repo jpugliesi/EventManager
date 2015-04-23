@@ -20,11 +20,14 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import java.awt.Font;
 
 public class createEventDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField;
+	private JTextField clubNameTF;
+	private JTextField textField_1;
 
 	/**
 	 * Launch the application.
@@ -47,47 +50,49 @@ public class createEventDialog extends JDialog {
 	//Date eventTime, String eventClub, String eventDesc, int peopleAttending, int adminID)
 	public createEventDialog() {
 		setTitle("Create Event");
-		setBounds(100, 100, 450, 398);
+		setBounds(100, 100, 450, 511);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
 			JLabel lblEventName = new JLabel("Event Title");
-			lblEventName.setBounds(16, 120, 77, 22);
+			lblEventName.setBounds(16, 171, 77, 22);
 			contentPanel.add(lblEventName);
 		}
 		
 		textField = new JTextField();
-		textField.setBounds(203, 115, 241, 33);
+		textField.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
+		textField.setBounds(203, 166, 241, 33);
 		contentPanel.add(textField);
 		textField.setColumns(10);
 		
 		JLabel lblEventDescription = new JLabel("Description");
-		lblEventDescription.setBounds(16, 182, 117, 16);
+		lblEventDescription.setBounds(16, 262, 117, 16);
 		contentPanel.add(lblEventDescription);
 		
 		JTextArea textArea = new JTextArea();
+		textArea.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
 		textArea.setLineWrap(true);
-		textArea.setBounds(203, 168, 228, 82);
+		textArea.setBounds(213, 262, 228, 91);
 		contentPanel.add(textArea);
 		{
 			String months[] = { "January", "February", "March", "April", "May", "June", "July", "August","September", "October","November", "December"};
 			
 			JComboBox comboBox = new JComboBox(months);
-			comboBox.setBounds(127, 268, 117, 27);
+			comboBox.setBounds(122, 386, 117, 27);
 			contentPanel.add(comboBox);
 			
 		}
 		{
 			JLabel lblDateAndTime = new JLabel("Date and Time");
-			lblDateAndTime.setBounds(16, 272, 107, 16);
+			lblDateAndTime.setBounds(16, 390, 107, 16);
 			contentPanel.add(lblDateAndTime);
 		}
 		{
 			String days[] = { "1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
 			JComboBox daycomboBox = new JComboBox(days);
-			daycomboBox.setBounds(239, 268, 66, 27);
+			daycomboBox.setBounds(244, 386, 66, 27);
 			contentPanel.add(daycomboBox);
 		}
 		{
@@ -107,26 +112,51 @@ public class createEventDialog extends JDialog {
 		{
 			String hours[] = { "1","2","3","4","5","6","7","8","9","10","11", "12"};
 			JComboBox hourComboBox = new JComboBox(hours);
-			hourComboBox.setBounds(317, 268, 61, 27);
+			hourComboBox.setBounds(322, 386, 61, 27);
 			contentPanel.add(hourComboBox);
 		}
 		{
 			String minute[] = { "00","15","30","45"};
 			JComboBox minuteComboBox = new JComboBox(minute);
-			minuteComboBox.setBounds(378, 268, 66, 27);
+			minuteComboBox.setBounds(378, 386, 66, 27);
 			contentPanel.add(minuteComboBox);
 		}
 		ButtonGroup group= new ButtonGroup();
 		JRadioButton am = new JRadioButton("AM");
-		am.setBounds(342, 307, 52, 23);
+		am.setSelected(true);
+		am.setBounds(338, 421, 52, 23);
 		contentPanel.add(am);
 		
 		JRadioButton pm = new JRadioButton("PM");
-		pm.setBounds(389, 307, 52, 23);
+		pm.setBounds(392, 421, 52, 23);
 		
 		group.add(am);
 		group.add(pm);
 		contentPanel.add(pm);
+		{
+			JLabel clubNameLabel = new JLabel("Club Name");
+			clubNameLabel.setBounds(16, 120, 89, 16);
+			contentPanel.add(clubNameLabel);
+		}
+		{
+			clubNameTF = new JTextField();
+			clubNameTF.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
+			clubNameTF.setBounds(203, 114, 241, 33);
+			contentPanel.add(clubNameTF);
+			clubNameTF.setColumns(10);
+		}
+		{
+			JLabel locationLabel = new JLabel("Location");
+			locationLabel.setBounds(16, 223, 61, 16);
+			contentPanel.add(locationLabel);
+		}
+		{
+			textField_1 = new JTextField();
+			textField_1.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
+			textField_1.setBounds(203, 212, 241, 33);
+			contentPanel.add(textField_1);
+			textField_1.setColumns(10);
+		}
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
