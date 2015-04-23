@@ -72,6 +72,7 @@ public class ClientLoginThread extends Thread{
 			//TODO
 			//Move to the User's Event Page , pass User u
 			constants.Environment.currentUser = u;
+			u.setProfilePicture();
 			received = 1;
 			finished = true;
 			System.out.println("finished set to true");
