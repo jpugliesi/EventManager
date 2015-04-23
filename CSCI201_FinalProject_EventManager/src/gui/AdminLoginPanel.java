@@ -281,7 +281,7 @@ class AdminMainPanel extends JFrame {
 						"Ryan Chase" };
 				JList list2 = new JList(nameList2);
 				JPanel chatPanel = new JPanel();
-				chatPanel.add(new UserChatPanel(nameList2, list2));
+				chatPanel.add(new UserChatPanel(list2));
 
 				jd.add(chatPanel);
 				jd.setVisible(true);
