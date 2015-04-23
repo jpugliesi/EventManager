@@ -7,11 +7,14 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Vector;
 
+import javax.swing.ImageIcon;
+
 import main.ChatMessage;
 import main.Event;
 import main.GetAdminsException;
 import main.GetChatHistoryException;
 import main.GetEventException;
+import main.GetProfilePictureException;
 import main.LoginException;
 import main.User;
 import constants.Constants;
@@ -216,6 +219,17 @@ public class ServerThread extends Thread {
 		return db.rsvp(u,e);
 	}
 	
+	private ImageIcon getUsersPic(User u){
+		ImageIcon ii = null;
+		try{
+			ii = db.getProfilePicture(u);
+		} catch (GetProfilePictureException gppe){
+			errorCode = gppe.getErrorCode();
+		}
+		
+		return ii;
+	}
+	
 	private Event getEvent(int id){
 		Event e = null;
 		
@@ -381,6 +395,23 @@ public class ServerThread extends Thread {
 					
 					oos.writeObject(db.updateUser(newUser));
 					oos.flush();
+				}
+				else if (command == Constants.CLIENT_GET_PROFILE_PICTURE){
+					User u = getUser();
+					
+					ImageIcon icon = getUsersPic(u);
+					
+					if(icon != null){
+						oos.writeObject(Constants.SERVER_GET_PROFILE_PICTURE_SUCCESS);
+						oos.flush();
+						oos.writeObject(icon);
+						oos.flush();
+					}
+					else{
+						oos.writeObject(errorCode);
+						oos.flush();
+					}
+					
 				}
 				else if(command == Constants.SHUTDOWN){
 					db.shutdownDB();

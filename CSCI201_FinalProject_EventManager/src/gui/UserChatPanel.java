@@ -16,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListCellRenderer;
 import javax.swing.ScrollPaneConstants;
 
+import client.ClientGetProfilePictureThread;
 import main.User;
 
 public class UserChatPanel extends JScrollPane {
@@ -109,6 +110,13 @@ public class UserChatPanel extends JScrollPane {
 				boolean isSelected, boolean cellHasFocus) {
 			
 			this.user_name.setText("<html><b>" + user.getFullName() + "</b>"+"</html>");
+			
+			ClientGetProfilePictureThread cgppt = new ClientGetProfilePictureThread(user);
+			cgppt.start();
+			
+			ImageIcon icon = cgppt.getProfilePicture();
+			
+			this.user_name.setIcon(icon);
 			/*try{
 				this.user_name.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("boy1.png"))));
 			}catch (IOException e){
