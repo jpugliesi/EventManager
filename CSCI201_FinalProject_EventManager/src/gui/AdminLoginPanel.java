@@ -29,6 +29,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
+import constants.Environment;
 import client.ClientLoginThread;
 
 public class AdminLoginPanel extends JFrame {
@@ -238,15 +239,14 @@ class AdminMainPanel extends JFrame {
 				JPanel panel_2 = new JPanel();
 				panel_2.setLayout(null);
 
-				JLabel profileName = new JLabel("Zack Kim");
+				JLabel profileName = new JLabel(Environment.currentAdmin.getFullName());
 				profileName.setHorizontalAlignment(SwingConstants.LEFT);
 				profileName.setFont(new Font("Helvetica Neue", Font.BOLD, 21));
 				profileName.setBounds(17, 31, 124, 33);
 				panel_2.add(profileName);
 
 				JLabel lblPicturePlaceholder = new JLabel("Picture PlaceHolder");
-				lblPicturePlaceholder.setIcon(new ImageIcon(UserTabFrame.class
-						.getResource("/gui/icon.gif")));
+				lblPicturePlaceholder.setIcon(Environment.currentAdmin.getProfilePicture());
 				lblPicturePlaceholder.setBounds(240, 20, 65, 44);
 				panel_2.add(lblPicturePlaceholder);
 
@@ -268,6 +268,8 @@ class AdminMainPanel extends JFrame {
 				scrollPane.setBounds(17, 148, 198, 207);
 				panel_2.add(scrollPane);
 
+				
+				/*
 				JLabel descriptionLabel = new JLabel(
 						"<html>Sophomore Computer Science Major. Go Trojans!</html>");
 				descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -276,6 +278,8 @@ class AdminMainPanel extends JFrame {
 				descriptionLabel.setVerticalAlignment(SwingConstants.TOP);
 				descriptionLabel.setBounds(17, 76, 166, 43);
 				panel_2.add(descriptionLabel);
+				
+				*/
 
 				jd.add(dTitle);
 				jd.add(panel_2);

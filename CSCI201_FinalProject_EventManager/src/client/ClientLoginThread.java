@@ -73,7 +73,12 @@ public class ClientLoginThread extends Thread{
 			u = (User) inputStream.readObject();
 			//TODO
 			//Move to the User's Event Page , pass User u
-			constants.Environment.currentUser = u;
+			if(isAdmin){
+				constants.Environment.currentAdmin = u;
+			}
+			else{
+				constants.Environment.currentUser = u;
+			}
 			u.setProfilePicture();
 			received = 1;
 			finished = true;

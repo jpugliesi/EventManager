@@ -13,6 +13,7 @@ public class Environment {
 	public static Socket socket;
 	public static URL ipAddress;
 	public static Vector<Event> eventFeed;
+	public static User currentAdmin;
 	
 	public Environment(User user, Socket socket, URL ipAddress){
 		this.currentUser = user;
