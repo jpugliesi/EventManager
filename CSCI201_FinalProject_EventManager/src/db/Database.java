@@ -358,11 +358,7 @@ public class Database {
 			int pic_id = profile_pic_found.getInt("pic_id");
 			String pic_path = profile_pic_found.getString("file_path");
 			
-			try {
-				pic = new ImageIcon(ImageIO.read(getClass().getResource(/*pic_path*/"profile_pictures/boy1.png")));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			pic = new ImageIcon(pic_path);
 						
 			profile_pic_found.close();
 			find_pic.close();
