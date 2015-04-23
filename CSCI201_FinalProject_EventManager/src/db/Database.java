@@ -84,7 +84,7 @@ public class Database {
 	 * Returns a User if successful login
 	 * throws LoginException with corresponding error code if username, or password is incorrect
 	 */
-	public User checkLogin(String username, String password_hash) throws LoginException{
+	public User checkLogin(String username, String password_hash, boolean check_is_admin) throws LoginException{
 		User user = null;
 		
 		try{			
@@ -119,6 +119,8 @@ public class Database {
 					//password hashes do not match.
 					//Throw LoginException
 					throw new LoginException(Constants.SERVER_LOGIN_INCORRECT_PASSWORD);
+				} else if(check_is_admin && !is_admin){
+					throw new LoginException(Constants.SERVER_LOGIN_INCORRECT_USER);
 				} else {
 					//user's password is correct. Create a new user instance and populate with the user's data
 					user = new User(full_name, db_username, db_password, is_admin, fk_prof_pic);
@@ -232,7 +234,7 @@ public class Database {
 			throw new LoginException(Constants.SERVER_REGISTRATION_USERNAME_FAIL);
 		}
 		
-		User newUser = checkLogin(user.getUserName(), user.getPassword());
+		User newUser = checkLogin(user.getUserName(), user.getPassword(), false);
 		
 		return newUser;
 	}
@@ -735,8 +737,8 @@ public class Database {
 		//Add UserEvent Junctions
 		User joeb = null, fsmith = null;
 		try{
-			joeb = this.checkLogin("joeb", "password");
-			fsmith = this.checkLogin("fsmith", "password1");
+			joeb = this.checkLogin("joeb", "password", false);
+			fsmith = this.checkLogin("fsmith", "password1", false);
 		} catch(LoginException le){
 			le.printStackTrace();
 		}
@@ -950,8 +952,8 @@ public class Database {
 			//Login users
 			User joeb = null, fsmith = null;
 			try{
-				joeb = db.checkLogin("joeb", "password");
-				fsmith = db.checkLogin("fsmith", "password1");
+				joeb = db.checkLogin("joeb", "password", false);
+				fsmith = db.checkLogin("fsmith", "password1", false);
 			} catch(LoginException le){
 				le.printStackTrace();
 			}
