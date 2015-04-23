@@ -24,6 +24,7 @@ public class ClientLoginThread extends Thread{
 	private String username;
 	private String password;
 	private User u;
+	private boolean success= false;
 	
 	
 	public ClientLoginThread(String username, String password) {
@@ -52,6 +53,7 @@ public class ClientLoginThread extends Thread{
 		int code = (Integer)inputStream.readObject();
 		//received User object is not null, log in success
 		if (code == Constants.SERVER_LOGIN_SUCCESS) {
+			success=true;
 			u = (User) inputStream.readObject();
 			//TODO
 			//Move to the User's Event Page , pass User u
@@ -60,6 +62,7 @@ public class ClientLoginThread extends Thread{
 		
 		//received User object have problem, log in fail cases
 		else if (code == Constants.SERVER_LOGIN_INCORRECT_USER) {
+			success=true;
 			JDialog jd = new JDialog();
 			jd.setSize(300,250);
 			jd.setLocation(400,100);
@@ -120,5 +123,8 @@ public class ClientLoginThread extends Thread{
 	
 	public User getLoggedInUser(){
 		return u;
+	}
+	public boolean loginSuccessful(){
+		return success;
 	}
 }

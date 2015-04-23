@@ -178,15 +178,19 @@ public class UserLoginPanel extends JFrame {
 						// and before it closes
 						if (jtf2.getText().equals(jtf3.getText())
 								&& !jtf2.getText().equals("")
-								&& !username.getText().equals("")
-								&& !name.getText().equals("")) {
-						ClientLoginThread loginThread= new ClientLoginThread(jtf1.getText(),jtf2.getText());
-						loginThread.start(); 
-						
-						new UserTabFrame().setVisible(true);
-						dispose();
-						jd.dispose();
-
+								&& !username.getText().equals("")) 
+						{
+							ClientLoginThread loginThread= new ClientLoginThread(jtf1.getText(),jtf2.getText());
+							loginThread.start(); 
+							
+							
+							if(loginThread.loginSuccessful()){
+							new UserTabFrame().setVisible(true);
+							dispose();
+							jd.dispose();
+							}
+	
+						}
 					}
 				});
 				JButton cancelButton = new JButton("Cancel");
