@@ -76,7 +76,7 @@ public class Constants {
 	public static int SERVER_GET_PROFILE_PICTURE_FAIL = 0;
 	
 	//Update Events
-	public static int CLIENT_UPDATE_EVENT_FAIL = 13;
+	public static int CLIENT_UPDATE_EVENT = 13;
 	public static int SERVER_UPDATE_EVENT_SUCCESS = 1;
 	public static int SERVER_UPDATE_EVENT_FAIL = 0;
 	

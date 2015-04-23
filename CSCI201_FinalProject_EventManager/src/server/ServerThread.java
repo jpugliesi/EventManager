@@ -427,11 +427,20 @@ public class ServerThread extends Thread {
 					}
 					
 				}
+				else if (command == Constants.CLIENT_UPDATE_EVENT){
+					Event e = getEvent();
+					
+					oos.writeObject(db.updateEvent(e));
+					oos.flush();
+					
+				}
 				else if(command == Constants.SHUTDOWN){
 					db.shutdownDB();
 				}
 	
 			}
+			
+			
 		
 		} catch (IOException ioe) {
 			server.removeServerThread(this);
