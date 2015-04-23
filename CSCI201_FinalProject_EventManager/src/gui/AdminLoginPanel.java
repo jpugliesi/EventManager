@@ -34,7 +34,7 @@ public class AdminLoginPanel extends JFrame {
 
 	AdminLoginPanel() {
 		super("Admin Login");
-		setSize(325, 265);
+		setSize(325, 245);
 		setLocation(500, 100);
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,11 +44,8 @@ public class AdminLoginPanel extends JFrame {
 		setLayout(new BorderLayout());
 		JLabel username = new JLabel("User Name:    ");
 		JLabel pass = new JLabel("Password:      ");
-		JLabel pass2 = new JLabel("Re enter Pass:");
 		JTextField jtf1 = new JTextField(15);
-		// JTextField jtf2= new JTextField(15);
 		JPasswordField jtf2 = new JPasswordField(15);
-		JPasswordField jtf3 = new JPasswordField(15);
 
 		JButton loginButton = new JButton("Login");
 		loginButton.addActionListener(new ActionListener() {
@@ -86,8 +83,6 @@ public class AdminLoginPanel extends JFrame {
 		centerPanel.add(new JPanel());
 		centerPanel.add(pass);
 		centerPanel.add(jtf2);
-		centerPanel.add(pass2);
-		centerPanel.add(jtf3);
 		centerPanel.add(new JPanel());
 		add(centerPanel, BorderLayout.CENTER);
 		add(buttonPanel2, BorderLayout.SOUTH);
