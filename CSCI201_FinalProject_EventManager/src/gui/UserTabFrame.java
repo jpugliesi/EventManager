@@ -18,6 +18,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import main.Event;
+import main.User;
+import client.ClientGetAdminsThread;
 import client.ClientGetEventFeedThread;
 
 public class UserTabFrame extends JFrame {
@@ -75,12 +77,21 @@ public class UserTabFrame extends JFrame {
 		panel1.add(firstPanel);
 		tabbedPane.addTab("Event Feed", null, panel1, null);
 
+		
+		//get chat display
 		JPanel panel2 = new JPanel();
 		panel2.setLayout(null);
-		String[] nameList2 = { "Kieran Strolorz", "John Pugliesi", "Zack Kim",
-				"Vincent Jin", "Jeffrey Miller", "Ryan Chase" };
-		JList list2 = new JList(nameList2);
-		UserChatPanel secondPanel = new UserChatPanel(nameList2, list2);
+
+		ClientGetAdminsThread chatThread = new ClientGetAdminsThread();
+		chatThread.start();
+		Vector<User> chatFeed = chatThread.getAdmins();
+		
+		DefaultListModel<User> listModel2 = new DefaultListModel<>();
+		for(User u : chatFeed){
+			listModel2.addElement(u);
+		}
+		JList<User> list2 = new JList<User>(listModel2);
+		UserChatPanel secondPanel = new UserChatPanel(list2);
 		secondPanel.setBounds(20, 6, 285, 349);
 		panel2.add(secondPanel);
 		tabbedPane.addTab("Chat", null, panel2, null);
