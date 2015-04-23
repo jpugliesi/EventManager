@@ -292,7 +292,7 @@ public class ServerThread extends Thread {
 					oos.writeObject(createEvent(newEvent));
 					oos.flush();
 					
-					server.sendMessageToClients(55);
+					server.sendMessageToClients(Constants.SERVER_UPDATE_EVENT_FEED);
 	
 				}
 				else if (command == Constants.CLIENT_GET_CHAT_HISTORY){ //load chat history
@@ -319,7 +319,7 @@ public class ServerThread extends Thread {
 					oos.writeObject(db.writeChatMessage(cm));
 					oos.flush();
 					
-					server.sendMessageToClients(56);
+					server.sendMessageToClients(Constants.SERVER_UPDATE_CHAT_HISTORY);
 				}
 				else if (command == Constants.CLIENT_GET_USER_EVENTS){ //get event vector for a given user
 					User u = getUser();

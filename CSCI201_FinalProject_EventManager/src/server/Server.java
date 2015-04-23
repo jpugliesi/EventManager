@@ -18,6 +18,28 @@ public class Server {
 	
 	private Vector<ServerThread> stVector = new Vector<ServerThread>();
 	private Database db;
+	private Vector<ServerThread> updateVector = new Vector<ServerThread>();
+	private ServerSocket listenSS;
+	
+	private class ListenServerThread extends Thread {
+		private Server server;
+		public ListenServerThread(Server server){
+			this.server = server;
+			try {
+				listenSS = new ServerSocket(6790);
+				while(true){
+					Socket s = listenSS.accept();
+					ServerThread st = new ServerThread(s, server , db);
+					updateVector.add(st);
+					st.start();
+					
+					
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	
 	public Server(){
@@ -26,6 +48,8 @@ public class Server {
 			db = new Database("localhost", true);
 			System.out.println("Starting Server");
 			ss = new ServerSocket(6789);
+			ListenServerThread lst = new ListenServerThread(this);
+			//lst.start(); - unnecessary
 			while(true){
 				System.out.println("Waiting for client to connect...");
 				Socket s = ss.accept();
@@ -59,7 +83,7 @@ public class Server {
 	
 	//needs to be changed - send code only to the client(s) listening
 	public void sendMessageToClients(int n) {
-		for (ServerThread st1 : stVector) {
+		for (ServerThread st1 : updateVector) {
 			st1.sendCode(n);	
 		}
 	}
