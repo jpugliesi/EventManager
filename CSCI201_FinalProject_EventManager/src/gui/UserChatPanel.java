@@ -21,7 +21,10 @@ import main.User;
 public class UserChatPanel extends JScrollPane {
 
 	private Map<String, ImageIcon> imageMap;
+	
+	
 
+	
 	public UserChatPanel(JList list) {
 		super(list);
 		//imageMap = createImageMap(nameList);
