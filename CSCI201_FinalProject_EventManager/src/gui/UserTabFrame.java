@@ -88,6 +88,7 @@ public class UserTabFrame extends JFrame {
 		
 		DefaultListModel<User> listModel2 = new DefaultListModel<>();
 		for(User u : chatFeed){
+		
 			listModel2.addElement(u);
 		}
 		JList<User> list2 = new JList<User>(listModel2);

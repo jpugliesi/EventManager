@@ -1,9 +1,12 @@
 package main;
 
 import java.io.Serializable;
-
 import java.util.Date;
 import java.util.Vector;
+
+import javax.swing.ImageIcon;
+
+import constants.Constants;
 
 public class User implements Serializable{
 	
@@ -13,6 +16,7 @@ public class User implements Serializable{
 	private String fullName, userName, password;
 	private boolean isAdmin;
 	private Vector<Event> eventVector;
+	private ImageIcon profilePicture;
 
 
 	
@@ -23,12 +27,25 @@ public class User implements Serializable{
 		this.isAdmin = isAdmin;
 		this.profilePictureID = profilePictureID;
 		this.eventVector = new Vector<Event>();
+		//setProfilePicture();
 
 
 	}
 	
 	public User(){
 		
+	}
+	
+	public void setProfilePicture(){
+		switch(profilePictureID){
+			case 1: profilePicture = Constants.BOY1;
+			case 2: profilePicture = Constants.BOY2;
+			case 3: profilePicture = Constants.MAN1;
+			case 4: profilePicture = Constants.MAN2;
+			case 5: profilePicture = Constants.WOMAN1;
+			case 6: profilePicture = Constants.WOMAN2;
+			case 7: profilePicture = Constants.WOMAN3;
+		}
 	}
 	
 	public Vector<Event> getEventVector(){
@@ -75,6 +92,14 @@ public class User implements Serializable{
 		this.addEvent(new Event("Event 4", "VKC 201", new Date(System.currentTimeMillis()), "ACM", "Club Meeting!", 10, 1));
 		this.addEvent(new Event("Event 5", "Leavy Library", new Date(System.currentTimeMillis()), "SAS", "Study Club!", 18, 1));
 		
+	}
+	
+	public void setProfilePicture(ImageIcon pp){
+		profilePicture = pp;
+	}
+	
+	public ImageIcon getProfilePicture(){
+		return profilePicture;
 	}
 
 

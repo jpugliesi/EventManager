@@ -99,7 +99,7 @@ public class UserChatPanel extends JScrollPane {
 		
 		public ChatRenderer(){
 			super();
-			this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+			//this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 			this.setOpaque(true);
 			
 			user_name = new JLabel("");
@@ -111,10 +111,10 @@ public class UserChatPanel extends JScrollPane {
 			
 			this.user_name.setText("<html><b>" + user.getFullName() + "</b>"+"</html>");
 			
-			ClientGetProfilePictureThread cgppt = new ClientGetProfilePictureThread(user);
-			cgppt.start();
-			
-			ImageIcon icon = cgppt.getProfilePicture();
+			//ClientGetProfilePictureThread cgppt = new ClientGetProfilePictureThread(user);
+			//cgppt.start();
+			user.setProfilePicture();
+			ImageIcon icon = user.getProfilePicture();
 			
 			this.user_name.setIcon(icon);
 			/*try{

@@ -1,5 +1,7 @@
 package constants;
 
+import javax.swing.ImageIcon;
+
 public class Constants {
 	
 	//Login Codes
@@ -78,6 +80,16 @@ public class Constants {
 	
 	//server ip address
 	public static String SERVER_IP = "localhost";
+	
+	public static ImageIcon BOY1 = new ImageIcon("profile_pictures/boy1.png");
+	public static ImageIcon BOY2 = new ImageIcon("profile_pictures/boy2.png");
+	public static ImageIcon MAN1 = new ImageIcon("profile_pictures/man1.png");
+	public static ImageIcon MAN2 = new ImageIcon("profile_pictures/man2.png");
+	public static ImageIcon WOMAN1 = new ImageIcon("profile_pictures/woman1.png");
+	public static ImageIcon WOMAN2 = new ImageIcon("profile_pictures/woman2.png");
+	public static ImageIcon WOMAN3 = new ImageIcon("profile_pictures/woman13.png");
+	
+	
 	
 	
 
