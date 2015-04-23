@@ -28,6 +28,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
+import client.ClientLoginThread;
+
 public class UserLoginPanel extends JFrame {
 	private JLabel titleLogo;
 	private JButton registerButton;
@@ -53,6 +55,8 @@ public class UserLoginPanel extends JFrame {
 
 		setResizable(false);
 		setVisible(true);
+		
+		
 	}
 
 	void addActionListeners() {
@@ -172,6 +176,13 @@ public class UserLoginPanel extends JFrame {
 						// makes sure jtf2 and jtf3 are the same pass
 						// pull the username and one of the password textfields
 						// and before it closes
+						if (jtf2.getText().equals(jtf3.getText())
+								&& !jtf2.getText().equals("")
+								&& !username.getText().equals("")
+								&& !name.getText().equals("")) {
+						ClientLoginThread loginThread= new ClientLoginThread(jtf1.getText(),jtf2.getText());
+						loginThread.start(); 
+						
 						new UserTabFrame().setVisible(true);
 						dispose();
 						jd.dispose();

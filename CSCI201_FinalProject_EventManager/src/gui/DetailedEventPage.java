@@ -18,6 +18,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.swing.Box;
+import javax.swing.JButton;
 
 public class DetailedEventPage extends JFrame {
 
@@ -73,20 +74,29 @@ public class DetailedEventPage extends JFrame {
 		contentPane.add(lblEventNamePlaceholder);
 		
 		JLabel lblHksajdfhasklfhalkshfaklshfkalshfsalkhfkalshfasdlkhfklsahdfkaslfhalska = new JLabel("<html>hksajd fhasklfh alkshfaklshfka lshfsalkhfkal shfasdlkhfk lsahdfkaslfha lska</html>");
+		lblHksajdfhasklfhalkshfaklshfkalshfsalkhfkalshfasdlkhfklsahdfkaslfhalska.setFont(new Font("Helvetica Neue", Font.PLAIN, 13));
 		lblHksajdfhasklfhalkshfaklshfkalshfsalkhfkalshfasdlkhfklsahdfkaslfhalska.setBounds(18, 110, 165, 143);
 		contentPane.add(lblHksajdfhasklfhalkshfaklshfkalshfsalkhfkalshfasdlkhfklsahdfkaslfhalska);
 		
 		JLabel lblDate = new JLabel("Date");
+		lblDate.setFont(new Font("Helvetica Neue", Font.PLAIN, 13));
 		lblDate.setBounds(302, 149, 61, 16);
 		contentPane.add(lblDate);
 		
 		JLabel lblTime = new JLabel("Time");
+		lblTime.setFont(new Font("Helvetica Neue", Font.PLAIN, 13));
 		lblTime.setBounds(302, 177, 61, 16);
 		contentPane.add(lblTime);
 		
 		JLabel lblLocation = new JLabel("Location");
+		lblLocation.setFont(new Font("Helvetica Neue", Font.PLAIN, 13));
 		lblLocation.setBounds(302, 205, 61, 26);
 		contentPane.add(lblLocation);
+		
+		JButton btnRsvpNow = new JButton("RSVP");
+		btnRsvpNow.setFont(new Font("Helvetica Neue", Font.PLAIN, 13));
+		btnRsvpNow.setBounds(6, 231, 117, 29);
+		contentPane.add(btnRsvpNow);
 	}
 	public BufferedImage resizeImage(BufferedImage originalImage, int width,
 			int height, int type) throws IOException {

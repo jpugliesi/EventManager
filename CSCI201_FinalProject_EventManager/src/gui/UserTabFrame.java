@@ -58,8 +58,9 @@ public class UserTabFrame extends JFrame {
 		JPanel panel1 = new JPanel();
 		panel1.setLayout(null);
 		
-		ClientGetEventFeedThread feedThread = new ClientGetEventFeedThread();
-		feedThread.start();
+		ClientGetEventFeedThread feedThread = new ClientGetEventFeedThread(); //creates a new thread, gets the events from the thread,
+																	    		//and adds it to our local listmodel
+		feedThread.start(); 
 		Vector<Event> eventFeed = feedThread.getEventFeed();
 		constants.Environment.eventFeed = eventFeed;
 		
