@@ -32,6 +32,7 @@ public class ClientGetProfilePictureThread extends Thread {
 			
 			
 			outputStream = new ObjectOutputStream(socket.getOutputStream());
+			outputStream.flush();
 			inputStream = new ObjectInputStream(socket.getInputStream());
 
 			outputStream.writeObject(Constants.CLIENT_GET_PROFILE_PICTURE);
@@ -39,8 +40,9 @@ public class ClientGetProfilePictureThread extends Thread {
 			
 			outputStream.writeObject(u);
 			outputStream.flush();
-			
-			int code = (Integer)inputStream.readObject();
+			System.out.println("client about to read success code");
+			int code = (int)inputStream.readObject();
+			System.out.println("client for pp got code: " + code);
 			
 			if(code == Constants.SERVER_GET_PROFILE_PICTURE_SUCCESS){
 				try{

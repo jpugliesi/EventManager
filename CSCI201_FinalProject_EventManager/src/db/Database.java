@@ -359,7 +359,7 @@ public class Database {
 			String pic_path = profile_pic_found.getString("file_path");
 			
 			try {
-				pic = new ImageIcon(ImageIO.read(getClass().getResource(pic_path)));
+				pic = new ImageIcon(ImageIO.read(getClass().getResource(/*pic_path*/"profile_pictures/boy1.png")));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -692,25 +692,25 @@ public class Database {
 		//Add Profile Pictures
 		try{
 			Statement statement = conn.createStatement(); 
-			String sql = "INSERT INTO profile_pictures VALUES (0, 'src/profile_pictures/boy1')";
+			String sql = "INSERT INTO profile_pictures VALUES (0, 'src/profile_pictures/boy1.png')";
 			statement.addBatch(sql);
 			
-			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/boy2')";
+			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/boy2.png')";
 			statement.addBatch(sql);
 			
-			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/man1')";
+			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/man1.png')";
 			statement.addBatch(sql);
 			
-			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/man2')";
+			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/man2.png')";
 			statement.addBatch(sql);
 			
-			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/woman1')";
+			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/woman1.png')";
 			statement.addBatch(sql);
 			
-			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/woman2')";
+			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/woman2.png')";
 			statement.addBatch(sql);
 			
-			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/woman3')";
+			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/woman3.png')";
 			statement.addBatch(sql);
 			
 			statement.executeBatch();
