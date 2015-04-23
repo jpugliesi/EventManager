@@ -156,6 +156,15 @@ public class ServerThread extends Thread {
 		
 	}
 	
+	public void sendUser(User u){
+		try {
+			oos.writeObject(u);
+			oos.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private User registerUser(User u){
 		User user = null;
 		try{
