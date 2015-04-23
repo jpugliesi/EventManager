@@ -113,7 +113,6 @@ public class UserChatPanel extends JScrollPane {
 			
 			//ClientGetProfilePictureThread cgppt = new ClientGetProfilePictureThread(user);
 			//cgppt.start();
-			user.setProfilePicture();
 			ImageIcon icon = user.getProfilePicture();
 			
 			this.user_name.setIcon(icon);

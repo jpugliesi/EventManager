@@ -37,14 +37,28 @@ public class User implements Serializable{
 	}
 	
 	public void setProfilePicture(){
-		switch(profilePictureID){
-			case 1: profilePicture = Constants.BOY1;
-			case 2: profilePicture = Constants.BOY2;
-			case 3: profilePicture = Constants.MAN1;
-			case 4: profilePicture = Constants.MAN2;
-			case 5: profilePicture = Constants.WOMAN1;
-			case 6: profilePicture = Constants.WOMAN2;
-			case 7: profilePicture = Constants.WOMAN3;
+		if(profilePictureID == 1){
+			profilePicture = Constants.BOY1;
+		}
+		else if (profilePictureID == 2){
+			profilePicture = Constants.BOY2;
+		}
+		else if (profilePictureID == 3){
+			profilePicture = Constants.MAN1;
+
+		}
+		else if (profilePictureID == 4){
+			profilePicture = Constants.MAN2;
+
+		}
+		else if (profilePictureID == 5){
+			profilePicture = Constants.WOMAN1;
+		}
+		else if (profilePictureID == 6){
+			profilePicture = Constants.WOMAN2;
+		}
+		else if (profilePictureID == 7){
+			profilePicture = Constants.WOMAN3;
 		}
 	}
 	

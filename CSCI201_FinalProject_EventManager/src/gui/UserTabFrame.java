@@ -7,6 +7,7 @@ import java.util.Vector;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -88,7 +89,8 @@ public class UserTabFrame extends JFrame {
 		
 		DefaultListModel<User> listModel2 = new DefaultListModel<>();
 		for(User u : chatFeed){
-		
+			u.setProfilePicture();
+			
 			listModel2.addElement(u);
 		}
 		JList<User> list2 = new JList<User>(listModel2);
