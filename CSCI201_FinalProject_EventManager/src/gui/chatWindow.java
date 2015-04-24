@@ -44,13 +44,14 @@ public class chatWindow extends JDialog {
 	 * Create the dialog.
 	 */
 	public chatWindow() {
-		setBounds(100, 100, 450, 530);
+		setBounds(100, 100, 450, 494);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
 			JButton sendButton = new JButton("Send");
+			getRootPane().setDefaultButton(sendButton);
 			sendButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					//send button
@@ -98,32 +99,23 @@ public class chatWindow extends JDialog {
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBounds(6, 423, 450, 12);
 		contentPanel.add(separator_1);
+		{
+			JButton cancelButton = new JButton("Close");
+			cancelButton.setBounds(365, 6, 79, 29);
+			contentPanel.add(cancelButton);
+			cancelButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+				}
+			});
+			cancelButton.setActionCommand("Cancel");
+		}
 		
 		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setBounds(6, 482, 450, 10);
+			contentPanel.add(buttonPane);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("OK");
-				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						dispose(); 
-					}
-				});
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						dispose();
-					}
-				});
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
-			}
 		}
 	}
 	
