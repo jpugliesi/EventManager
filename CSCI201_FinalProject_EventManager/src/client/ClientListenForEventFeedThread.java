@@ -21,7 +21,7 @@ public class ClientListenForEventFeedThread {
 			oos = new ObjectOutputStream(socket.getOutputStream());
 			ois = new ObjectInputStream(socket.getInputStream());
 			
-			oos.writeObject(Constants.CLIENT_LISTENING);
+			oos.writeObject(Constants.CLIENT_LISTENING_FOR_EVENT_FEED);
 			oos.flush();
 		} catch(IOException ioe){
 			ioe.printStackTrace();

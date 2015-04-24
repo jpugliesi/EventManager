@@ -81,7 +81,8 @@ public class Constants {
 	public static int SERVER_UPDATE_EVENT_FAIL = 0;
 	
 	//tell server that this client is listening for an update prompt
-	public static int CLIENT_LISTENING = 14;
+	public static int CLIENT_LISTENING_FOR_CHAT = 14;
+	public static int CLIENT_LISTENING_FOR_EVENT_FEED = 15;
 	
 	
 	//close the database
