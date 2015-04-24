@@ -28,14 +28,16 @@ public class ServerThread extends Thread {
 	private Socket s;
 	private String username;
 	private Database db;
-	private boolean isListening;
+	private boolean isListeningForChat;
+	private boolean isListeningForFeed;
 	
 	private int errorCode;
 	public ServerThread(Socket s, Server server, Database db) {
 		this.server = server;
 		this.s = s;
 		this.db = db;
-		this.isListening = false;
+		this.isListeningForChat = false;
+		this.isListeningForFeed = false;
 		try {
 			oos = new ObjectOutputStream(s.getOutputStream());
 			oos.flush();
@@ -54,8 +56,12 @@ public class ServerThread extends Thread {
 		return username;
 	}
 	
-	public boolean isListening(){
-		return isListening;
+	public boolean isListeningForChat(){
+		return isListeningForChat;
+	}
+	
+	public boolean isListeningForFeed(){
+		return this.isListeningForFeed;
 	}
 	 
 
@@ -441,8 +447,12 @@ public class ServerThread extends Thread {
 					
 				}
 				
-				else if (command == Constants.CLIENT_LISTENING){
-					this.isListening = true;
+				else if (command == Constants.CLIENT_LISTENING_FOR_CHAT){
+					this.isListeningForChat = true;
+				}
+				
+				else if(command == Constants.CLIENT_LISTENING_FOR_EVENT_FEED){
+					this.isListeningForFeed = true;
 				}
 				else if(command == Constants.SHUTDOWN){
 					db.shutdownDB();
