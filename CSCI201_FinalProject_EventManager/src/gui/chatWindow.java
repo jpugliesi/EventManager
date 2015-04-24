@@ -33,7 +33,7 @@ public class chatWindow extends JDialog {
 	public static void main(String[] args) {
 		try {
 			chatWindow dialog = new chatWindow();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -100,15 +100,15 @@ public class chatWindow extends JDialog {
 		separator_1.setBounds(6, 423, 450, 12);
 		contentPanel.add(separator_1);
 		{
-			JButton cancelButton = new JButton("Close");
-			cancelButton.setBounds(365, 6, 79, 29);
-			contentPanel.add(cancelButton);
-			cancelButton.addActionListener(new ActionListener() {
+			JButton closeButton = new JButton("Close");
+			closeButton.setBounds(365, 6, 79, 29);
+			contentPanel.add(closeButton);
+			closeButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					dispose();
+					hide();
 				}
 			});
-			cancelButton.setActionCommand("Cancel");
+			closeButton.setActionCommand("Cancel");
 		}
 		
 		{
