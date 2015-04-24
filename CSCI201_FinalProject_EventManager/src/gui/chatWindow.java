@@ -18,6 +18,9 @@ import javax.swing.JList;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextArea;
+import java.awt.Font;
+import javax.swing.JSeparator;
 
 public class chatWindow extends JDialog {
 
@@ -63,15 +66,6 @@ public class chatWindow extends JDialog {
 			textField.setColumns(10);
 		}
 		{
-			JPanel chatPanel = new JPanel();
-			chatPanel.setBounds(6, 63, 438, 361);
-			contentPanel.add(chatPanel);
-			{
-				JList list = new JList();
-				chatPanel.add(list);
-			}
-		}
-		{
 			JLabel icon = new JLabel("");
 			icon.setBounds(6, 0, 132, 68);
 			BufferedImage image=null;
@@ -89,6 +83,21 @@ public class chatWindow extends JDialog {
 			
 			contentPanel.add(icon);
 		}
+		{
+			JTextArea textArea = new JTextArea();
+			textArea.setLineWrap(true);
+			textArea.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+			textArea.setBounds(16, 80, 416, 331);
+			contentPanel.add(textArea);
+		}
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(6, 65, 438, 12);
+		contentPanel.add(separator);
+		
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setBounds(6, 423, 450, 12);
+		contentPanel.add(separator_1);
 		
 		{
 			JPanel buttonPane = new JPanel();
@@ -126,5 +135,4 @@ public class chatWindow extends JDialog {
 		g.dispose();
 		return resizedImage;
 	}
-
 }
