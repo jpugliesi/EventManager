@@ -88,7 +88,7 @@ public class Constants {
 	public static int SHUTDOWN = 12;
 	
 	//server ip address
-	public static String SERVER_IP = "207.151.35.44";
+	public static String SERVER_IP = "localhost";
 	
 	public static ImageIcon BOY1 = new ImageIcon("profile_pictures/boy1.png");
 	public static ImageIcon BOY2 = new ImageIcon("profile_pictures/boy2.png");
