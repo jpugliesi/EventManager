@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Vector;
 
 import constants.Constants;
+import constants.Environment;
 import main.User;
+import main.Event;
 
 public class ClientListenForEventFeedThread {
 	private Socket socket;
@@ -35,6 +38,7 @@ public class ClientListenForEventFeedThread {
 				
 				if(update == Constants.SERVER_UPDATE_EVENT_FEED){
 					updateFeed = true;
+					Environment.eventFeed = (Vector<Event>) ois.readObject();
 				}
 			}
 		} catch(IOException ioe){
