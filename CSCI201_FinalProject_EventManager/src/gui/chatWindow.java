@@ -16,6 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JLabel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class chatWindow extends JDialog {
 
@@ -46,6 +48,11 @@ public class chatWindow extends JDialog {
 		contentPanel.setLayout(null);
 		{
 			JButton sendButton = new JButton("Send");
+			sendButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					//send button
+				}
+			});
 			sendButton.setBounds(327, 436, 117, 29);
 			contentPanel.add(sendButton);
 		}
@@ -89,12 +96,22 @@ public class chatWindow extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("OK");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose(); 
+					}
+				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
