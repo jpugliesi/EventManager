@@ -85,13 +85,17 @@ public class Server {
 	//needs to be changed - send code only to the client(s) listening
 	public void sendMessageToClients(int n) {
 		for (ServerThread st1 : updateVector) {
-			st1.sendCode(n);	
+			if(st1.isListening()){
+				st1.sendCode(n);	
+			}
 		}
 	}
 	
 	public void sendUserToClient(User u){
 		for (ServerThread st1 : updateVector){
-			st1.sendUser(u);
+			if (st1.isListening()){
+				st1.sendUser(u);
+			}
 		}
 	}
 		
