@@ -376,6 +376,8 @@ public class ServerThread extends Thread {
 					oos.flush();
 					
 					server.sendMessageToClients(Constants.SERVER_UPDATE_CHAT_HISTORY);
+					server.sendUserToClient(cm.getSender());
+					server.sendUserToClient(cm.getReceiver());
 				}
 				else if (command == Constants.CLIENT_GET_USER_EVENTS){ //get event vector for a given user
 					User u = getUser();
