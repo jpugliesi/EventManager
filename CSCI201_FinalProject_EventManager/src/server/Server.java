@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
+import main.Event;
 import main.LoginException;
 import main.User;
 import constants.Constants;
@@ -107,6 +108,14 @@ public class Server {
 		}
 		
 		return ret;
+	}
+	
+	public void sendFeed(Vector<Event> feed){
+		for (ServerThread st1 : updateVector){
+			if(st1.isListeningForFeed()){
+				st1.sendEventFeed(feed);
+			}
+		}
 	}
 	
 	public static void main(String [] args){

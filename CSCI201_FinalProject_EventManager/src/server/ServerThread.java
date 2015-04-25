@@ -176,6 +176,15 @@ public class ServerThread extends Thread {
 		}
 	}
 	
+	public void sendEventFeeed(Vector<Event> feed){
+		try{
+			oos.writeObject(feed);
+			oos.flush();
+		} catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+	
 	private User registerUser(User u){
 		User user = null;
 		try{
@@ -339,6 +348,7 @@ public class ServerThread extends Thread {
 					oos.flush();
 					
 					server.sendMessageToClients(Constants.SERVER_UPDATE_EVENT_FEED);
+					
 	
 				}
 				else if (command == Constants.CLIENT_GET_CHAT_HISTORY){ //load chat history
