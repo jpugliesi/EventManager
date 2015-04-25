@@ -12,7 +12,7 @@ import main.User;
 import constants.Constants;
 import constants.Environment;
 
-public class ClientListenForChatUpdateThread {
+public class ClientListenForChatUpdateThread extends Thread{
 	private Socket socket;
 	private ObjectInputStream ois;
 	private ObjectOutputStream oos;
@@ -36,9 +36,11 @@ public class ClientListenForChatUpdateThread {
 	
 	public void run() {
 		try{
+			System.out.println("Running chat listener thread");
 			while(true){
 				int update = (Integer)ois.readObject();
 				
+				System.out.println("Notified to update chat");
 				if(update == Constants.SERVER_UPDATE_CHAT_HISTORY){
 					updateChat = true;
 					
@@ -46,8 +48,7 @@ public class ClientListenForChatUpdateThread {
 					this.receiver = (User) ois.readObject();
 					
 					boolean chatWindowOpen = false;
-					
-					
+
 					User otherPerson = null;
 					if(sender.getUserName().equals(Environment.currentUser.getUserName())){
 						otherPerson = receiver;
@@ -56,17 +57,16 @@ public class ClientListenForChatUpdateThread {
 					}
 					
 					for(chatWindow chat : chatWindows){
-						if(chat.otherPerson().getUserName().equals(this.sender.getUserName()) ||
-								chat.otherPerson().getUserName().equals(this.receiver.getUserName())){
+						if(chat.getOtherPerson().getUserName().equals(otherPerson.getUserName())){
 							chatWindowOpen = true;
 							chat.setVisible(true);
 							chat.updateChat();
 						}
 					}
 					if(!chatWindowOpen){
-						chatWindow chat = new chatWindow(receiver);
+						chatWindow chat = new chatWindow(otherPerson);
 						chatWindows.add(chat);
-						chatWindow.updateChat();
+						chat.updateChat();
 					}
 				}
 			}
@@ -89,11 +89,7 @@ public class ClientListenForChatUpdateThread {
 		return this.receiver;
 	}
 	
-	public void reset(){
-		this.updateChat = false;
+	public void addNewWindow(chatWindow window){
+		chatWindows.add(window);
 	}
-	
-	
-	
-	
 }

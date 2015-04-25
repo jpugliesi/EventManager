@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import main.Event;
 import main.User;
+import client.ClientListenForChatUpdateThread;
 
 public class Environment {
 	
@@ -14,6 +15,7 @@ public class Environment {
 	public static URL ipAddress;
 	public static Vector<Event> eventFeed;
 	public static User currentAdmin;
+	public static ClientListenForChatUpdateThread chatListenerThread = null;
 	
 	public Environment(User user, Socket socket, URL ipAddress){
 		this.currentUser = user;

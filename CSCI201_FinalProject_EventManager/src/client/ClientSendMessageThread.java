@@ -46,7 +46,6 @@ public class ClientSendMessageThread extends Thread{
 				System.out.println("Fail send message");
 			}
 					
-			
 		} catch (IOException ioe) {
 			success = false;
 			System.out.println(ioe.getMessage());

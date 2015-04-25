@@ -80,6 +80,7 @@ public class UserLoginPanel extends JFrame {
 				final JPasswordField passTF2 = new JPasswordField(15);
 
 				JButton okButton = new JButton("OK");
+				jd.getRootPane().setDefaultButton(okButton);
 				// okButton.setHorizontalAlignment(SwingConstants.RIGHT);
 				okButton.addActionListener(new ActionListener() {
 
@@ -123,7 +124,7 @@ public class UserLoginPanel extends JFrame {
 								JDialog tmp_jd = new JDialog();
 								tmp_jd.setSize(300,250);
 								tmp_jd.setLocation(400,100);
-								tmp_jd.setTitle("Invalid Login");
+								tmp_jd.setTitle("Invalid Registration");
 								JLabel label = new JLabel("Invalid Username, Please try again.");
 								JButton button = new JButton("Got it!");
 								button.addActionListener(new ActionListener() {
@@ -139,7 +140,7 @@ public class UserLoginPanel extends JFrame {
 								JDialog tmp_jd = new JDialog();
 								tmp_jd.setSize(300,250);
 								tmp_jd.setLocation(400,100);
-								tmp_jd.setTitle("Invalid Login");
+								tmp_jd.setTitle("Invalid Registration");
 								JLabel label = new JLabel("Invalid password, Please try again.");
 								JButton button = new JButton("Got it!");
 								button.addActionListener(new ActionListener() {
@@ -226,6 +227,7 @@ public class UserLoginPanel extends JFrame {
 				jd.setSize(325, 265);
 				jd.setLocationRelativeTo(null);
 				jd.setResizable(false);
+				
 
 				JPanel centerPanel = new JPanel();
 				centerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -236,6 +238,7 @@ public class UserLoginPanel extends JFrame {
 				JPasswordField jtf2 = new JPasswordField(15);
 
 				JButton okButton = new JButton("OK");
+				jd.getRootPane().setDefaultButton(okButton);
 				// okButton.setHorizontalAlignment(SwingConstants.RIGHT);
 				okButton.addActionListener(new ActionListener() {
 
@@ -252,14 +255,61 @@ public class UserLoginPanel extends JFrame {
 
 							}
 
-							
-		
 							if(loginThread.loginSuccessful()){
 								new UserTabFrame().setVisible(true);
 								Environment.chatListenerThread = new ClientListenForChatUpdateThread();
 								Environment.chatListenerThread.start();
+								System.out.println("Chat listener started");
 								dispose();
 								jd.dispose();
+							} else if(loginThread.getCode() == Constants.SERVER_LOGIN_INCORRECT_USER){
+								JDialog tmp_jd = new JDialog();
+								tmp_jd.setSize(300,250);
+								tmp_jd.setLocation(400,100);
+								tmp_jd.setTitle("Invalid Login");
+								JLabel label = new JLabel("Incorrect Username, Please try again.");
+								JButton button = new JButton("Got it!");
+								button.addActionListener(new ActionListener() {
+									public void actionPerformed (ActionEvent ae) {
+										tmp_jd.dispose();
+									}
+								});
+								tmp_jd.add(label);	
+								tmp_jd.add(button, BorderLayout.SOUTH);
+								tmp_jd.setModal(true);
+								tmp_jd.setVisible(true);
+							} else if(loginThread.getCode() == Constants.SERVER_LOGIN_INCORRECT_PASSWORD){
+								JDialog tmp_jd = new JDialog();
+								tmp_jd.setSize(300,250);
+								tmp_jd.setLocation(400,100);
+								tmp_jd.setTitle("Invalid Login");
+								JLabel label = new JLabel("Incorrect Password, Please try again.");
+								JButton button = new JButton("Got it!");
+								button.addActionListener(new ActionListener() {
+									public void actionPerformed (ActionEvent ae) {
+										tmp_jd.dispose();
+									}
+								});
+								tmp_jd.add(label);
+								tmp_jd.add(button, BorderLayout.SOUTH);
+								tmp_jd.setModal(true);
+								tmp_jd.setVisible(true);
+							} else if(loginThread.getCode() == Constants.SERVER_LOGIN_INCORRECT_IP){
+								JDialog tmp_jd = new JDialog();
+								tmp_jd.setSize(300,250);
+								tmp_jd.setLocation(400,100);
+								tmp_jd.setTitle("Invalid Login");
+								JLabel label = new JLabel("Incorrect IP_Address, Please try again.");
+								JButton button = new JButton("Got it!");
+								button.addActionListener(new ActionListener() {
+									public void actionPerformed (ActionEvent ae) {
+										tmp_jd.dispose();
+									}
+								});
+								tmp_jd.add(label);	
+								tmp_jd.add(button, BorderLayout.SOUTH);
+								tmp_jd.setModal(true);
+								tmp_jd.setVisible(true);
 							}
 	
 						}

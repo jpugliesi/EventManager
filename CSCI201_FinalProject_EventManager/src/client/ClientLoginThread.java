@@ -32,6 +32,7 @@ public class ClientLoginThread extends Thread{
 	private int received = 0;
 	private volatile boolean finished = false;
 	private boolean isAdmin;
+	private int code;
 	
 	
 	public ClientLoginThread(String username, String password, boolean isAdmin) {
@@ -65,7 +66,7 @@ public class ClientLoginThread extends Thread{
 		
 		inputStream = new ObjectInputStream(socket.getInputStream());
 			
-		int code = (Integer)inputStream.readObject();
+		code = (Integer)inputStream.readObject();
 		//received User object is not null, log in success
 		System.out.println("received code " + code);
 		if (code == Constants.SERVER_LOGIN_SUCCESS) {
@@ -82,71 +83,25 @@ public class ClientLoginThread extends Thread{
 			u.setProfilePicture();
 			received = 1;
 			finished = true;
-			System.out.println("finished set to true");
-
 
 		}
 		
 		//received User object have problem, log in fail cases
 		else if (code == Constants.SERVER_LOGIN_INCORRECT_USER) {
 			success=true;
-			JDialog jd = new JDialog();
-			jd.setSize(300,250);
-			jd.setLocation(400,100);
-			jd.setTitle("Invalid Login");
-			JLabel label = new JLabel("Incorrect Username, Please try again.");
-			JButton button = new JButton("Got it!");
-			button.addActionListener(new ActionListener() {
-				public void actionPerformed (ActionEvent ae) {
-					jd.dispose();
-				}
-			});
-			jd.add(label);	
-			jd.add(button, BorderLayout.SOUTH);
-			jd.setModal(true);
-			jd.setVisible(true);
+			
 			received = 1;
 			finished = true;
 
-
 		}
 		else if (code == Constants.SERVER_LOGIN_INCORRECT_PASSWORD) {
-			JDialog jd = new JDialog();
-			jd.setSize(300,250);
-			jd.setLocation(400,100);
-			jd.setTitle("Invalid Login");
-			JLabel label = new JLabel("Incorrect Password, Please try again.");
-			JButton button = new JButton("Got it!");
-			button.addActionListener(new ActionListener() {
-				public void actionPerformed (ActionEvent ae) {
-					jd.dispose();
-				}
-			});
-			jd.add(label);
-			jd.add(button, BorderLayout.SOUTH);
-			jd.setModal(true);
-			jd.setVisible(true);
 			received = 1;
 			finished = true;
 
 
 		}
 		else if (code == Constants.SERVER_LOGIN_INCORRECT_IP) {
-			JDialog jd = new JDialog();
-			jd.setSize(300,250);
-			jd.setLocation(400,100);
-			jd.setTitle("Invalid Login");
-			JLabel label = new JLabel("Incorrect IP_Address, Please try again.");
-			JButton button = new JButton("Got it!");
-			button.addActionListener(new ActionListener() {
-				public void actionPerformed (ActionEvent ae) {
-					jd.dispose();
-				}
-			});
-			jd.add(label);	
-			jd.add(button, BorderLayout.SOUTH);
-			jd.setModal(true);
-			jd.setVisible(true);
+			
 			received = 1;
 			finished = true;
 
@@ -181,5 +136,9 @@ public class ClientLoginThread extends Thread{
 		
 		System.out.println("I am about to return and received is " + received);
 		return success;
+	}
+	
+	public int getCode(){
+		return code;
 	}
 }

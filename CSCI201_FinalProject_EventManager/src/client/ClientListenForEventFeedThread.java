@@ -42,7 +42,7 @@ public class ClientListenForEventFeedThread extends Thread {
 				}
 			}
 		} catch(IOException ioe){
-			ioe.printStackTrace();
+			//ioe.printStackTrace();
 		} catch (ClassNotFoundException cnfe){
 			cnfe.printStackTrace();
 		}

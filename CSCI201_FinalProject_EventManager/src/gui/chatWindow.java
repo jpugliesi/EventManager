@@ -2,37 +2,46 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Date;
+import java.util.Vector;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.ImageIcon;
-import javax.swing.JTextField;
-import javax.swing.JScrollPane;
-import javax.swing.JList;
 import javax.swing.JLabel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextArea;
-import java.awt.Font;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import main.ChatMessage;
+import main.User;
+import client.ClientGetChatHistoryThread;
+import client.ClientSendMessageThread;
+import constants.Environment;
 
 public class chatWindow extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField;
+	private User otherPerson;
+	private JTextArea messageArea;
+	private JButton sendButton;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			chatWindow dialog = new chatWindow();
+			chatWindow dialog = new chatWindow(null);
 			dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -43,18 +52,22 @@ public class chatWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public chatWindow() {
+	public chatWindow(User otherPerson) {
+		this.otherPerson = otherPerson;
 		setBounds(100, 100, 450, 494);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
-			JButton sendButton = new JButton("Send");
+			sendButton = new JButton("Send");
 			getRootPane().setDefaultButton(sendButton);
 			sendButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					//send button
+					ChatMessage message = new ChatMessage(chatWindow.this.textField.getText(), Environment.currentUser, chatWindow.this.otherPerson, new Date(System.currentTimeMillis()));
+					ClientSendMessageThread sendMessageThread = new ClientSendMessageThread(message);
+					sendMessageThread.start();
 				}
 			});
 			sendButton.setBounds(327, 436, 117, 29);
@@ -85,11 +98,12 @@ public class chatWindow extends JDialog {
 			contentPanel.add(icon);
 		}
 		{
-			JTextArea textArea = new JTextArea();
-			textArea.setLineWrap(true);
-			textArea.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
-			textArea.setBounds(16, 80, 416, 331);
-			contentPanel.add(textArea);
+			messageArea = new JTextArea();
+			messageArea.setEditable(false);
+			messageArea.setLineWrap(true);
+			messageArea.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+			messageArea.setBounds(16, 80, 416, 331);
+			contentPanel.add(messageArea);
 		}
 		
 		JSeparator separator = new JSeparator();
@@ -105,7 +119,7 @@ public class chatWindow extends JDialog {
 			contentPanel.add(closeButton);
 			closeButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					hide();
+					chatWindow.this.setVisible(false);
 				}
 			});
 			closeButton.setActionCommand("Cancel");
@@ -117,6 +131,7 @@ public class chatWindow extends JDialog {
 			contentPanel.add(buttonPane);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		}
+		setVisible(true);
 	}
 	
 	public BufferedImage resizeImage(BufferedImage originalImage, int width,
@@ -126,5 +141,24 @@ public class chatWindow extends JDialog {
 		g.drawImage(originalImage, 0, 0, width, height, null);
 		g.dispose();
 		return resizedImage;
+	}
+	
+	public void updateChat(){
+		ClientGetChatHistoryThread chatHistoryThread = new ClientGetChatHistoryThread(Environment.currentUser, this.otherPerson);
+		chatHistoryThread.start();
+		while(!chatHistoryThread.finished()){ }
+		
+		if(chatHistoryThread.success()){
+			Vector<ChatMessage> messageHistory = chatHistoryThread.getMessageHistory();
+			messageArea.removeAll();
+			for(ChatMessage message : messageHistory){
+				messageArea.append(message.getSender().getUserName() + ": " + message.getMessage() + "\n");
+			}
+		}
+		System.out.println("Error updating chat");
+	}
+	
+	public User getOtherPerson(){
+		return this.otherPerson;
 	}
 }

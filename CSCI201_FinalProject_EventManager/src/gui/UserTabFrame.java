@@ -57,6 +57,7 @@ public class UserTabFrame extends JFrame {
 	private UserEventFeedPanel firstPanel;
 	
 	private JList<Event> event_feed_list;
+	private JList<User> admin_list; 
 	private DefaultListModel<Event> listModel;
 
 	/**
@@ -126,14 +127,18 @@ public class UserTabFrame extends JFrame {
 		chatThread.start();
 		Vector<User> chatFeed = chatThread.getAdmins();
 		
-		DefaultListModel<User> listModel2 = new DefaultListModel<>();
+		DefaultListModel<User> adminsModel = new DefaultListModel<>();
 		for(User u : chatFeed){
 			u.setProfilePicture();
 			
-			listModel2.addElement(u);
+			adminsModel.addElement(u);
 		}
-		JList<User> list2 = new JList<User>(listModel2);
-		UserChatPanel secondPanel = new UserChatPanel(list2);
+		admin_list = new JList<User>(adminsModel);
+		UserChatPanel secondPanel = new UserChatPanel(admin_list);
+		
+		//add click listener to admin_list
+		addAdminListListener();
+		
 		secondPanel.setBounds(20, 6, 285, 349);
 		panel2.add(secondPanel);
 		tabbedPane.addTab("Chat", null, panel2, null);
@@ -268,10 +273,24 @@ public class UserTabFrame extends JFrame {
 		            // Double-click detected
 		            int index = event_feed_list.locationToIndex(evt.getPoint());
 		            Event e = event_feed_list.getSelectedValue();
-		            new DetailedEventPage(e).setVisible(true);;
+		            new DetailedEventPage(e).setVisible(true);
 		        }
 		    }
 		});
 		
+	}
+	
+	private void addAdminListListener(){
+		admin_list.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		        if (evt.getClickCount() == 2) {
+
+		            // Double-click detected
+		            int index = admin_list.locationToIndex(evt.getPoint());
+		            User u = admin_list.getSelectedValue();
+		            Environment.chatListenerThread.addNewWindow(new chatWindow(u));
+		        }
+		    }
+		});
 	}
 }

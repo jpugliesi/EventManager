@@ -18,6 +18,10 @@ public class ClientGetChatHistoryThread extends Thread{
 	User sender;
 	User receiver;
 	Vector<ChatMessage> v;
+	private int code;
+	private boolean success = false;
+	
+	private volatile boolean finished = false;
 	
 	public ClientGetChatHistoryThread(User sender, User receiver) {
 		this.sender = sender;
@@ -41,13 +45,15 @@ public class ClientGetChatHistoryThread extends Thread{
 			outputStream.writeObject(receiver);
 			outputStream.flush();			
 			
-			int code = (Integer) inputStream.readObject();
+			code = (Integer) inputStream.readObject();
 			//success case
 			if (code == Constants.SERVER_GET_CHAT_HISTORY_SUCCESS) {
+				success = true;
 				v = (Vector<ChatMessage>) inputStream.readObject();
 				System.out.println("success loading chat history");
 			}
 			else if (code == Constants.SERVER_GET_CHAT_HISTORY_FAIL) {
+				success = false;
 				System.out.println("fail loading chat history");
 			}
 			
@@ -59,10 +65,19 @@ public class ClientGetChatHistoryThread extends Thread{
 		} catch (ClassNotFoundException e) {
 			System.out.println(e.getMessage());
 		} 
+		finished = true;
 	}
 	
 	public Vector<ChatMessage> getMessageHistory(){
 		return v;
+	}
+	
+	public boolean finished(){
+		return finished;
+	}
+	
+	public boolean success(){
+		return success;
 	}
 	
 	
