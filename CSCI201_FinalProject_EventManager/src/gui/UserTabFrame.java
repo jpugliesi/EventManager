@@ -44,9 +44,19 @@ public class UserTabFrame extends JFrame {
 		public void run(){
 			while(true){
 				if(listening.updateFeed()){
-					listModel.add(0, Environment.eventFeed.get(Environment.eventFeed.size()-1));
-					event_feed_list = new JList<Event>(listModel);
-					firstPanel = firstPanel.update(event_feed_list);
+					
+					ClientGetEventFeedThread feedThread = new ClientGetEventFeedThread(); 																    		
+					feedThread.start(); 
+					Vector<Event> eventFeed = feedThread.getEventFeed();
+					
+					listModel.add(0, eventFeed.get(eventFeed.size()-1));
+					event_feed_list .setModel(listModel);
+					/*firstPanel = new UserEventFeedPanel(event_feed_list);
+					firstPanel.revalidate();
+					panel1.revalidate();
+					firstPanel.repaint();
+					panel1.repaint();
+					*/
 				}
 			}
 		}
@@ -59,6 +69,7 @@ public class UserTabFrame extends JFrame {
 	private JList<Event> event_feed_list;
 	private JList<User> admin_list; 
 	private DefaultListModel<Event> listModel;
+	private JPanel panel1;
 
 	/**
 	 * Launch the application.
@@ -91,7 +102,7 @@ public class UserTabFrame extends JFrame {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 
-		JPanel panel1 = new JPanel();
+		panel1 = new JPanel();
 		panel1.setLayout(null);
 		//creates a new thread, gets the events from the thread
 		ClientGetEventFeedThread feedThread = new ClientGetEventFeedThread(); 																    		
