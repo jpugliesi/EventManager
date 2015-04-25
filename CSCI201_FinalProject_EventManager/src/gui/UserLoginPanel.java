@@ -2,18 +2,14 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dialog;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 import javax.imageio.ImageIO;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,17 +18,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.border.Border;
 
-import constants.Constants;
-import constants.Environment;
 import main.User;
+import client.ClientListenForChatUpdateThread;
 import client.ClientLoginThread;
 import client.ClientRegisterThread;
+import constants.Constants;
+import constants.Environment;
 
 public class UserLoginPanel extends JFrame {
 	private JLabel titleLogo;
@@ -267,6 +260,8 @@ public class UserLoginPanel extends JFrame {
 		
 							if(loginThread.loginSuccessful()){
 								new UserTabFrame().setVisible(true);
+								Environment.chatListenerThread = new ClientListenForChatUpdateThread();
+								Environment.chatListenerThread.start();
 								dispose();
 								jd.dispose();
 							}
