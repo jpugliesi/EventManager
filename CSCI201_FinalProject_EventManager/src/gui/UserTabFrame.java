@@ -31,14 +31,33 @@ import main.User;
 import client.ClientGetAdminsThread;
 import client.ClientGetEventFeedThread;
 import client.ClientGetUserEventThread;
+import client.ClientListenForEventFeedThread;
 import client.ClientUpdateProfileThread;
 
 public class UserTabFrame extends JFrame {
+	
+	private ClientListenForEventFeedThread listening = new ClientListenForEventFeedThread();
+	
+	
+	
+	private class CheckForUpdateThread extends Thread{
+		public void run(){
+			while(true){
+				if(listening.updateFeed()){
+					listModel.add(0, Environment.eventFeed.get(Environment.eventFeed.size()-1));
+					event_feed_list = new JList<Event>(listModel);
+					firstPanel = firstPanel.update(event_feed_list);
+				}
+			}
+		}
+	}
 
 	private JPanel contentPane;
 	private JTable table;
+	private UserEventFeedPanel firstPanel;
 	
 	private JList<Event> event_feed_list;
+	private DefaultListModel<Event> listModel;
 
 	/**
 	 * Launch the application.
@@ -60,6 +79,7 @@ public class UserTabFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public UserTabFrame() {
+		listening.start();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 356, 480);
 		contentPane = new JPanel();
@@ -78,21 +98,24 @@ public class UserTabFrame extends JFrame {
 		Vector<Event> eventFeed = feedThread.getEventFeed();
 		constants.Environment.eventFeed = eventFeed;
 		//and adds it to our local listmodel
-		DefaultListModel<Event> listModel = new DefaultListModel<>();
+		listModel = new DefaultListModel<>();
 		for(Event e : eventFeed){
 			listModel.addElement(e);
 		}
 		
 		event_feed_list = new JList<Event>(listModel);
+		CheckForUpdateThread cfut = new CheckForUpdateThread();
+		cfut.start();
 		
 		//add listener for list
 		addEventFeedListeners();
 		
 		
-		UserEventFeedPanel firstPanel = new UserEventFeedPanel(event_feed_list);
+		firstPanel = new UserEventFeedPanel(event_feed_list);
 		firstPanel.setBounds(20, 6, 285, 349);
 		panel1.add(firstPanel);
 		tabbedPane.addTab("Event Feed", null, panel1, null);
+		
 
 		
 		//get chat display

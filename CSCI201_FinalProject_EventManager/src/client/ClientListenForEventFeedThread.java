@@ -11,7 +11,7 @@ import constants.Environment;
 import main.User;
 import main.Event;
 
-public class ClientListenForEventFeedThread {
+public class ClientListenForEventFeedThread extends Thread {
 	private Socket socket;
 	private ObjectInputStream ois;
 	private ObjectOutputStream oos;

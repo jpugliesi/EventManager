@@ -31,6 +31,10 @@ public class UserEventFeedPanel extends JScrollPane {
 		this.setPreferredSize(new Dimension(300, 300));
 	}
 	
+	public UserEventFeedPanel update(JList list){
+		return new UserEventFeedPanel(list);
+	}
+	
 	private Map<String, ImageIcon> createImageMap(String[] list) {
 		Map<String, ImageIcon> map = new HashMap<>();
 		try {
