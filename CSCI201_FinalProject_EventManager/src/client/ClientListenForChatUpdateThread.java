@@ -1,12 +1,16 @@
 package client;
 
+import gui.chatWindow;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
-import constants.Constants;
 import main.User;
+import constants.Constants;
+import constants.Environment;
 
 public class ClientListenForChatUpdateThread {
 	private Socket socket;
@@ -15,9 +19,9 @@ public class ClientListenForChatUpdateThread {
 	private boolean updateChat = false;
 	private User sender, receiver;
 	
-	public ClientListenForChatUpdateThread(User sender, User receiver){
-		this.sender = sender;
-		this.receiver = receiver;
+	private ArrayList<chatWindow> chatWindows = new ArrayList<chatWindow>();
+	
+	public ClientListenForChatUpdateThread(){
 		try{
 			socket = new Socket(Constants.SERVER_IP, 6789);
 			oos = new ObjectOutputStream(socket.getOutputStream());
@@ -37,6 +41,33 @@ public class ClientListenForChatUpdateThread {
 				
 				if(update == Constants.SERVER_UPDATE_CHAT_HISTORY){
 					updateChat = true;
+					
+					this.sender = (User) ois.readObject();
+					this.receiver = (User) ois.readObject();
+					
+					boolean chatWindowOpen = false;
+					
+					
+					User otherPerson = null;
+					if(sender.getUserName().equals(Environment.currentUser.getUserName())){
+						otherPerson = receiver;
+					} else {
+						otherPerson = sender;
+					}
+					
+					for(chatWindow chat : chatWindows){
+						if(chat.otherPerson().getUserName().equals(this.sender.getUserName()) ||
+								chat.otherPerson().getUserName().equals(this.receiver.getUserName())){
+							chatWindowOpen = true;
+							chat.setVisible(true);
+							chat.updateChat();
+						}
+					}
+					if(!chatWindowOpen){
+						chatWindow chat = new chatWindow(receiver);
+						chatWindows.add(chat);
+						chatWindow.updateChat();
+					}
 				}
 			}
 		} catch(IOException ioe){
@@ -57,6 +88,12 @@ public class ClientListenForChatUpdateThread {
 	public User getReceiver(){
 		return this.receiver;
 	}
+	
+	public void reset(){
+		this.updateChat = false;
+	}
+	
+	
 	
 	
 }
