@@ -23,25 +23,7 @@ public class Server {
 	private Vector<ServerThread> updateVector = new Vector<ServerThread>();
 	private ServerSocket listenSS;
 	
-	private class ListenServerThread extends Thread {
-		private Server server;
-		public ListenServerThread(Server server){
-			this.server = server;
-			try {
-				listenSS = new ServerSocket(6790);
-				while(true){
-					Socket s = listenSS.accept();
-					ServerThread st = new ServerThread(s, server , db);
-					updateVector.add(st);
-					st.start();
-					
-					
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+
 	
 	
 	public Server(){
@@ -85,7 +67,7 @@ public class Server {
 	
 	//needs to be changed - send code only to the client(s) listening
 	public void sendMessageToClients(int n) {
-		for (ServerThread st1 : updateVector) {
+		for (ServerThread st1 : stVector) {
 			if(st1.isListeningForChat() || st1.isListeningForFeed()){
 				st1.sendCode(n);	
 			}
@@ -93,7 +75,7 @@ public class Server {
 	}
 	
 	public void sendUserToClient(User u){
-		for (ServerThread st1 : updateVector){
+		for (ServerThread st1 : stVector){
 			if (st1.isListeningForChat()){
 				st1.sendUser(u);
 			}
@@ -111,7 +93,7 @@ public class Server {
 	}
 	
 	public void sendFeed(Vector<Event> feed){
-		for (ServerThread st1 : updateVector){
+		for (ServerThread st1 : stVector){
 			if(st1.isListeningForFeed()){
 				st1.sendEventFeed(feed);
 			}

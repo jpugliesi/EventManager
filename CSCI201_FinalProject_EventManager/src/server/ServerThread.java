@@ -347,7 +347,9 @@ public class ServerThread extends Thread {
 					oos.writeObject(createEvent(newEvent));
 					oos.flush();
 					
+					
 					server.sendMessageToClients(Constants.SERVER_UPDATE_EVENT_FEED);
+					
 					
 	
 				}
@@ -438,7 +440,6 @@ public class ServerThread extends Thread {
 					User u = getUser();
 					
 					ImageIcon icon = getUsersPic(u);
-					System.out.println("server got users pic from database");
 					if(icon != null){
 						oos.writeObject(Constants.SERVER_GET_PROFILE_PICTURE_SUCCESS);
 						oos.flush();

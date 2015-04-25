@@ -15,7 +15,7 @@ public class ClientListenForEventFeedThread extends Thread {
 	private Socket socket;
 	private ObjectInputStream ois;
 	private ObjectOutputStream oos;
-	private boolean updateFeed = false;
+	private volatile boolean updateFeed = false;
 	
 	public ClientListenForEventFeedThread(){
 		
@@ -29,16 +29,20 @@ public class ClientListenForEventFeedThread extends Thread {
 		} catch(IOException ioe){
 			ioe.printStackTrace();
 		}
+		
 	}
 	
 	public void run() {
 		try{
 			while(true){
 				int update = (Integer)ois.readObject();
+				System.out.println("client prompted for update with code:" + update);
+				
 				
 				if(update == Constants.SERVER_UPDATE_EVENT_FEED){
 					updateFeed = true;
-					Environment.eventFeed = (Vector<Event>) ois.readObject();
+					//Environment.eventFeed = (Vector<Event>) ois.readObject();
+					
 				}
 			}
 		} catch(IOException ioe){
@@ -49,7 +53,11 @@ public class ClientListenForEventFeedThread extends Thread {
 	}
 	
 	public boolean updateFeed(){
-		return this.updateFeed;
+		if (updateFeed){
+			updateFeed = false;
+			return true;
+		}
+		return false;
 	}
 
 	
