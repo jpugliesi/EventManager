@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
+import main.Event;
 import main.LoginException;
 import main.User;
 import constants.Constants;
@@ -85,7 +86,7 @@ public class Server {
 	//needs to be changed - send code only to the client(s) listening
 	public void sendMessageToClients(int n) {
 		for (ServerThread st1 : updateVector) {
-			if(st1.isListening()){
+			if(st1.isListeningForChat() || st1.isListeningForFeed()){
 				st1.sendCode(n);	
 			}
 		}
@@ -93,7 +94,7 @@ public class Server {
 	
 	public void sendUserToClient(User u){
 		for (ServerThread st1 : updateVector){
-			if (st1.isListening()){
+			if (st1.isListeningForChat()){
 				st1.sendUser(u);
 			}
 		}
@@ -107,6 +108,14 @@ public class Server {
 		}
 		
 		return ret;
+	}
+	
+	public void sendFeed(Vector<Event> feed){
+		for (ServerThread st1 : updateVector){
+			if(st1.isListeningForFeed()){
+				st1.sendEventFeed(feed);
+			}
+		}
 	}
 	
 	public static void main(String [] args){

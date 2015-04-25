@@ -18,6 +18,9 @@ import javax.swing.JList;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextArea;
+import java.awt.Font;
+import javax.swing.JSeparator;
 
 public class chatWindow extends JDialog {
 
@@ -30,7 +33,7 @@ public class chatWindow extends JDialog {
 	public static void main(String[] args) {
 		try {
 			chatWindow dialog = new chatWindow();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -41,13 +44,14 @@ public class chatWindow extends JDialog {
 	 * Create the dialog.
 	 */
 	public chatWindow() {
-		setBounds(100, 100, 450, 530);
+		setBounds(100, 100, 450, 494);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
 			JButton sendButton = new JButton("Send");
+			getRootPane().setDefaultButton(sendButton);
 			sendButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					//send button
@@ -61,15 +65,6 @@ public class chatWindow extends JDialog {
 			textField.setBounds(6, 435, 322, 28);
 			contentPanel.add(textField);
 			textField.setColumns(10);
-		}
-		{
-			JPanel chatPanel = new JPanel();
-			chatPanel.setBounds(6, 63, 438, 361);
-			contentPanel.add(chatPanel);
-			{
-				JList list = new JList();
-				chatPanel.add(list);
-			}
 		}
 		{
 			JLabel icon = new JLabel("");
@@ -89,32 +84,38 @@ public class chatWindow extends JDialog {
 			
 			contentPanel.add(icon);
 		}
+		{
+			JTextArea textArea = new JTextArea();
+			textArea.setLineWrap(true);
+			textArea.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
+			textArea.setBounds(16, 80, 416, 331);
+			contentPanel.add(textArea);
+		}
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(6, 65, 438, 12);
+		contentPanel.add(separator);
+		
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setBounds(6, 423, 450, 12);
+		contentPanel.add(separator_1);
+		{
+			JButton closeButton = new JButton("Close");
+			closeButton.setBounds(365, 6, 79, 29);
+			contentPanel.add(closeButton);
+			closeButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					hide();
+				}
+			});
+			closeButton.setActionCommand("Cancel");
+		}
 		
 		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setBounds(6, 482, 450, 10);
+			contentPanel.add(buttonPane);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("OK");
-				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						dispose(); 
-					}
-				});
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						dispose();
-					}
-				});
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
-			}
 		}
 	}
 	
@@ -126,5 +127,4 @@ public class chatWindow extends JDialog {
 		g.dispose();
 		return resizedImage;
 	}
-
 }
