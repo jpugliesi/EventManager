@@ -239,11 +239,8 @@ public class UserLoginPanel extends JFrame {
 				jd.setLayout(new BorderLayout());
 				JLabel username = new JLabel("User Name:    ");
 				JLabel pass = new JLabel("Password:      ");
-				JLabel pass2 = new JLabel("Re enter Pass:");
 				JTextField jtf1 = new JTextField(15);
-				// JTextField jtf2= new JTextField(15);
 				JPasswordField jtf2 = new JPasswordField(15);
-				JPasswordField jtf3 = new JPasswordField(15);
 
 				JButton okButton = new JButton("OK");
 				// okButton.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -253,8 +250,7 @@ public class UserLoginPanel extends JFrame {
 						// makes sure jtf2 and jtf3 are the same pass
 						// pull the username and one of the password textfields
 						// and before it closes
-						if (jtf2.getText().equals(jtf3.getText())
-								&& !jtf2.getText().equals("")
+						if ( !jtf2.getText().equals("")
 								&& !username.getText().equals("")) 
 						{
 							ClientLoginThread loginThread= new ClientLoginThread(jtf1.getText(),jtf2.getText(), false);
@@ -309,8 +305,6 @@ public class UserLoginPanel extends JFrame {
 				centerPanel.add(new JPanel());
 				centerPanel.add(pass);
 				centerPanel.add(jtf2);
-				centerPanel.add(pass2);
-				centerPanel.add(jtf3);
 				centerPanel.add(new JPanel());
 				jd.add(centerPanel, BorderLayout.CENTER);
 				jd.add(buttonPanel2, BorderLayout.SOUTH);
