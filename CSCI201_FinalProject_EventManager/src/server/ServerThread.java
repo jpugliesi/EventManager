@@ -176,7 +176,7 @@ public class ServerThread extends Thread {
 		}
 	}
 	
-	public void sendEventFeeed(Vector<Event> feed){
+	public void sendEventFeed(Vector<Event> feed){
 		try{
 			oos.writeObject(feed);
 			oos.flush();
