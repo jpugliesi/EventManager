@@ -30,6 +30,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
 import constants.Environment;
+import client.ClientListenForChatUpdateThread;
 import client.ClientLoginThread;
 
 public class AdminLoginPanel extends JFrame {
@@ -51,6 +52,7 @@ public class AdminLoginPanel extends JFrame {
 		JPasswordField jtf2 = new JPasswordField(15);
 
 		JButton loginButton = new JButton("Login");
+		this.getRootPane().setDefaultButton(loginButton);
 		loginButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -69,7 +71,25 @@ public class AdminLoginPanel extends JFrame {
 					
 					if(lt.loginSuccessful()){
 						setVisible(false);
+						Environment.adminChatListenerThread = new ClientListenForChatUpdateThread(true);
+						Environment.adminChatListenerThread.start();
 						new AdminMainPanel();
+					} else {
+						JDialog tmp_jd = new JDialog();
+						tmp_jd.setSize(300,250);
+						tmp_jd.setLocation(400,100);
+						tmp_jd.setTitle("Login failed!");
+						JLabel label = new JLabel("Failed to login.");
+						JButton button = new JButton("Ok");
+						button.addActionListener(new ActionListener() {
+							public void actionPerformed (ActionEvent ae) {
+								tmp_jd.dispose();			
+							}
+						});
+						tmp_jd.add(label);
+						tmp_jd.add(button, BorderLayout.SOUTH);
+						tmp_jd.setModal(true);
+						tmp_jd.setVisible(true);
 					}
 					
 				}

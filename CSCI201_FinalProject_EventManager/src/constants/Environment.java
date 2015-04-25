@@ -16,6 +16,7 @@ public class Environment {
 	public static Vector<Event> eventFeed;
 	public static User currentAdmin;
 	public static ClientListenForChatUpdateThread chatListenerThread = null;
+	public static ClientListenForChatUpdateThread adminChatListenerThread = null;
 	
 	public Environment(User user, Socket socket, URL ipAddress){
 		this.currentUser = user;

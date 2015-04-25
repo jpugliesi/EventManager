@@ -59,16 +59,16 @@ public class UserLoginPanel extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				// Execute when button is pressed
-				final JDialog jd = new JDialog();
-				jd.setTitle("Register Your Information");
-				jd.setSize(325, 300);
-				jd.setLocationRelativeTo(null);
-				jd.setResizable(false);
-				jd.getContentPane().setBackground(new Color(100, 190, 250));
+				final JDialog register_jd = new JDialog();
+				register_jd.setTitle("Register Your Information");
+				register_jd.setSize(325, 300);
+				register_jd.setLocationRelativeTo(null);
+				register_jd.setResizable(false);
+				register_jd.getContentPane().setBackground(new Color(100, 190, 250));
 
 				JPanel centerPanel = new JPanel();
 				centerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-				jd.setLayout(new BorderLayout());
+				register_jd.setLayout(new BorderLayout());
 				final JLabel name = new JLabel("Name (First+Last):");
 				final JLabel username = new JLabel("User Name:           ");
 				JLabel pass = new JLabel("Password:             ");
@@ -80,7 +80,7 @@ public class UserLoginPanel extends JFrame {
 				final JPasswordField passTF2 = new JPasswordField(15);
 
 				JButton okButton = new JButton("OK");
-				jd.getRootPane().setDefaultButton(okButton);
+				register_jd.getRootPane().setDefaultButton(okButton);
 				// okButton.setHorizontalAlignment(SwingConstants.RIGHT);
 				okButton.addActionListener(new ActionListener() {
 
@@ -111,15 +111,16 @@ public class UserLoginPanel extends JFrame {
 								button.addActionListener(new ActionListener() {
 									public void actionPerformed (ActionEvent ae) {
 										tmp_jd.dispose();
+										register_jd.dispose();
+										
 									}
 								});
 								tmp_jd.add(label);
 								tmp_jd.add(button, BorderLayout.SOUTH);
 								tmp_jd.setModal(true);
 								tmp_jd.setVisible(true);
-								
 								dispose();
-								tmp_jd.dispose();
+								
 							} else if(registerThread.getErrorCode() == Constants.SERVER_REGISTRATION_USERNAME_FAIL){
 								JDialog tmp_jd = new JDialog();
 								tmp_jd.setSize(300,250);
@@ -177,7 +178,7 @@ public class UserLoginPanel extends JFrame {
 				cancelButton.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent e) {
-						jd.dispose();
+						register_jd.dispose();
 
 					}
 				});
@@ -212,9 +213,9 @@ public class UserLoginPanel extends JFrame {
 				centerPanel.add(pass2);
 				centerPanel.add(passTF2);
 				centerPanel.add(new JPanel());
-				jd.add(centerPanel, BorderLayout.CENTER);
-				jd.add(buttonPanel2, BorderLayout.SOUTH);
-				jd.setVisible(true);
+				register_jd.add(centerPanel, BorderLayout.CENTER);
+				register_jd.add(buttonPanel2, BorderLayout.SOUTH);
+				register_jd.setVisible(true);
 			}
 		});
 
@@ -257,7 +258,7 @@ public class UserLoginPanel extends JFrame {
 
 							if(loginThread.loginSuccessful()){
 								new UserTabFrame().setVisible(true);
-								Environment.chatListenerThread = new ClientListenForChatUpdateThread();
+								Environment.chatListenerThread = new ClientListenForChatUpdateThread(false);
 								Environment.chatListenerThread.start();
 								System.out.println("Chat listener started");
 								dispose();

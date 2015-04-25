@@ -17,6 +17,8 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -35,13 +37,15 @@ public class chatWindow extends JDialog {
 	private User otherPerson;
 	private JTextArea messageArea;
 	private JButton sendButton;
+	private JScrollPane scrollPane;
+	private boolean isAdmin;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			chatWindow dialog = new chatWindow(null);
+			chatWindow dialog = new chatWindow(null, false);
 			dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -52,7 +56,8 @@ public class chatWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public chatWindow(User otherPerson) {
+	public chatWindow(User otherPerson, boolean isAdmin) {
+		this.isAdmin = isAdmin;
 		this.otherPerson = otherPerson;
 		setBounds(100, 100, 450, 494);
 		getContentPane().setLayout(new BorderLayout());
@@ -65,9 +70,17 @@ public class chatWindow extends JDialog {
 			sendButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					//send button
-					ChatMessage message = new ChatMessage(chatWindow.this.textField.getText(), Environment.currentUser, chatWindow.this.otherPerson, new Date(System.currentTimeMillis()));
+					
+					User cUser = null;
+					if(chatWindow.this.isAdmin){
+						cUser = Environment.currentAdmin;
+					} else {
+						cUser = Environment.currentUser;
+					}
+					ChatMessage message = new ChatMessage(chatWindow.this.textField.getText(), cUser, chatWindow.this.otherPerson, new Date(System.currentTimeMillis()));
 					ClientSendMessageThread sendMessageThread = new ClientSendMessageThread(message);
 					sendMessageThread.start();
+					chatWindow.this.textField.setText("");
 				}
 			});
 			sendButton.setBounds(327, 436, 117, 29);
@@ -98,12 +111,16 @@ public class chatWindow extends JDialog {
 			contentPanel.add(icon);
 		}
 		{
-			messageArea = new JTextArea();
+			messageArea = new JTextArea(20, 20);
 			messageArea.setEditable(false);
 			messageArea.setLineWrap(true);
 			messageArea.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
-			messageArea.setBounds(16, 80, 416, 331);
-			contentPanel.add(messageArea);
+			
+			
+			scrollPane = new JScrollPane(messageArea);
+			scrollPane.setBounds(16, 80, 416, 331);
+			
+			contentPanel.add(scrollPane);
 		}
 		
 		JSeparator separator = new JSeparator();
@@ -132,6 +149,8 @@ public class chatWindow extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		}
 		setVisible(true);
+		
+		updateChat();
 	}
 	
 	public BufferedImage resizeImage(BufferedImage originalImage, int width,
@@ -143,19 +162,32 @@ public class chatWindow extends JDialog {
 		return resizedImage;
 	}
 	
+	
+	
 	public void updateChat(){
-		ClientGetChatHistoryThread chatHistoryThread = new ClientGetChatHistoryThread(Environment.currentUser, this.otherPerson);
+		User cUser = null;
+		if(this.isAdmin){
+			cUser = Environment.currentAdmin;
+		} else {
+			cUser = Environment.currentUser;
+		}
+		ClientGetChatHistoryThread chatHistoryThread = new ClientGetChatHistoryThread(cUser, this.otherPerson);
 		chatHistoryThread.start();
 		while(!chatHistoryThread.finished()){ }
 		
 		if(chatHistoryThread.success()){
 			Vector<ChatMessage> messageHistory = chatHistoryThread.getMessageHistory();
-			messageArea.removeAll();
+			messageArea.setText("");
+			
 			for(ChatMessage message : messageHistory){
 				messageArea.append(message.getSender().getUserName() + ": " + message.getMessage() + "\n");
 			}
+			
+			JScrollBar vertical = scrollPane.getVerticalScrollBar();
+			vertical.setValue( vertical.getMaximum() );
+		} else {
+			System.out.println("Error updating chat");
 		}
-		System.out.println("Error updating chat");
 	}
 	
 	public User getOtherPerson(){

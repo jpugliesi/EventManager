@@ -18,10 +18,12 @@ public class ClientListenForChatUpdateThread extends Thread{
 	private ObjectOutputStream oos;
 	private boolean updateChat = false;
 	private User sender, receiver;
+	private boolean isAdmin;
 	
 	private ArrayList<chatWindow> chatWindows = new ArrayList<chatWindow>();
 	
-	public ClientListenForChatUpdateThread(){
+	public ClientListenForChatUpdateThread(boolean isAdmin){
+		this.isAdmin = isAdmin;
 		try{
 			socket = new Socket(Constants.SERVER_IP, 6789);
 			oos = new ObjectOutputStream(socket.getOutputStream());
@@ -50,7 +52,14 @@ public class ClientListenForChatUpdateThread extends Thread{
 					boolean chatWindowOpen = false;
 
 					User otherPerson = null;
-					if(sender.getUserName().equals(Environment.currentUser.getUserName())){
+					
+					String username;
+					if(isAdmin){
+						username = Environment.currentAdmin.getUserName();
+					} else {
+						username = Environment.currentUser.getUserName();
+					}
+					if(sender.getUserName().equals(username)){
 						otherPerson = receiver;
 					} else {
 						otherPerson = sender;
@@ -64,7 +73,7 @@ public class ClientListenForChatUpdateThread extends Thread{
 						}
 					}
 					if(!chatWindowOpen){
-						chatWindow chat = new chatWindow(otherPerson);
+						chatWindow chat = new chatWindow(otherPerson, isAdmin);
 						chatWindows.add(chat);
 						chat.updateChat();
 					}
