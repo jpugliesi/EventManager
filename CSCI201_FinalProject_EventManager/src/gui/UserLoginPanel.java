@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -61,7 +62,7 @@ public class UserLoginPanel extends JFrame {
 				// Execute when button is pressed
 				final JDialog register_jd = new JDialog();
 				register_jd.setTitle("Register Your Information");
-				register_jd.setSize(325, 300);
+				register_jd.setSize(325, 400);
 				register_jd.setLocationRelativeTo(null);
 				register_jd.setResizable(false);
 				register_jd.getContentPane().setBackground(new Color(100, 190, 250));
@@ -78,6 +79,18 @@ public class UserLoginPanel extends JFrame {
 				// JTextField jtf2= new JTextField(15);
 				final JPasswordField passTF1 = new JPasswordField(15);
 				final JPasswordField passTF2 = new JPasswordField(15);
+				
+				//adding User profile pictures 
+							
+				ImageIcon i1 = new ImageIcon("profile_pictures/boy1.png");
+				ImageIcon i2 = new ImageIcon("profile_pictures/boy2.png");	
+				ImageIcon i3 = new ImageIcon("profile_pictures/man1.png");
+				ImageIcon i4 = new ImageIcon("profile_pictures/man2.png");
+				ImageIcon i5 = new ImageIcon("profile_pictures/woman1.png");
+				ImageIcon i6 = new ImageIcon("profile_pictures/woman2.png");
+				ImageIcon i7 = new ImageIcon("profile_pictures/woman3.png");				
+				Object options[] = {i1,i2,i3,i4,i5,i6,i7};
+				JComboBox jcb = new JComboBox(options);
 
 				JButton okButton = new JButton("OK");
 				register_jd.getRootPane().setDefaultButton(okButton);
@@ -92,7 +105,14 @@ public class UserLoginPanel extends JFrame {
 								&& !passTF1.getText().equals("")
 								&& !usernameTF.getText().equals("")
 								&& !nameTF.getText().equals("")) {
-							ClientRegisterThread registerThread = new ClientRegisterThread(new User(nameTF.getText(), usernameTF.getText(), passTF1.getText(), false, 1));
+							
+							
+							User nu = new User(nameTF.getText(), usernameTF.getText(), passTF1.getText(), false, 1);
+							int profile_id = jcb.getSelectedIndex() + 1;
+							System.out.println("selected profile index is: " + profile_id);
+							nu.setProfilePictureID(profile_id);
+							
+							ClientRegisterThread registerThread = new ClientRegisterThread(nu);
 							registerThread.start();
 							while(!registerThread.finished()){
 								
@@ -212,9 +232,12 @@ public class UserLoginPanel extends JFrame {
 				centerPanel.add(passTF1);
 				centerPanel.add(pass2);
 				centerPanel.add(passTF2);
-				centerPanel.add(new JPanel());
+				centerPanel.add(jcb);
+				
 				register_jd.add(centerPanel, BorderLayout.CENTER);
 				register_jd.add(buttonPanel2, BorderLayout.SOUTH);
+				
+				
 				register_jd.setVisible(true);
 			}
 		});
