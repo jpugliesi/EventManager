@@ -23,7 +23,7 @@ import main.Event;
 public class UserEventFeedPanel extends JScrollPane {
 
 	private Map<String, ImageIcon> imageMap;
-	public UserEventFeedPanel(JList list){
+	public UserEventFeedPanel(JList<Event> list){
 		super(list);
 		//imageMap = createImageMap(nameList);
 		list.setCellRenderer(new EventRenderer());
@@ -31,7 +31,7 @@ public class UserEventFeedPanel extends JScrollPane {
 		this.setPreferredSize(new Dimension(300, 300));
 	}
 	
-	public UserEventFeedPanel update(JList list){
+	public UserEventFeedPanel update(JList<Event> list){
 		return new UserEventFeedPanel(list);
 	}
 	
