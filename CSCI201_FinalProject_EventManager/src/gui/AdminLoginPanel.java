@@ -285,6 +285,7 @@ class AdminMainPanel extends JFrame {
 						
 						new AdminLoginPanel();
 						dispose();
+						jd.dispose();
 						
 					}
 					
