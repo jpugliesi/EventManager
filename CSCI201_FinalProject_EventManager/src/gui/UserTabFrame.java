@@ -11,6 +11,7 @@ import java.util.Vector;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -167,6 +168,7 @@ public class UserTabFrame extends JFrame {
 		panel3.add(profileName);
 
 		JLabel lblPicturePlaceholder = new JLabel("Picture PlaceHolder");
+		Environment.currentUser.setProfilePicture();
 		lblPicturePlaceholder.setIcon(Environment.currentUser.getProfilePicture());
 		lblPicturePlaceholder.setBounds(240, 20, 65, 44);
 		panel3.add(lblPicturePlaceholder);
@@ -177,7 +179,7 @@ public class UserTabFrame extends JFrame {
 		editProfileButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				JDialog jd = new JDialog();
-				jd.setSize(350,300);
+				jd.setSize(350,450);
 				jd.setLocation(400,50);
 				jd.setTitle("Edit Profile");
 				JLabel label1 = new JLabel("fullname");
@@ -189,15 +191,29 @@ public class UserTabFrame extends JFrame {
 				JPanel jp1 = new JPanel();
 				JPanel jp2 = new JPanel();
 				JPanel jp3 = new JPanel();
+				JPanel jp4 = new JPanel();
 				jp1.add(label1); jp1.add(jtf1);
 				jp1.add(label2); jp1.add(jtf2);
 				jp1.add(label3); jp1.add(jtf3);
+				
+				//adding user profile pictures
+				ImageIcon i1 = new ImageIcon("profile_pictures/boy1.png");
+				ImageIcon i2 = new ImageIcon("profile_pictures/boy2.png");	
+				ImageIcon i3 = new ImageIcon("profile_pictures/man1.png");
+				ImageIcon i4 = new ImageIcon("profile_pictures/man2.png");
+				ImageIcon i5 = new ImageIcon("profile_pictures/woman1.png");
+				ImageIcon i6 = new ImageIcon("profile_pictures/woman2.png");
+				ImageIcon i7 = new ImageIcon("profile_pictures/woman3.png");				
+				Object options[] = {i1,i2,i3,i4,i5,i6,i7};
+				JComboBox jcb = new JComboBox(options);
+				jp4.add(jcb);
 				
 				JPanel mainPanel = new JPanel();
 				mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 				mainPanel.add(jp1);
 				mainPanel.add(jp2);
 				mainPanel.add(jp3);
+				mainPanel.add(jp4);
 				
 				JButton bt = new JButton("Submit");
 				//upon clicking the "Submit" button, update GUI and initiate thread
@@ -208,8 +224,16 @@ public class UserTabFrame extends JFrame {
 						String password = jtf3.getText();
 						//update GUI
 						profileName.setText(fullname);
-						//create new User
+						//create new User and set profile picture
 						User newUser = new User(fullname, username, password, false, 1);
+						int profile_id = jcb.getSelectedIndex() + 1;
+						//newUser.setProfilePictureID(profile_id);
+						Environment.currentUser.setProfilePictureID(profile_id);
+						Environment.currentUser.setProfilePicture();
+						lblPicturePlaceholder.setIcon(Environment.currentUser.getProfilePicture());
+						
+						
+						
 						//initiate update thread
 						ClientUpdateProfileThread updateThread = new ClientUpdateProfileThread(newUser);
 						updateThread.start();

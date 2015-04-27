@@ -16,7 +16,7 @@ public class User implements Serializable{
 	private String fullName, userName, password;
 	private boolean isAdmin;
 	private Vector<Event> eventVector;
-	private ImageIcon profilePicture;
+	private volatile ImageIcon profilePicture;
 
 
 	
@@ -60,8 +60,7 @@ public class User implements Serializable{
 		}
 		else if (profilePictureID == 7){
 			profilePicture = Constants.WOMAN3;
-		}
-		
+		}		
 		
 	}
 	
@@ -123,5 +122,7 @@ public class User implements Serializable{
 	public ImageIcon getProfilePicture(){
 		return profilePicture;
 	}
+	
+	
 
 }

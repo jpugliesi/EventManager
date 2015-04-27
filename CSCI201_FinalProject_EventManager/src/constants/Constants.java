@@ -101,7 +101,7 @@ public class Constants {
 	public static ImageIcon MAN2 = new ImageIcon("profile_pictures/man2.png");
 	public static ImageIcon WOMAN1 = new ImageIcon("profile_pictures/woman1.png");
 	public static ImageIcon WOMAN2 = new ImageIcon("profile_pictures/woman2.png");
-	public static ImageIcon WOMAN3 = new ImageIcon("profile_pictures/woman13.png");
+	public static ImageIcon WOMAN3 = new ImageIcon("profile_pictures/woman3.png");
 	
 	public static int DEFAULT_PORT = 6789;
 	
