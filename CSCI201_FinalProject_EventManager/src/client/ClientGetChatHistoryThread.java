@@ -50,11 +50,11 @@ public class ClientGetChatHistoryThread extends Thread{
 			if (code == Constants.SERVER_GET_CHAT_HISTORY_SUCCESS) {
 				success = true;
 				v = (Vector<ChatMessage>) inputStream.readObject();
-				System.out.println("success loading chat history");
+				//System.out.println("success loading chat history");
 			}
 			else if (code == Constants.SERVER_GET_CHAT_HISTORY_FAIL) {
 				success = false;
-				System.out.println("fail loading chat history");
+				//System.out.println("fail loading chat history");
 			}
 			
 			//TODO

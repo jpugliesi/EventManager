@@ -337,7 +337,7 @@ public class ServerThread extends Thread {
 					oos.flush();
 				}
 				else if (command == Constants.CLIENT_GET_EVENT_FEED){ //get events
-					System.out.println("prompted for feed");
+					//System.out.println("prompted for feed");
 					oos.writeObject(getEventVector()); //sends the event feed vector
 					
 					oos.flush();

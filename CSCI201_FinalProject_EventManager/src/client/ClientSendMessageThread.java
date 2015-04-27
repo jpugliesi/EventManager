@@ -39,11 +39,11 @@ public class ClientSendMessageThread extends Thread{
 			
 			if (code == Constants.SERVER_SEND_MESSAGE_SUCCESS) {
 				success = true;
-				System.out.println("Success send message");
+				//System.out.println("Success send message");
 			}
 			else if (code == Constants.SERVER_SEND_MESSAGE_FAIL) {
 				success = false;
-				System.out.println("Fail send message");
+				//System.out.println("Fail send message");
 			}
 					
 		} catch (IOException ioe) {

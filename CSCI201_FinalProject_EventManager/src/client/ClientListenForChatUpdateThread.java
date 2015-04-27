@@ -38,11 +38,11 @@ public class ClientListenForChatUpdateThread extends Thread{
 	
 	public void run() {
 		try{
-			System.out.println("Running chat listener thread");
+			//System.out.println("Running chat listener thread");
 			while(true){
 				int update = (Integer)ois.readObject();
 				
-				System.out.println("Notified to update chat");
+				//System.out.println("Notified to update chat");
 				if(update == Constants.SERVER_UPDATE_CHAT_HISTORY){
 					updateChat = true;
 					

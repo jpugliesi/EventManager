@@ -36,10 +36,10 @@ public class ClientCreateEventThread extends Thread {
 			int code = (Integer) inputStream.readObject();
 			
 			if (code == Constants.SERVER_CREATE_EVENT_SUCCESS) {
-				System.out.println("Success created event");
+				//System.out.println("Success created event");
 			}
 			else if (code == Constants.SERVER_CREATE_EVENT_FAIL) {
-				System.out.println("Fail created event");
+				//System.out.println("Fail created event");
 			}			
 			
 		} catch (IOException ioe) {

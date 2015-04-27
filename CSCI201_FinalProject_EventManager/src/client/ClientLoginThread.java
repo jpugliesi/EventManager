@@ -68,7 +68,7 @@ public class ClientLoginThread extends Thread{
 			
 		code = (Integer)inputStream.readObject();
 		//received User object is not null, log in success
-		System.out.println("received code " + code);
+		//System.out.println("received code " + code);
 		if (code == Constants.SERVER_LOGIN_SUCCESS) {
 			success=true;
 			u = (User) inputStream.readObject();
@@ -116,7 +116,7 @@ public class ClientLoginThread extends Thread{
 
 		}
 		}
-		System.out.println("end of run()");
+		//System.out.println("end of run()");
 		finished = true;
 	}
 	
@@ -134,7 +134,7 @@ public class ClientLoginThread extends Thread{
 	
 	public synchronized boolean loginSuccessful(){
 		
-		System.out.println("I am about to return and received is " + received);
+		//System.out.println("I am about to return and received is " + received);
 		return success;
 	}
 	
