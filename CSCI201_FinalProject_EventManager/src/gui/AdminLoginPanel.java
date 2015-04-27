@@ -148,6 +148,7 @@ class AdminMainPanel extends JFrame {
 	JButton manageEventButton;
 	JButton createEventButton;
 	JButton profileButton;
+	JButton inboxButton;
 
 	AdminMainPanel() {
 		super("Admin HomePage");
