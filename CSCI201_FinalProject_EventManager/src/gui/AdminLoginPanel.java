@@ -218,7 +218,7 @@ class AdminMainPanel extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				// Execute when button is pressed
-				final CreateEventDialog jd = new CreateEventDialog("This is a fake title", "this is my really long description");
+				final ManageEventDialog jd = new ManageEventDialog();
 				jd.setVisible(true);
 			}
 		});
