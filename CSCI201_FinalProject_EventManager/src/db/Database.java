@@ -174,6 +174,8 @@ public class Database {
 		
 	}
 	
+	
+	
 	/*
 	 * PARAM: User object
 	 * RETURNS: Error/Success code
@@ -368,6 +370,54 @@ public class Database {
 		}
 		
 		return events;
+	}
+	
+	/*
+	 * getAdminEventVector(User)
+	 * Retrieves a Vector<Event> for all of a admin's created events
+	 * 
+	 * Throws GetEventException if error
+	 * 
+	 * PARAMS: User object
+	 * RETURNS: Vector<Event>
+	 * 
+	 */
+	public Vector<Event> getAdminEventVector(User user) throws GetEventException{
+		Vector<Event> admin_events = new Vector<Event>();
+		
+		try{
+			String sql = "SELECT * FROM events WHERE fk_admin = ?";
+			PreparedStatement find_events = conn.prepareStatement(sql);
+			find_events.setInt(1, user.getUserID());
+			ResultSet users_events = find_events.executeQuery();
+			
+			while(users_events.next()){
+				int event_id = users_events.getInt("event_id");
+				String event_title = users_events.getString("name");
+				String event_club = users_events.getString("club");
+				String event_location = users_events.getString("location");
+				long event_epoch_time = users_events.getLong("time");
+				String event_description = users_events.getString("description");
+				int event_attending = users_events.getInt("num_attending");
+				int event_admin_id = users_events.getInt("fk_admin");
+				
+				Date event_time = new Date(event_epoch_time);
+				Event found_event = new Event(event_title, event_location, event_time, event_club, event_description, event_attending, event_admin_id);
+				found_event.setID(event_id);
+				
+				admin_events.add(found_event);
+			}
+			
+			users_events.close();
+			find_events.close();
+		} catch(SQLException sqle){
+			System.out.println("SQLException retieving admin's events");
+			sqle.printStackTrace();
+			throw new GetEventException(Constants.CLIENT_GET_ADMIN_EVENTS_FAIL);
+		}
+		
+		return admin_events;
+	
 	}
 	
 	public ImageIcon getProfilePicture(User user) throws GetProfilePictureException{
@@ -774,11 +824,11 @@ public class Database {
 		}
 		
 		//Add Events
-		this.createEvent(new Event("Event 1", "Bovard Auditorium", new GregorianCalendar(2009, 1, 1, 9, 55).getTime(), "Club1", "An event at Bovard!", 0, 1));
-		this.createEvent(new Event("Event 2", "SAL 101", new GregorianCalendar(2010, 2, 1, 10, 55).getTime(), "Club2", "A club event at Sal!", 0, 1));
-		this.createEvent(new Event("Event 3", "Galen Center", new GregorianCalendar(2015, 1, 1, 11, 55).getTime(), "Club3", "Club Basketball Game!", 0, 1));
-		this.createEvent(new Event("Event 4", "VKC 201", new GregorianCalendar(2015, 3, 13, 14, 0).getTime(), "Club4", "Club Meeting!", 0, 1));
-		this.createEvent(new Event("Event 5", "Leavy Library", new GregorianCalendar(2015, 6, 1, 10, 0).getTime(), "Club5", "Study Club!", 0, 1));
+		this.createEvent(new Event("Event 1", "Bovard Auditorium", new GregorianCalendar(2009, 1, 1, 9, 55).getTime(), "Club1", "An event at Bovard!", 0, 2));
+		this.createEvent(new Event("Event 2", "SAL 101", new GregorianCalendar(2010, 2, 1, 10, 55).getTime(), "Club2", "A club event at Sal!", 0, 2));
+		this.createEvent(new Event("Event 3", "Galen Center", new GregorianCalendar(2015, 1, 1, 11, 55).getTime(), "Club3", "Club Basketball Game!", 0, 2));
+		this.createEvent(new Event("Event 4", "VKC 201", new GregorianCalendar(2015, 3, 13, 14, 0).getTime(), "Club4", "Club Meeting!", 0, 2));
+		this.createEvent(new Event("Event 5", "Leavy Library", new GregorianCalendar(2015, 6, 1, 10, 0).getTime(), "Club5", "Study Club!", 0, 2));
 		
 		
 		
@@ -1044,14 +1094,25 @@ public class Database {
 			}
 			
 			//get admins
+			Vector<User> admins = null;
 			try {
-				Vector<User> admins = db.getAdmins();
+				admins = db.getAdmins();
 				System.out.println("Admins:");
 				for(User a : admins){
 					System.out.println(a.getFullName() + " is an admin");
 				}
 				System.out.println();
 			} catch (GetAdminsException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try{
+				Vector<Event> admin_events = db.getAdminEventVector(admins.get(0));
+				for(Event e : admin_events){
+					System.out.println(admins.get(0).getFullName() + " is hosting: " + e.getName());
+				}
+			} catch (GetEventException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
