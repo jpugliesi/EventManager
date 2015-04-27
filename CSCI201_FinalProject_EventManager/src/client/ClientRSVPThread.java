@@ -51,6 +51,7 @@ public class ClientRSVPThread extends Thread{
 		//success case
 		if (code == Constants.SERVER_RSVP_SUCCESS) {
 			success = true;
+			
 		}
 		
 		//fail case
