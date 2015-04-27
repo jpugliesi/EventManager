@@ -3,13 +3,16 @@ package main;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.swing.ImageIcon;
+
 public class Event implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private int eventID, peopleAttending, eventAdminID;
+	private int eventID, peopleAttending, eventAdminID, profilePictureID;
 	private String eventName, eventLocation, eventDesc, eventClub;
 	private Date eventTime;
+	private ImageIcon profilePicture;
 	
 	public Event(String eventName, String eventLocation, Date eventTime, String eventClub, String eventDesc, int peopleAttending, int adminID){
 		this.eventName = eventName;
@@ -22,6 +25,14 @@ public class Event implements Serializable{
 	}
 	
 	public Event(){
+		
+	}
+	
+	public void setProfilePictureID(int id){
+		this.profilePictureID = id;
+	}
+	
+	public void setProfilePicture(){
 		
 	}
 	
