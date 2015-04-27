@@ -6,26 +6,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Vector;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
-import constants.Environment;
 import main.Event;
 import main.User;
 import client.ClientGetAdminsThread;
@@ -33,6 +31,7 @@ import client.ClientGetEventFeedThread;
 import client.ClientGetUserEventThread;
 import client.ClientListenForEventFeedThread;
 import client.ClientUpdateProfileThread;
+import constants.Environment;
 
 public class UserTabFrame extends JFrame {
 	
@@ -65,10 +64,12 @@ public class UserTabFrame extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private UserEventFeedPanel firstPanel;
+	private JTabbedPane tabbedPane;
 	
 	private JList<Event> event_feed_list;
 	private JList<User> admin_list; 
 	private DefaultListModel<Event> listModel;
+	private DefaultListModel<Event> userEventsListModel;
 	private JPanel panel1;
 
 	/**
@@ -99,7 +100,7 @@ public class UserTabFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 
 		panel1 = new JPanel();
@@ -121,6 +122,7 @@ public class UserTabFrame extends JFrame {
 		
 		//add listener for list
 		addEventFeedListeners();
+		addUserEventListeners();
 		
 		
 		firstPanel = new UserEventFeedPanel(event_feed_list);
@@ -251,12 +253,12 @@ public class UserTabFrame extends JFrame {
 		
 		Vector<Event> vec = uet.getUserEvents();
 		
-		DefaultListModel<Event> listModel3 = new DefaultListModel<Event>();
+		userEventsListModel = new DefaultListModel<Event>();
 		for(Event e : vec){
 		
-			listModel3.addElement(e);
+			userEventsListModel.addElement(e);
 		}
-		JList<Event> jlist3 = new JList<Event>(listModel3);
+		JList<Event> jlist3 = new JList<Event>(userEventsListModel);
 		
 		UserEventsPanel uep = new UserEventsPanel(jlist3);
 		uep.setBounds(17, 148, 198, 207);
@@ -273,6 +275,18 @@ public class UserTabFrame extends JFrame {
 		panel3.add(descriptionLabel);
 		
 		*/
+	}
+	
+	private void addUserEventListeners(){
+			tabbedPane.addChangeListener(new ChangeListener() {
+		      public void stateChanged(ChangeEvent changeEvent) {
+		        JTabbedPane tPane = (JTabbedPane) changeEvent.getSource();
+		        int index = tPane.getSelectedIndex();
+		        if(index == 2){
+		        	UserTabFrame.this.updateUserEvents();
+		        }
+		      }
+		    });
 	}
 	
 	private void addEventFeedListeners(){
@@ -303,5 +317,19 @@ public class UserTabFrame extends JFrame {
 		        }
 		    }
 		});
+	}
+	
+	public void updateUserEvents(){
+		ClientGetUserEventThread uet = new ClientGetUserEventThread(Environment.currentUser);
+		uet.start();
+		
+		userEventsListModel.removeAllElements();
+		
+		Vector<Event> vec = uet.getUserEvents();
+
+		for(Event e : vec){
+		
+			userEventsListModel.addElement(e);
+		}
 	}
 }
