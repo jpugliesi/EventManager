@@ -6,8 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -448,6 +452,127 @@ public class Database {
 	}
 	
 	/*
+	 * given a user, returns a recommended event
+	 */
+	public Event recommendEvent(User user) throws GetEventException{
+		Event event = null;
+		Map<Integer, Integer> event_map = new HashMap<Integer, Integer>();
+		int recommendedEventID = 0;
+		Vector<Event> users_events = null;
+		try{
+			users_events = this.getUserEventVector(user);
+		} catch (GetEventException ge){
+			System.out.println("error in event recommendation");
+			ge.printStackTrace();
+			throw new GetEventException(Constants.SERVER_GET_RECOMMENDED_EVENT_FAIL);
+		}
+		if(users_events.size() == 0){ throw new GetEventException(Constants.SERVER_GET_RECOMMENDED_EVENT_FAIL); }
+		for(Event e : users_events){
+			//find users at the same events
+			Vector<User> similar_users = this.getSimilarUsers(e);
+			for(User u : similar_users){
+				//aggregate events
+				Vector<Event> tmp_events = this.getUserEventVector(u);
+				for(Event ue : tmp_events){
+					if(!users_events.contains(ue)){
+						if(event_map.containsKey(ue.getID())){
+							event_map.replace(ue.getID(), event_map.get(ue.getID())+1);
+						} else {
+							event_map.put(ue.getID(), 0);
+						}
+					}
+				}
+				
+			}
+		}
+		if(event_map.size() == 0){ throw new GetEventException(Constants.SERVER_GET_RECOMMENDED_EVENT_FAIL); }
+		
+		int maxVal=(Collections.max(event_map.values()));
+		for (Entry<Integer, Integer> entry : event_map.entrySet()) {  // Itrate through hashmap
+            if (entry.getValue()==maxVal) {
+                System.out.println(entry.getKey());     // Print the key with max value
+            	recommendedEventID = entry.getKey();
+            }
+        }
+		
+		//retrieve recommended event
+		try {
+			event = this.getEvent(recommendedEventID);
+		} catch (GetEventException e) {
+			System.out.println("Error getting recommended event by id");
+			e.printStackTrace();
+		}
+	
+		return event;
+	}
+	
+	private Vector<User> getSimilarUsers(Event event){
+		Vector<User> similarUsers = new Vector<User>();
+		try{
+			//find users at the same event
+			String sql = "SELECT fk_user_id FROM user_event_junction WHERE fk_event_id=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, event.getID());
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				int similar_user_id = rs.getInt("fk_user_id");
+				User similar_user = this.getUserByID(similar_user_id);
+				similarUsers.add(similar_user);
+			}
+			
+			rs.close();
+			ps.close();
+			
+		} catch (SQLException e) {
+			//error in register user
+			System.out.println("SQLException in getSimilarUsers()");
+			e.printStackTrace();
+			return null;
+		}
+		
+		return similarUsers;
+	}
+	
+	private User getUserByID(int user_id){
+		User tmp_user = null;
+		try{
+			//find users at the same event
+			String sql = "SELECT * FROM users WHERE user_id=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, user_id);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			rs.next();
+				
+			int id = rs.getInt("user_id");
+			String db_username = rs.getString("username");
+			String db_password = rs.getString("password_hash");
+			String full_name = rs.getString("full_name");
+			boolean is_admin = rs.getBoolean("is_admin");
+			int fk_prof_pic = rs.getInt("fk_profile_picture");
+			tmp_user = new User(full_name, db_username, db_password, is_admin, fk_prof_pic); 
+			tmp_user.setUserID(id);
+			
+			
+			rs.close();
+			ps.close();
+			
+		} catch (SQLException e) {
+			//error in register user
+			System.out.println("SQLException in getUserByID()");
+			e.printStackTrace();
+			return null;
+		}
+		
+		return tmp_user;
+	}
+	
+	/*
 	 * getEventFeed()
 	 * Returns a Vector<Event> of 10 most recent events
 	 * 
@@ -846,22 +971,29 @@ public class Database {
 			
 			
 			//get event
-			String s = "SELECT * FROM events LIMIT 1";
+			String s = "SELECT * FROM events LIMIT 2";
 			Statement st = conn.createStatement();
 			ResultSet tmp_event_result = st.executeQuery(s);
-			tmp_event_result.next();
-			int event_id = tmp_event_result.getInt("event_id");
-			String event_name = tmp_event_result.getString("name");
-			String event_club = tmp_event_result.getString("club");
-			String event_location = tmp_event_result.getString("location");
-			long event_time = tmp_event_result.getLong("time");
-			String event_description = tmp_event_result.getString("description");
-			int event_attending = tmp_event_result.getInt("num_attending");
-			int event_fk_admin = tmp_event_result.getInt("fk_admin");
 			
-			Event tmp_event = new Event(event_name, event_location, new Date(event_time), event_club, event_description, event_attending, event_fk_admin);
-			tmp_event.setID(event_id);
-			this.rsvp(joeb, tmp_event);
+			int count = 0;
+			while(tmp_event_result.next()){
+				int event_id = tmp_event_result.getInt("event_id");
+				String event_name = tmp_event_result.getString("name");
+				String event_club = tmp_event_result.getString("club");
+				String event_location = tmp_event_result.getString("location");
+				long event_time = tmp_event_result.getLong("time");
+				String event_description = tmp_event_result.getString("description");
+				int event_attending = tmp_event_result.getInt("num_attending");
+				int event_fk_admin = tmp_event_result.getInt("fk_admin");
+				
+				Event tmp_event = new Event(event_name, event_location, new Date(event_time), event_club, event_description, event_attending, event_fk_admin);
+				tmp_event.setID(event_id);
+				this.rsvp(joeb, tmp_event);
+				if(count == 0){
+					this.rsvp(fsmith, tmp_event);
+				}
+				count++;
+			}
 			
 		} catch(SQLException sqle){
 			sqle.printStackTrace();
@@ -1109,14 +1241,23 @@ public class Database {
 				e.printStackTrace();
 			}
 			
+			//get admin list
 			try{
 				Vector<Event> admin_events = db.getAdminEventVector(admins.get(0));
 				for(Event e : admin_events){
 					System.out.println(admins.get(0).getFullName() + " is hosting: " + e.getName());
 				}
 			} catch (GetEventException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+			
+			//get recommended event for fsmith, which should be event 2
+			try{
+				Event recommended_event = db.recommendEvent(fsmith);
+				System.out.println("recommended event for fsmith: " + recommended_event.getName() + " id:" + recommended_event.getID());
+				
+			} catch(GetEventException ge){
+				ge.printStackTrace();
 			}
 			
 			db.shutdownDB();

@@ -30,6 +30,7 @@ import main.Event;
 import main.User;
 import client.ClientGetAdminsThread;
 import client.ClientGetEventFeedThread;
+import client.ClientGetRecommendedEventThread;
 import client.ClientGetUserEventThread;
 import client.ClientListenForEventFeedThread;
 import client.ClientUpdateProfileThread;
@@ -250,6 +251,42 @@ public class UserTabFrame extends JFrame {
 		});
 		panel3.add(editProfileButton);
 
+		//add recommendation button
+		JButton recommendationButton = new JButton("Recommend an Event");
+		recommendationButton.setBounds(17, 367, 180, 29);
+		panel3.add(recommendationButton);
+		
+		recommendationButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				ClientGetRecommendedEventThread cgre = new ClientGetRecommendedEventThread(Environment.currentUser);
+				cgre.start();
+				
+				while(!cgre.finished()){ }
+				
+				if(cgre.sucessful()){
+					new DetailedEventPage(cgre.getEvent()).setVisible(true);
+				} else {
+					JDialog tmp_jd = new JDialog();
+			
+					tmp_jd.setSize(300,250);
+					tmp_jd.setLocation(500,100);
+					tmp_jd.setTitle("No Event Recommendations");
+					JLabel label = new JLabel("<html>Sorry, we currently don't have any events to recommend. <br> Please make sure to RSVP to other events so that we can recommend others.</html>");
+					label.setHorizontalAlignment(SwingConstants.CENTER);
+					JButton button = new JButton("Got it!");
+					button.addActionListener(new ActionListener() {
+						public void actionPerformed (ActionEvent ae) {
+							tmp_jd.dispose();
+						}
+					});
+					tmp_jd.add(label);
+					tmp_jd.add(button, BorderLayout.SOUTH);
+					tmp_jd.setModal(true);
+					tmp_jd.setVisible(true);
+				}
+			}
+		});
+		
 		JButton btnLogout = new JButton("Logout");
 		btnLogout.setBounds(208, 367, 117, 29);
 		panel3.add(btnLogout);

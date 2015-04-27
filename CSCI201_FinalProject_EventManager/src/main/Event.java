@@ -75,5 +75,20 @@ public class Event implements Serializable{
 	public void setNumAttending(int numattending){
 		this.peopleAttending = numattending;
 	}
+	
+	public boolean equals(Object obj){
+		if (obj == null) {
+	        return false;
+	    }
+	    if (getClass() != obj.getClass()) {
+	        return false;
+	    }
+	    final Event other = (Event) obj;
+
+	    if (this.getID() == other.getID()) {
+	        return true;
+	    }
+	    return false;
+	}
 
 }

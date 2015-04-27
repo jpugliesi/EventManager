@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import main.User;
 import client.ClientListenForChatUpdateThread;
@@ -127,6 +128,7 @@ public class UserLoginPanel extends JFrame {
 								tmp_jd.setLocation(400,100);
 								tmp_jd.setTitle("Registration success!");
 								JLabel label = new JLabel("You are now registered!");
+								//label.setHorizontalAlignment(SwingConstants.CENTER);
 								JButton button = new JButton("Got it!");
 								button.addActionListener(new ActionListener() {
 									public void actionPerformed (ActionEvent ae) {

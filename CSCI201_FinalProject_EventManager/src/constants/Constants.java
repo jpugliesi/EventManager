@@ -89,6 +89,11 @@ public class Constants {
 	public static int CLIENT_GET_ADMIN_EVENTS_SUCCESS = 1;
 	public static int CLIENT_GET_ADMIN_EVENTS_FAIL = 0;
 	
+	public static int CLIENT_GET_RECOMMENDED_EVENT = 17;
+	public static int SERVER_GET_RECOMMENDED_EVENT_SUCCESS = 1;
+	public static int SERVER_GET_RECOMMENDED_EVENT_FAIL = 0;
+	
+	
 	//close the database
 	public static int SHUTDOWN = 12;
 	

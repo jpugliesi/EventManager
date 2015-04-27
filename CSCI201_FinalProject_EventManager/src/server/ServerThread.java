@@ -259,6 +259,16 @@ public class ServerThread extends Thread {
 		return db.rsvp(u,e);
 	}
 	
+	private Event recommendEvent(User u){
+		Event e = null;
+		try{
+			e = db.recommendEvent(u);
+		} catch(GetEventException ge){
+			return null;
+		}
+		return e;
+	}
+	
 	private ImageIcon getUsersPic(User u){
 		ImageIcon ii = null;
 		try{
@@ -437,6 +447,21 @@ public class ServerThread extends Thread {
 						oos.flush();
 					}
 					
+				}
+				else if (command == Constants.CLIENT_GET_RECOMMENDED_EVENT){
+					User u = getUser();
+					
+					Event e = recommendEvent(u);
+
+					if(e != null){
+						oos.writeObject(Constants.SERVER_GET_RECOMMENDED_EVENT_SUCCESS);
+						oos.flush();
+						oos.writeObject(e);
+						oos.flush();
+					} else {
+						oos.writeObject(Constants.SERVER_GET_RECOMMENDED_EVENT_FAIL);
+						oos.flush();
+					}
 				}
 				else if (command == Constants.CLIENT_GET_ADMINS){
 					Vector<User> admins = getAdmins();
