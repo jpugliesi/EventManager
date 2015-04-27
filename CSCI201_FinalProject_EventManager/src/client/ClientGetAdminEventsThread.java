@@ -21,12 +21,14 @@ public class ClientGetAdminEventsThread extends Thread{
 	private Vector<Event> adminEvents = null;
 	private ReentrantLock lock = new ReentrantLock();
 	private Condition signal = lock.newCondition();
+	private boolean b = false;
 	
 	public ClientGetAdminEventsThread(User admin){
 		this.admin = admin;
 	}
 	
 	public void run(){
+		b = false;
 		try{
 			socket = new Socket(Constants.SERVER_IP, Constants.DEFAULT_PORT);
 			oos = new ObjectOutputStream(socket.getOutputStream());
@@ -58,12 +60,16 @@ public class ClientGetAdminEventsThread extends Thread{
 		} catch (ClassNotFoundException cnfe){
 			
 		}
+		finally{
+			b = true;
+			signal.signalAll();
+		}
 	}
 	
 	public Vector<Event> getAdminEvent(){
 		lock.lock();
 		try{
-			if (adminEvents == null){
+			if (adminEvents == null || b == false){
 				signal.await();
 			}
 		} catch(InterruptedException ie){
@@ -74,6 +80,7 @@ public class ClientGetAdminEventsThread extends Thread{
 		
 		Vector<Event> temp = adminEvents;
 		adminEvents = null;
+		
 		
 		return temp;
 	}
