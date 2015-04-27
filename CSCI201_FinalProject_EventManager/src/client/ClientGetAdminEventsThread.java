@@ -72,7 +72,10 @@ public class ClientGetAdminEventsThread extends Thread{
 			lock.unlock();
 		}
 		
-		return adminEvents;
+		Vector<Event> temp = adminEvents;
+		adminEvents = null;
+		
+		return temp;
 	}
 	
 }
