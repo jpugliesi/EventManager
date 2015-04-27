@@ -177,7 +177,7 @@ public class ChatWindow extends JDialog {
 		
 		if(chatHistoryThread.success()){
 			Vector<ChatMessage> messageHistory = chatHistoryThread.getMessageHistory();
-			messageArea.setText("");
+			messageArea.setText("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 			
 			for(ChatMessage message : messageHistory){
 				messageArea.append(message.getSender().getUserName() + ": " + message.getMessage() + "\n");
