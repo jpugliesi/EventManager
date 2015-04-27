@@ -76,7 +76,7 @@ public class AdminLoginPanel extends JFrame {
 						new AdminMainPanel();
 					} else {
 						JDialog tmp_jd = new JDialog();
-						tmp_jd.setSize(300,250);
+						tmp_jd.setSize(300,100);
 						tmp_jd.setLocation(400,100);
 						tmp_jd.setTitle("Login failed!");
 						JLabel label = new JLabel("Failed to login.");
@@ -325,21 +325,8 @@ class AdminMainPanel extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				// Execute when button is pressed
-				final JDialog jd = new JDialog();
-				jd.setTitle("Chat Inbox");
-				jd.setSize(350, 370);
-				jd.setLocationRelativeTo(null);
-				jd.setResizable(false);
-
-				String[] nameList2 = { "Kieran Strolorz", "John Pugliesi",
-						"Zack Kim", "Vincent Jin", "Jeffrey Miller",
-						"Ryan Chase" };
-				JList list2 = new JList(nameList2);
-				JPanel chatPanel = new JPanel();
-				chatPanel.add(new UserChatPanel(list2));
-
-				jd.add(chatPanel);
-				jd.setVisible(true);
+				new AboutDialog().setVisible(true);;
+			
 			}
 		});
 	}
