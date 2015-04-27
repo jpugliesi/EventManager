@@ -290,6 +290,15 @@ class AdminMainPanel extends JFrame {
 					}
 					
 				});
+				
+				
+				editProfileButton.addActionListener(new ActionListener(){
+
+					public void actionPerformed(ActionEvent e) {
+						
+					}
+					
+				});
 
 				JLabel lblEventsAttended = new JLabel("Events Hosting");
 				lblEventsAttended.setFont(new Font("Helvetica Neue",

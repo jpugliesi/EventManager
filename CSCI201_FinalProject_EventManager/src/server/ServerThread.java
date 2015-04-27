@@ -473,8 +473,8 @@ public class ServerThread extends Thread {
 				}
 				else if (command == Constants.CLIENT_UPDATE_EVENT){
 					Event e = getEvent();
-					
-					oos.writeObject(db.updateEvent(e));
+					int result = db.updateEvent(e);
+					oos.writeObject(result);
 					oos.flush();
 					
 				}
