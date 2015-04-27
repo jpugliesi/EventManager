@@ -416,6 +416,7 @@ public class Database {
 			throw new GetEventException(Constants.CLIENT_GET_ADMIN_EVENTS_FAIL);
 		}
 		
+		System.out.println("admin event vector returned: " + admin_events.get(0).getName());
 		return admin_events;
 	
 	}
@@ -716,6 +717,7 @@ public class Database {
 			sqle.printStackTrace();
 			return Constants.SERVER_UPDATE_EVENT_FAIL;
 		}
+		System.out.println("Updating event with name: " + event.getName());
 		
 		return Constants.SERVER_UPDATE_EVENT_SUCCESS;
 	}

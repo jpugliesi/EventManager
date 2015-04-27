@@ -240,10 +240,12 @@ public class ServerThread extends Thread {
 	
 	
 	private Vector<Event> getAdminEventVector(User admin){
+		System.out.println("Get Admin Events");
 		Vector<Event> ev = null;
 		
 		try{
 			ev = db.getAdminEventVector(admin);
+			System.out.println("IN getAdminEventVector: " + ev.get(0).getName());
 		} catch (GetEventException gee){
 			errorCode = gee.getErrorCode();
 		}
@@ -492,12 +494,15 @@ public class ServerThread extends Thread {
 				else if (command == Constants.CLIENT_GET_ADMIN_EVENTS){
 					User admin = getUser();
 					Vector<Event> adminEvents = getAdminEventVector(admin);
+					System.out.println("Have event vector");
 					
 					if (adminEvents != null){
+						
 						oos.writeObject(Constants.CLIENT_GET_ADMIN_EVENTS_SUCCESS);
 						oos.flush();
 						oos.writeObject(adminEvents);
 						oos.flush();
+						System.out.println(adminEvents.get(0).getName());
 					} else{
 						oos.writeObject(Constants.CLIENT_GET_ADMIN_EVENTS_FAIL);
 						oos.flush();

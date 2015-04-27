@@ -218,10 +218,11 @@ class AdminMainPanel extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				// Execute when button is pressed
-				final ManageEventDialog jd = new ManageEventDialog();
+				ManageEventDialog jd = new ManageEventDialog();
 				jd.setVisible(true);
 			}
 		});
+		
 		// CREATE EVENT
 		// -----------------------------------------------------------------------------
 		createEventButton.addActionListener(new ActionListener() {

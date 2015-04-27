@@ -21,6 +21,7 @@ public class ClientGetAdminEventsThread extends Thread{
 	private Vector<Event> adminEvents = null;
 	private ReentrantLock lock = new ReentrantLock();
 	private Condition signal = lock.newCondition();
+	private volatile boolean finished;
 	
 	public ClientGetAdminEventsThread(User admin){
 		this.admin = admin;
@@ -28,6 +29,7 @@ public class ClientGetAdminEventsThread extends Thread{
 	
 	public void run(){
 		try{
+			finished = false;
 			socket = new Socket(Constants.SERVER_IP, Constants.DEFAULT_PORT);
 			oos = new ObjectOutputStream(socket.getOutputStream());
 			ois = new ObjectInputStream(socket.getInputStream());
@@ -59,8 +61,12 @@ public class ClientGetAdminEventsThread extends Thread{
 			
 		}
 		finally{
-			
+			finished = true;
 		}
+	}
+	
+	public boolean finished(){
+		return finished;
 	}
 	
 	public Vector<Event> getAdminEvent(){
@@ -77,7 +83,6 @@ public class ClientGetAdminEventsThread extends Thread{
 		
 		Vector<Event> temp = adminEvents;
 		adminEvents = null;
-		
 		
 		return temp;
 	}

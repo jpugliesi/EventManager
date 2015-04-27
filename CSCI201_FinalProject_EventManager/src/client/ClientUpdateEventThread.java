@@ -48,7 +48,7 @@ public class ClientUpdateEventThread extends Thread {
 		}
 	}
 	
-	public boolean updateSuccessfule(){
+	public boolean updateSuccesful(){
 		return success;
 	}
 
