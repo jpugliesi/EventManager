@@ -34,9 +34,45 @@ public class ClientGetAdminEventsThread extends Thread{
 			
 			oos.writeObject(Constants.CLIENT_GET_ADMIN_EVENTS);
 			oos.flush();
+			
+			oos.writeObject(admin);
+			oos.flush();
+			
+			int code = (Integer) ois.readObject();
+			
+			if(code == Constants.CLIENT_GET_ADMIN_EVENTS_SUCCESS){
+				try{
+					lock.lock();
+					adminEvents = (Vector<Event>) ois.readObject();
+					signal.signalAll();
+				} finally {
+					lock.unlock();
+				}
+			}
+			
+			else if (code == Constants.CLIENT_GET_ADMIN_EVENTS_FAIL){
+				
+			}
 		} catch(IOException ioe){
 			ioe.printStackTrace();
+		} catch (ClassNotFoundException cnfe){
+			
 		}
+	}
+	
+	public Vector<Event> getAdminEvent(){
+		lock.lock();
+		try{
+			if (adminEvents == null){
+				signal.await();
+			}
+		} catch(InterruptedException ie){
+			ie.printStackTrace();
+		} finally{
+			lock.unlock();
+		}
+		
+		return adminEvents;
 	}
 	
 }
