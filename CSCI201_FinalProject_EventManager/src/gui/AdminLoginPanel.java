@@ -218,7 +218,7 @@ class AdminMainPanel extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				// Execute when button is pressed
-				final createEventDialog jd = new createEventDialog("This is a fake title", "this is my really long description");
+				final CreateEventDialog jd = new CreateEventDialog("This is a fake title", "this is my really long description");
 				jd.setVisible(true);
 			}
 		});
@@ -228,7 +228,7 @@ class AdminMainPanel extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				// Execute when button is pressed
-				final createEventDialog jd = new createEventDialog();
+				final CreateEventDialog jd = new CreateEventDialog();
 				jd.setVisible(true);
 			}
 		});
@@ -277,6 +277,18 @@ class AdminMainPanel extends JFrame {
 				JButton btnLogout = new JButton("Logout");
 				btnLogout.setBounds(208, 367, 117, 29);
 				panel_2.add(btnLogout);
+				
+				btnLogout.addActionListener(new ActionListener(){
+
+					public void actionPerformed(ActionEvent e) {
+						Environment.currentAdmin = null;
+						
+						new AdminLoginPanel();
+						dispose();
+						
+					}
+					
+				});
 
 				JLabel lblEventsAttended = new JLabel("Events Hosting");
 				lblEventsAttended.setFont(new Font("Helvetica Neue",

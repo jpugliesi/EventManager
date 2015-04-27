@@ -28,7 +28,7 @@ import constants.Environment;
 import main.Event;
 import client.ClientCreateEventThread;
 
-public class createEventDialog extends JDialog {
+public class CreateEventDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField;
@@ -52,7 +52,7 @@ public class createEventDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	//create event
-	public createEventDialog() {
+	public CreateEventDialog() {
 		setTitle("Create Event");
 		setBounds(100, 100, 450, 511);
 		getContentPane().setLayout(new BorderLayout());
@@ -252,7 +252,7 @@ public class createEventDialog extends JDialog {
 	}
 	
 	//manage event
-	public createEventDialog(String eventTitle, String eventDescription) {
+	public CreateEventDialog(String eventTitle, String eventDescription) {
 		setTitle("Manage Event");
 		setBounds(100, 100, 450, 398);
 		getContentPane().setLayout(new BorderLayout());

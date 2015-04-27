@@ -1,6 +1,6 @@
 package client;
 
-import gui.chatWindow;
+import gui.ChatWindow;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -20,7 +20,7 @@ public class ClientListenForChatUpdateThread extends Thread{
 	private User sender, receiver;
 	private boolean isAdmin;
 	
-	private ArrayList<chatWindow> chatWindows = new ArrayList<chatWindow>();
+	private ArrayList<ChatWindow> chatWindows = new ArrayList<ChatWindow>();
 	
 	public ClientListenForChatUpdateThread(boolean isAdmin){
 		this.isAdmin = isAdmin;
@@ -65,7 +65,7 @@ public class ClientListenForChatUpdateThread extends Thread{
 						otherPerson = sender;
 					}
 					
-					for(chatWindow chat : chatWindows){
+					for(ChatWindow chat : chatWindows){
 						if(chat.getOtherPerson().getUserName().equals(otherPerson.getUserName())){
 							chatWindowOpen = true;
 							chat.setVisible(true);
@@ -73,7 +73,7 @@ public class ClientListenForChatUpdateThread extends Thread{
 						}
 					}
 					if(!chatWindowOpen){
-						chatWindow chat = new chatWindow(otherPerson, isAdmin);
+						ChatWindow chat = new ChatWindow(otherPerson, isAdmin);
 						chatWindows.add(chat);
 						chat.updateChat();
 					}
@@ -98,7 +98,7 @@ public class ClientListenForChatUpdateThread extends Thread{
 		return this.receiver;
 	}
 	
-	public void addNewWindow(chatWindow window){
+	public void addNewWindow(ChatWindow window){
 		chatWindows.add(window);
 	}
 }

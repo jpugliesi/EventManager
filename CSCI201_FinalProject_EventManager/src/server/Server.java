@@ -22,7 +22,6 @@ public class Server {
 	private Database db;
 	private Vector<ServerThread> updateVector = new Vector<ServerThread>();
 	private ServerSocket listenSS;
-	
 
 	
 	
