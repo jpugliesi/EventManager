@@ -85,6 +85,10 @@ public class Constants {
 	public static int CLIENT_LISTENING_FOR_EVENT_FEED = 15;
 	
 	
+	public static int CLIENT_GET_ADMIN_EVENTS = 16;
+	public static int CLIENT_GET_ADMIN_EVENTS_SUCCESS = 1;
+	public static int CLIENT_GET_ADMIN_EVENTS_FAIL = 0;
+	
 	//close the database
 	public static int SHUTDOWN = 12;
 	
@@ -99,7 +103,7 @@ public class Constants {
 	public static ImageIcon WOMAN2 = new ImageIcon("profile_pictures/woman2.png");
 	public static ImageIcon WOMAN3 = new ImageIcon("profile_pictures/woman13.png");
 	
-	
+	public static int DEFAULT_PORT = 6789;
 	
 	
 
