@@ -36,14 +36,14 @@ public class ClientGetEventThread extends Thread{
 			int code = (Integer) inputStream.readObject();
 			//success case
 			if (code == Constants.SERVER_GET_EVENT_SUCCESS) {
-				System.out.println("Success get detail event");
+				//System.out.println("Success get detail event");
 				e = (Event) inputStream.readObject();
 				//TODO
 				//direct GUI to the detailed page 
 			}
 			//fail case
 			else if (code == Constants.SERVER_GET_EVENT_FAIL) {
-				System.out.println("Fail get detail event");
+				//System.out.println("Fail get detail event");
 			}
 			
 			

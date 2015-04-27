@@ -57,7 +57,7 @@ public class ClientGetUserEventThread extends Thread{
 			}
 			//fail case
 			else if (code == Constants.SERVER_GET_USER_EVENTS_FAIL) {
-				System.out.println("Fail get user event vector");
+				//System.out.println("Fail get user event vector");
 			}			
 		
 		} catch (IOException ioe) {

@@ -40,9 +40,9 @@ public class ClientGetProfilePictureThread extends Thread {
 			
 			outputStream.writeObject(u);
 			outputStream.flush();
-			System.out.println("client about to read success code");
+			//System.out.println("client about to read success code");
 			int code = (int)inputStream.readObject();
-			System.out.println("client for pp got code: " + code);
+			//System.out.println("client for pp got code: " + code);
 			
 			if(code == Constants.SERVER_GET_PROFILE_PICTURE_SUCCESS){
 				try{

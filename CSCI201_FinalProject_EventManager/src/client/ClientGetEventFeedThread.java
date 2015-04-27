@@ -36,13 +36,13 @@ public class ClientGetEventFeedThread extends Thread{
 			outputStream.flush();
 			
 			try{
-				System.out.println("Acquiring Event Feed lock in run");
+				//System.out.println("Acquiring Event Feed lock in run");
 				lock.lock();
-				System.out.println("Acquired Event Feed lock in run");
+				//System.out.println("Acquired Event Feed lock in run");
 				v = (Vector<Event>) inputStream.readObject();
-				System.out.println("read the Event Feed object now signaling");
+				//System.out.println("read the Event Feed object now signaling");
 				signal.signalAll();
-				System.out.println("VECTOR SIZE1: " + v.size());
+				//System.out.println("VECTOR SIZE1: " + v.size());
 			} finally {
 				lock.unlock();
 			}

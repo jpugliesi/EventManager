@@ -65,6 +65,11 @@ public class User implements Serializable{
 		
 	}
 	
+	public void setProfilePictureID(int id){
+		this.profilePictureID = id;
+		this.setProfilePicture();
+	}
+	
 	public Vector<Event> getEventVector(){
 		return eventVector;
 	}
@@ -118,7 +123,5 @@ public class User implements Serializable{
 	public ImageIcon getProfilePicture(){
 		return profilePicture;
 	}
-
-
 
 }

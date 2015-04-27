@@ -260,7 +260,7 @@ public class UserLoginPanel extends JFrame {
 								new UserTabFrame().setVisible(true);
 								Environment.chatListenerThread = new ClientListenForChatUpdateThread(false);
 								Environment.chatListenerThread.start();
-								System.out.println("Chat listener started");
+								//System.out.println("Chat listener started");
 								dispose();
 								jd.dispose();
 							} else if(loginThread.getCode() == Constants.SERVER_LOGIN_INCORRECT_USER){

@@ -30,7 +30,7 @@ import client.ClientGetChatHistoryThread;
 import client.ClientSendMessageThread;
 import constants.Environment;
 
-public class chatWindow extends JDialog {
+public class ChatWindow extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField;
@@ -45,7 +45,7 @@ public class chatWindow extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			chatWindow dialog = new chatWindow(null, false);
+			ChatWindow dialog = new ChatWindow(null, false);
 			dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -56,7 +56,7 @@ public class chatWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public chatWindow(User otherPerson, boolean isAdmin) {
+	public ChatWindow(User otherPerson, boolean isAdmin) {
 		this.isAdmin = isAdmin;
 		this.otherPerson = otherPerson;
 		setBounds(100, 100, 450, 494);
@@ -72,15 +72,15 @@ public class chatWindow extends JDialog {
 					//send button
 					
 					User cUser = null;
-					if(chatWindow.this.isAdmin){
+					if(ChatWindow.this.isAdmin){
 						cUser = Environment.currentAdmin;
 					} else {
 						cUser = Environment.currentUser;
 					}
-					ChatMessage message = new ChatMessage(chatWindow.this.textField.getText(), cUser, chatWindow.this.otherPerson, new Date(System.currentTimeMillis()));
+					ChatMessage message = new ChatMessage(ChatWindow.this.textField.getText(), cUser, ChatWindow.this.otherPerson, new Date(System.currentTimeMillis()));
 					ClientSendMessageThread sendMessageThread = new ClientSendMessageThread(message);
 					sendMessageThread.start();
-					chatWindow.this.textField.setText("");
+					ChatWindow.this.textField.setText("");
 				}
 			});
 			sendButton.setBounds(327, 436, 117, 29);
@@ -136,7 +136,7 @@ public class chatWindow extends JDialog {
 			contentPanel.add(closeButton);
 			closeButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					chatWindow.this.setVisible(false);
+					ChatWindow.this.setVisible(false);
 				}
 			});
 			closeButton.setActionCommand("Cancel");

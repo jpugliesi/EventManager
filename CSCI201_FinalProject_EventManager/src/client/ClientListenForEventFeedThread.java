@@ -36,7 +36,7 @@ public class ClientListenForEventFeedThread extends Thread {
 		try{
 			while(true){
 				int update = (Integer)ois.readObject();
-				System.out.println("client prompted for update with code:" + update);
+				//System.out.println("client prompted for update with code:" + update);
 				
 				
 				if(update == Constants.SERVER_UPDATE_EVENT_FEED){

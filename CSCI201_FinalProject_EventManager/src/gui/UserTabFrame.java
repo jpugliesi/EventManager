@@ -313,7 +313,7 @@ public class UserTabFrame extends JFrame {
 		            // Double-click detected
 		            int index = admin_list.locationToIndex(evt.getPoint());
 		            User u = admin_list.getSelectedValue();
-		            Environment.chatListenerThread.addNewWindow(new chatWindow(u, false));
+		            Environment.chatListenerThread.addNewWindow(new ChatWindow(u, false));
 		        }
 		    }
 		});

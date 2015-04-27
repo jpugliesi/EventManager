@@ -76,7 +76,7 @@ public class AdminLoginPanel extends JFrame {
 						new AdminMainPanel();
 					} else {
 						JDialog tmp_jd = new JDialog();
-						tmp_jd.setSize(300,250);
+						tmp_jd.setSize(300,100);
 						tmp_jd.setLocation(400,100);
 						tmp_jd.setTitle("Login failed!");
 						JLabel label = new JLabel("Failed to login.");
@@ -218,7 +218,7 @@ class AdminMainPanel extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				// Execute when button is pressed
-				final createEventDialog jd = new createEventDialog("This is a fake title", "this is my really long description");
+				final CreateEventDialog jd = new CreateEventDialog("This is a fake title", "this is my really long description");
 				jd.setVisible(true);
 			}
 		});
@@ -228,7 +228,7 @@ class AdminMainPanel extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				// Execute when button is pressed
-				final createEventDialog jd = new createEventDialog();
+				final CreateEventDialog jd = new CreateEventDialog();
 				jd.setVisible(true);
 			}
 		});
@@ -277,6 +277,19 @@ class AdminMainPanel extends JFrame {
 				JButton btnLogout = new JButton("Logout");
 				btnLogout.setBounds(208, 367, 117, 29);
 				panel_2.add(btnLogout);
+				
+				btnLogout.addActionListener(new ActionListener(){
+
+					public void actionPerformed(ActionEvent e) {
+						Environment.currentAdmin = null;
+						
+						new AdminLoginPanel();
+						dispose();
+						jd.dispose();
+						
+					}
+					
+				});
 
 				JLabel lblEventsAttended = new JLabel("Events Hosting");
 				lblEventsAttended.setFont(new Font("Helvetica Neue",
@@ -312,21 +325,8 @@ class AdminMainPanel extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				// Execute when button is pressed
-				final JDialog jd = new JDialog();
-				jd.setTitle("Chat Inbox");
-				jd.setSize(350, 370);
-				jd.setLocationRelativeTo(null);
-				jd.setResizable(false);
-
-				String[] nameList2 = { "Kieran Strolorz", "John Pugliesi",
-						"Zack Kim", "Vincent Jin", "Jeffrey Miller",
-						"Ryan Chase" };
-				JList list2 = new JList(nameList2);
-				JPanel chatPanel = new JPanel();
-				chatPanel.add(new UserChatPanel(list2));
-
-				jd.add(chatPanel);
-				jd.setVisible(true);
+				new AboutDialog().setVisible(true);;
+			
 			}
 		});
 	}
