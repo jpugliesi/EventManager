@@ -236,6 +236,23 @@ public class ServerThread extends Thread {
 		return v;
 	}
 	
+	
+	
+	
+	private Vector<Event> getAdminEventVector(User admin){
+		Vector<Event> ev = null;
+		
+		try{
+			ev = db.getAdminEventVector(admin);
+		} catch (GetEventException gee){
+			errorCode = gee.getErrorCode();
+		}
+		
+		return ev;
+	}
+	
+	
+	
 	private int rsvp(Event e, User u){
 		return db.rsvp(u,e);
 	}
@@ -278,6 +295,8 @@ public class ServerThread extends Thread {
 		Event e = new Event();
 		return e;
 	}
+	
+	
 	
 	private boolean getBool(){
 		boolean b = false;
@@ -469,6 +488,20 @@ public class ServerThread extends Thread {
 				}
 				else if(command == Constants.SHUTDOWN){
 					db.shutdownDB();
+				}
+				else if (command == Constants.CLIENT_GET_ADMIN_EVENTS){
+					User admin = getUser();
+					Vector<Event> adminEvents = getAdminEventVector(admin);
+					
+					if (adminEvents != null){
+						oos.writeObject(Constants.CLIENT_GET_ADMIN_EVENTS_SUCCESS);
+						oos.flush();
+						oos.writeObject(adminEvents);
+						oos.flush();
+					} else{
+						oos.writeObject(Constants.CLIENT_GET_ADMIN_EVENTS_FAIL);
+						oos.flush();
+					}
 				}
 	
 			}
