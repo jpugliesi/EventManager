@@ -4,6 +4,9 @@ import javax.swing.ImageIcon;
 
 public class Constants {
 	
+	
+	public static ImageIcon [] PROFILE_PICTURES = {new ImageIcon("profile_pictures/boy1.png"), new ImageIcon("profile_pictures/boy2.png"), new ImageIcon("profile_pictures/man1.png"), new ImageIcon("profile_pictures/man2.png"), new ImageIcon("profile_pictures/woman1.png"), new ImageIcon("profile_pictures/woman2.png"), new ImageIcon("profile_pictures/woman3.png"), new ImageIcon("profile_pictures/dog1.png"), new ImageIcon("profile_pictures/dog2.png"), new ImageIcon("profile_pictures/dog3.png"), new ImageIcon("profile_pictures/dog4.png"), new ImageIcon("profile_pictures/dog5.png")};
+	
 	//Login Codes
 	//Database.checkLogin(String username, String password_hash) returns User
 	public static int CLIENT_LOGIN = 1;

@@ -82,7 +82,7 @@ public class UserLoginPanel extends JFrame {
 				final JPasswordField passTF2 = new JPasswordField(15);
 				
 				//adding User profile pictures 
-							
+				/*			
 				ImageIcon i1 = new ImageIcon("profile_pictures/boy1.png");
 				ImageIcon i2 = new ImageIcon("profile_pictures/boy2.png");	
 				ImageIcon i3 = new ImageIcon("profile_pictures/man1.png");
@@ -91,7 +91,8 @@ public class UserLoginPanel extends JFrame {
 				ImageIcon i6 = new ImageIcon("profile_pictures/woman2.png");
 				ImageIcon i7 = new ImageIcon("profile_pictures/woman3.png");				
 				Object options[] = {i1,i2,i3,i4,i5,i6,i7};
-				JComboBox jcb = new JComboBox(options);
+				*/
+				JComboBox<ImageIcon> jcb = new JComboBox(Constants.PROFILE_PICTURES);
 
 				JButton okButton = new JButton("OK");
 				register_jd.getRootPane().setDefaultButton(okButton);
