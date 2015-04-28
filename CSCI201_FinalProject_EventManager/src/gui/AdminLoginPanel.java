@@ -25,6 +25,8 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import javax.swing.border.Border;
+
 import client.ClientListenForChatUpdateThread;
 import client.ClientLoginThread;
 import constants.Environment;
@@ -41,7 +43,10 @@ public class AdminLoginPanel extends JFrame {
 		
 		super("Admin Login");
 		
-		
+		setSize(325, 245);
+		setLocation(500, 100);
+		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (ClassNotFoundException e) {
@@ -57,12 +62,6 @@ public class AdminLoginPanel extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		setSize(325, 245);
-		setLocation(500, 100);
-		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel centerPanel = new JPanel();
 		centerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -178,6 +177,9 @@ class AdminMainPanel extends JFrame {
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		setLayout(new GridLayout(2, 2, 10, 10));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+	
+		
 		setVisible(true);
 		setUpButtons();
 		JPanel panel1 = new JPanel();

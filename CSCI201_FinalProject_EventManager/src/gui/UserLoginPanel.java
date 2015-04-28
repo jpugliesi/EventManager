@@ -36,10 +36,11 @@ public class UserLoginPanel extends JFrame {
 	private JLabel titleLogo;
 	private JButton registerButton;
 	private JButton loginButton;
+	private JButton guestButton;
 
 	UserLoginPanel() {
 		super("Event Manager");
-		setSize(500, 590);
+		setSize(500, 700);
 		setLocation(500, 100);
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,6 +68,7 @@ public class UserLoginPanel extends JFrame {
 		// add(Box.createVerticalGlue());
 		add(registerButton);
 		add(loginButton);
+		add(guestButton);
 
 		setResizable(false);
 		setVisible(true);
@@ -75,6 +77,14 @@ public class UserLoginPanel extends JFrame {
 	}
 
 	void addActionListeners() {
+		guestButton.addActionListener(new ActionListener() {
+			 
+            public void actionPerformed(ActionEvent e)
+            {
+                //Execute when button is pressed
+               new GuestEventFeed();
+            }
+        }); 
 		registerButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -418,7 +428,7 @@ public class UserLoginPanel extends JFrame {
 	void setUpButtons() {
 		registerButton = new JButton();
 		loginButton = new JButton();
-	
+		guestButton= new JButton();
 		titleLogo = new JLabel();
 		try {
 			BufferedImage image = null;
@@ -433,6 +443,13 @@ public class UserLoginPanel extends JFrame {
 			image = resizeImage(image, 450, 155, image.TYPE_INT_RGB);
 			loginButton.setIcon(new ImageIcon(image));
 			loginButton.setAlignmentX(getContentPane().CENTER_ALIGNMENT);
+			
+			
+		    image = ImageIO.read(getClass().getResource("Guest.jpeg"));
+		    image= resizeImage( image, 450, 155, image.TYPE_INT_RGB);
+		    guestButton.setIcon(new ImageIcon(image));
+		    guestButton.setAlignmentX(getContentPane().CENTER_ALIGNMENT);
+	            
 
 			image = ImageIO.read(getClass().getResource("Title.jpeg"));
 			image = resizeImage(image, 500, 175, image.TYPE_INT_RGB);
