@@ -22,6 +22,7 @@ public class ClientUpdateProfileThread extends Thread{
 	private ObjectOutputStream outputStream;
 	private User newUser;
 	private boolean success = false;
+	private volatile boolean finished = false;
 	
 	public ClientUpdateProfileThread(User newUser) {
 		this.newUser = newUser;
@@ -46,40 +47,11 @@ public class ClientUpdateProfileThread extends Thread{
 			if (code == Constants.SERVER_UPDATE_PROFILE_SUCCESS) {
 				success = true;
 				Environment.currentUser = newUser;
-				JDialog jd = new JDialog();
-				jd.setSize(300,250);
-				jd.setLocation(400,100);
-				jd.setTitle("Update Profile");
-				JLabel label = new JLabel("Update Profile Success.");
-				JButton button = new JButton("Got it!");
-				button.addActionListener(new ActionListener() {
-					public void actionPerformed (ActionEvent ae) {
-						jd.dispose();
-					}
-				});
-				jd.add(label);	
-				jd.add(button, BorderLayout.SOUTH);
-				jd.setModal(true);
-				jd.setVisible(true);
 			}
 			//fail case
 			else if (code == Constants.SERVER_GET_ADMINS_FAIL) {
+				
 				success = false;
-				JDialog jd = new JDialog();
-				jd.setSize(300,250);
-				jd.setLocation(400,100);
-				jd.setTitle("Update Profile");
-				JLabel label = new JLabel("Error. Please try again.");
-				JButton button = new JButton("OK");
-				button.addActionListener(new ActionListener() {
-					public void actionPerformed (ActionEvent ae) {
-						jd.dispose();
-					}
-				});
-				jd.add(label);	
-				jd.add(button, BorderLayout.SOUTH);
-				jd.setModal(true);
-				jd.setVisible(true);
 			}	
 			
 		} catch (IOException ioe) {
@@ -89,9 +61,15 @@ public class ClientUpdateProfileThread extends Thread{
 			success = false;
 			System.out.println(e.getMessage());
 		}
+		
+		finished = true;
 	}
 	
-	public boolean updateSuccessful(){
+	public boolean successful(){
 		return success;
+	}
+	
+	public boolean finished(){
+		return finished;
 	}
 }

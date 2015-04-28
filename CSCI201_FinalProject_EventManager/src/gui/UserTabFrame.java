@@ -244,6 +244,17 @@ public class UserTabFrame extends JFrame {
 						//initiate update thread
 						ClientUpdateProfileThread updateThread = new ClientUpdateProfileThread(newUser);
 						updateThread.start();
+						
+						while(!updateThread.finished()){
+							
+						}
+						
+						if(updateThread.successful()){
+							JOptionPane.showMessageDialog(jd, "You have successfully updated your profile", "Profile Updated", JOptionPane.PLAIN_MESSAGE);
+						} else {
+							JOptionPane.showMessageDialog(jd, "Oops! Something went wrong updating your profile", "Update Failed", JOptionPane.WARNING_MESSAGE);
+						}
+						
 						jd.dispose();
 					}
 				});
