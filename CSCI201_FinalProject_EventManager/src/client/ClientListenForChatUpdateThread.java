@@ -20,6 +20,7 @@ public class ClientListenForChatUpdateThread extends Thread{
 	private User sender, receiver;
 	private boolean isAdmin;
 	
+	
 	private ArrayList<ChatWindow> chatWindows = new ArrayList<ChatWindow>();
 	
 	public ClientListenForChatUpdateThread(boolean isAdmin){
@@ -74,6 +75,7 @@ public class ClientListenForChatUpdateThread extends Thread{
 					}
 					if(!chatWindowOpen){
 						ChatWindow chat = new ChatWindow(otherPerson, isAdmin);
+						chat.setLoc(600,100); //demo purposes
 						chatWindows.add(chat);
 						chat.updateChat();
 					}
@@ -99,6 +101,8 @@ public class ClientListenForChatUpdateThread extends Thread{
 	}
 	
 	public void addNewWindow(ChatWindow window){
+		
 		chatWindows.add(window);
+		window.setLoc(100, 100);
 	}
 }
