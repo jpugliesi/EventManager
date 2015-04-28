@@ -20,12 +20,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-<<<<<<< Updated upstream
 import javax.swing.SwingConstants;
-=======
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
->>>>>>> Stashed changes
 
 import main.User;
 import client.ClientListenForChatUpdateThread;
