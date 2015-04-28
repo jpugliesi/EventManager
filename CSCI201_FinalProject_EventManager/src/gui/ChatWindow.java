@@ -59,10 +59,17 @@ public class ChatWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
+	
+	
+	public void setLoc(int x, int y){
+		this.setLocation(x, y);
+	}
+	
 	public ChatWindow(User otherPerson, boolean isAdmin) {
 		this.isAdmin = isAdmin;
 		this.otherPerson = otherPerson;
 		setBounds(100, 100, 450, 494);
+		
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);

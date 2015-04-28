@@ -60,7 +60,25 @@ public class User implements Serializable{
 		}
 		else if (profilePictureID == 7){
 			profilePicture = Constants.WOMAN3;
-		}		
+		}
+		else if (profilePictureID == 8){
+			profilePicture = Constants.DOG1;
+		}
+		else if (profilePictureID == 9){
+			profilePicture = Constants.DOG2;
+		}
+		else if (profilePictureID == 10){
+			profilePicture = Constants.DOG3;
+		}
+		else if (profilePictureID == 11){
+			profilePicture = Constants.DOG4;
+		}
+		else if (profilePictureID == 12){
+			profilePicture = Constants.DOG5;
+		}
+		else if (profilePictureID == 13){
+			profilePicture = Constants.DOG6;
+		}
 		
 	}
 	

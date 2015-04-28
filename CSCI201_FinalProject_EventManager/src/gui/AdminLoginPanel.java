@@ -5,43 +5,63 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 import javax.imageio.ImageIO;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 import javax.swing.border.Border;
 
-import constants.Environment;
 import client.ClientListenForChatUpdateThread;
 import client.ClientLoginThread;
+import constants.Environment;
 
 public class AdminLoginPanel extends JFrame {
 	static AdminMainPanel mainPanel;
+	
+	
+	
 
 	AdminLoginPanel() {
+		
+		
+		
 		super("Admin Login");
+		
 		setSize(325, 245);
 		setLocation(500, 100);
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		try {
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		JPanel centerPanel = new JPanel();
 		centerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -157,6 +177,9 @@ class AdminMainPanel extends JFrame {
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		setLayout(new GridLayout(2, 2, 10, 10));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+	
+		
 		setVisible(true);
 		setUpButtons();
 		JPanel panel1 = new JPanel();
