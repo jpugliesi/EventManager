@@ -911,35 +911,35 @@ public class Database {
 	
 	public void seed(){
 		//Add Profile Pictures
-		try{
-			Statement statement = conn.createStatement(); 
-			String sql = "INSERT INTO profile_pictures VALUES (0, 'src/profile_pictures/boy1.png')";
-			statement.addBatch(sql);
-			
-			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/boy2.png')";
-			statement.addBatch(sql);
-			
-			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/man1.png')";
-			statement.addBatch(sql);
-			
-			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/man2.png')";
-			statement.addBatch(sql);
-			
-			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/woman1.png')";
-			statement.addBatch(sql);
-			
-			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/woman2.png')";
-			statement.addBatch(sql);
-			
-			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/woman3.png')";
-			statement.addBatch(sql);
-			
-			statement.executeBatch();
-			statement.close();
-		} catch (SQLException sqle){
-			System.out.println("SQLException while seeding profile pictures");
-			sqle.printStackTrace();
-		}
+//		try{
+//			Statement statement = conn.createStatement(); 
+//			String sql = "INSERT INTO profile_pictures VALUES (0, 'src/profile_pictures/boy1.png')";
+//			statement.addBatch(sql);
+//			
+//			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/boy2.png')";
+//			statement.addBatch(sql);
+//			
+//			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/man1.png')";
+//			statement.addBatch(sql);
+//			
+//			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/man2.png')";
+//			statement.addBatch(sql);
+//			
+//			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/woman1.png')";
+//			statement.addBatch(sql);
+//			
+//			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/woman2.png')";
+//			statement.addBatch(sql);
+//			
+//			sql = "INSERT INTO profile_pictures VALUES (0, 'profile_pictures/woman3.png')";
+//			statement.addBatch(sql);
+//			
+//			statement.executeBatch();
+//			statement.close();
+//		} catch (SQLException sqle){
+//			System.out.println("SQLException while seeding profile pictures");
+//			sqle.printStackTrace();
+//		}
 		
 		//Add Users
 		try {
@@ -1026,7 +1026,7 @@ public class Database {
 		createUsersTable();
 		createUserEventJunctionTable();
 		createChatHistoryTable();
-		createProfilePicturesTable();
+		//createProfilePicturesTable();
 		createTableRelationConstraints();
 		
 	}
@@ -1039,8 +1039,8 @@ public class Database {
 			String sql = "ALTER TABLE events ADD CONSTRAINT userReference FOREIGN KEY (fk_admin) REFERENCES users (user_id)";
 			statement.addBatch(sql);
 			
-			sql = "ALTER TABLE users ADD CONSTRAINT profPicReference FOREIGN KEY (fk_profile_picture) REFERENCES profile_pictures (pic_id)";
-			statement.addBatch(sql);
+//			sql = "ALTER TABLE users ADD CONSTRAINT profPicReference FOREIGN KEY (fk_profile_picture) REFERENCES profile_pictures (pic_id)";
+//			statement.addBatch(sql);
 			
 			//Add user reference and event reference constraints to the user_event_junction table
 			sql = "ALTER TABLE user_event_junction ADD CONSTRAINT userRef FOREIGN KEY (fk_user_id) REFERENCES users (user_id)";
@@ -1155,7 +1155,7 @@ public class Database {
 		}
 	}
 
-	public void createProfilePicturesTable(){
+	/*public void createProfilePicturesTable(){
 		try {
 			Statement statement = conn.createStatement();
 			
@@ -1174,7 +1174,7 @@ public class Database {
 			System.out.println("SQLException creating ProfilePictures table in createProfilePicturesTable()");
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
 	public static void main(String [] args){
 		Database db;
