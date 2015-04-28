@@ -17,6 +17,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -141,7 +142,7 @@ public class UserLoginPanel extends JFrame {
 								Environment.currentUser = registerThread.getRegisteredUser();
 								new UserTabFrame().setVisible(true);
 								
-								JDialog tmp_jd = new JDialog();
+								/*JDialog tmp_jd = new JDialog();
 								tmp_jd.setSize(300,250);
 								tmp_jd.setLocation(400,100);
 								tmp_jd.setTitle("Registration success!");
@@ -158,11 +159,15 @@ public class UserLoginPanel extends JFrame {
 								tmp_jd.add(label);
 								tmp_jd.add(button, BorderLayout.SOUTH);
 								tmp_jd.setModal(true);
-								tmp_jd.setVisible(true);
+								tmp_jd.setVisible(true);*/
+								JOptionPane.showMessageDialog(register_jd, "You are now registered, Welcome!", "Registration Success", JOptionPane.PLAIN_MESSAGE);
+								register_jd.dispose();
 								dispose();
 								
+								
+								
 							} else if(registerThread.getErrorCode() == Constants.SERVER_REGISTRATION_USERNAME_FAIL){
-								JDialog tmp_jd = new JDialog();
+								/*JDialog tmp_jd = new JDialog();
 								tmp_jd.setSize(300,250);
 								tmp_jd.setLocation(400,100);
 								tmp_jd.setTitle("Invalid Registration");
@@ -176,7 +181,8 @@ public class UserLoginPanel extends JFrame {
 								tmp_jd.add(label);	
 								tmp_jd.add(button, BorderLayout.SOUTH);
 								tmp_jd.setModal(false);
-								tmp_jd.setVisible(true);
+								tmp_jd.setVisible(true);*/
+								JOptionPane.showMessageDialog(register_jd, "Invalid Username, Please try again.", "Invalid Registration", JOptionPane.PLAIN_MESSAGE);
 							} else if(registerThread.getErrorCode() == Constants.SERVER_REGISTRATION_PASSWORD_FAIL){
 								JDialog tmp_jd = new JDialog();
 								tmp_jd.setSize(300,250);
@@ -193,6 +199,7 @@ public class UserLoginPanel extends JFrame {
 								tmp_jd.add(button, BorderLayout.SOUTH);
 								tmp_jd.setModal(false);
 								tmp_jd.setVisible(true);
+								JOptionPane.showMessageDialog(register_jd, "Invalid Password, Please try again.", "Invalid Registration", JOptionPane.PLAIN_MESSAGE);
 							}
 						} else {
 							JDialog fail_jd = new JDialog();
@@ -210,6 +217,7 @@ public class UserLoginPanel extends JFrame {
 							fail_jd.add(button, BorderLayout.SOUTH);
 							fail_jd.setModal(true);
 							fail_jd.setVisible(true);
+							JOptionPane.showMessageDialog(register_jd, "Your information does not match!", "Invalid Registration", JOptionPane.PLAIN_MESSAGE);
 						}
 
 					}
@@ -307,7 +315,7 @@ public class UserLoginPanel extends JFrame {
 								dispose();
 								jd.dispose();
 							} else if(loginThread.getCode() == Constants.SERVER_LOGIN_INCORRECT_USER){
-								JDialog tmp_jd = new JDialog();
+								/*JDialog tmp_jd = new JDialog();
 								tmp_jd.setSize(300,250);
 								tmp_jd.setLocation(400,100);
 								tmp_jd.setTitle("Invalid Login");
@@ -321,9 +329,10 @@ public class UserLoginPanel extends JFrame {
 								tmp_jd.add(label);	
 								tmp_jd.add(button, BorderLayout.SOUTH);
 								tmp_jd.setModal(true);
-								tmp_jd.setVisible(true);
+								tmp_jd.setVisible(true);*/
+								JOptionPane.showMessageDialog(jd, "Invalid Username, Please try again.", "Invalid Login", JOptionPane.PLAIN_MESSAGE);
 							} else if(loginThread.getCode() == Constants.SERVER_LOGIN_INCORRECT_PASSWORD){
-								JDialog tmp_jd = new JDialog();
+								/*JDialog tmp_jd = new JDialog();
 								tmp_jd.setSize(300,250);
 								tmp_jd.setLocation(400,100);
 								tmp_jd.setTitle("Invalid Login");
@@ -337,9 +346,10 @@ public class UserLoginPanel extends JFrame {
 								tmp_jd.add(label);
 								tmp_jd.add(button, BorderLayout.SOUTH);
 								tmp_jd.setModal(true);
-								tmp_jd.setVisible(true);
+								tmp_jd.setVisible(true);*/
+								JOptionPane.showMessageDialog(jd, "Invalid Password, Please try again.", "Invalid Login", JOptionPane.PLAIN_MESSAGE);
 							} else if(loginThread.getCode() == Constants.SERVER_LOGIN_INCORRECT_IP){
-								JDialog tmp_jd = new JDialog();
+								/*JDialog tmp_jd = new JDialog();
 								tmp_jd.setSize(300,250);
 								tmp_jd.setLocation(400,100);
 								tmp_jd.setTitle("Invalid Login");
@@ -353,7 +363,8 @@ public class UserLoginPanel extends JFrame {
 								tmp_jd.add(label);	
 								tmp_jd.add(button, BorderLayout.SOUTH);
 								tmp_jd.setModal(true);
-								tmp_jd.setVisible(true);
+								tmp_jd.setVisible(true);*/
+								JOptionPane.showMessageDialog(jd, "Incorrect IP Address, Please try again.", "Invalid Login", JOptionPane.PLAIN_MESSAGE);
 							}
 	
 						}

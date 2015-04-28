@@ -17,6 +17,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -270,23 +271,7 @@ public class UserTabFrame extends JFrame {
 				if(cgre.sucessful()){
 					new DetailedEventPage(cgre.getEvent()).setVisible(true);
 				} else {
-					JDialog tmp_jd = new JDialog();
-			
-					tmp_jd.setSize(300,250);
-					tmp_jd.setLocation(500,100);
-					tmp_jd.setTitle("No Event Recommendations");
-					JLabel label = new JLabel("<html>Sorry, we currently don't have any events to recommend. <br> Please make sure to RSVP to other events so that we can recommend others.</html>");
-					label.setHorizontalAlignment(SwingConstants.CENTER);
-					JButton button = new JButton("Got it!");
-					button.addActionListener(new ActionListener() {
-						public void actionPerformed (ActionEvent ae) {
-							tmp_jd.dispose();
-						}
-					});
-					tmp_jd.add(label);
-					tmp_jd.add(button, BorderLayout.SOUTH);
-					tmp_jd.setModal(true);
-					tmp_jd.setVisible(true);
+					JOptionPane.showMessageDialog(UserTabFrame.this, "<html>Sorry, we currently don't have any events to recommend. <br> Please make sure to RSVP to other events so that we can recommend others.</html>", "No Event Recommendations", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
