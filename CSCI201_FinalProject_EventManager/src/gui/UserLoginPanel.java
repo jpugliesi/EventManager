@@ -20,7 +20,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+<<<<<<< Updated upstream
 import javax.swing.SwingConstants;
+=======
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+>>>>>>> Stashed changes
 
 import main.User;
 import client.ClientListenForChatUpdateThread;
@@ -42,6 +47,21 @@ public class UserLoginPanel extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setBackground(new Color(100, 190, 250));
 		setUpButtons();
+		try {
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		addActionListeners();
 
