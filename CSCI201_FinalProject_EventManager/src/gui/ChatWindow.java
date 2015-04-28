@@ -23,6 +23,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.StyledDocument;
 
 import main.ChatMessage;
 import main.User;
@@ -30,14 +31,16 @@ import client.ClientGetChatHistoryThread;
 import client.ClientSendMessageThread;
 import constants.Environment;
 
+import javax.swing.JTextPane;
+
 public class ChatWindow extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField;
 	private User otherPerson;
-	private JTextArea messageArea;
+	JTextPane messageArea; 
+	JScrollPane scrollPane ;
 	private JButton sendButton;
-	private JScrollPane scrollPane;
 	private boolean isAdmin;
 
 	/**
@@ -110,18 +113,6 @@ public class ChatWindow extends JDialog {
 			
 			contentPanel.add(icon);
 		}
-		{
-			messageArea = new JTextArea(20, 20);
-			messageArea.setEditable(false);
-			messageArea.setLineWrap(true);
-			messageArea.setFont(new Font("Helvetica Neue", Font.PLAIN, 16));
-			
-			
-			scrollPane = new JScrollPane(messageArea);
-			scrollPane.setBounds(16, 80, 416, 331);
-			
-			contentPanel.add(scrollPane);
-		}
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(6, 65, 438, 12);
@@ -147,6 +138,13 @@ public class ChatWindow extends JDialog {
 			buttonPane.setBounds(6, 482, 450, 10);
 			contentPanel.add(buttonPane);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		}
+		{
+			scrollPane= new JScrollPane();
+			scrollPane.setBounds(16, 80, 415, 344);
+			contentPanel.add(scrollPane);
+			messageArea = new JTextPane();
+			scrollPane.setViewportView(messageArea);
 		}
 		setVisible(true);
 		
@@ -178,9 +176,15 @@ public class ChatWindow extends JDialog {
 		if(chatHistoryThread.success()){
 			Vector<ChatMessage> messageHistory = chatHistoryThread.getMessageHistory();
 			messageArea.setText("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+			StyledDocument doc = messageArea.getStyledDocument();
 			
 			for(ChatMessage message : messageHistory){
-				messageArea.append(message.getSender().getUserName() + ": " + message.getMessage() + "\n");
+				try
+				{
+				      doc.insertString(doc.getLength(), message.getSender().getUserName() + ": " + message.getMessage() + "\n", null);
+				}
+				catch(Exception e) { System.out.println(e); }
+				
 			}
 			
 			JScrollBar vertical = scrollPane.getVerticalScrollBar();
