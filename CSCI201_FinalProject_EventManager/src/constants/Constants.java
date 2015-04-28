@@ -110,6 +110,14 @@ public class Constants {
 	public static ImageIcon WOMAN1 = new ImageIcon("profile_pictures/woman1.png");
 	public static ImageIcon WOMAN2 = new ImageIcon("profile_pictures/woman2.png");
 	public static ImageIcon WOMAN3 = new ImageIcon("profile_pictures/woman3.png");
+	public static ImageIcon DOG1 = new ImageIcon("profile_pictures/dog1.png");
+	public static ImageIcon DOG2 = new ImageIcon("profile_pictures/dog2.png");
+	public static ImageIcon DOG3 = new ImageIcon("profile_pictures/dog3.png");
+	public static ImageIcon DOG4 = new ImageIcon("profile_pictures/dog4.png");
+	public static ImageIcon DOG5 = new ImageIcon("profile_pictures/dog5.png");
+	public static ImageIcon DOG6 = new ImageIcon("profile_pictures/dog6.png");
+
+
 	
 	public static int DEFAULT_PORT = 6789;
 	
