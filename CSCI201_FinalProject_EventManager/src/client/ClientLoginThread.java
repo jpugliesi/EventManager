@@ -88,7 +88,7 @@ public class ClientLoginThread extends Thread{
 		
 		//received User object have problem, log in fail cases
 		else if (code == Constants.SERVER_LOGIN_INCORRECT_USER) {
-			success=true;
+			success=false;
 			
 			received = 1;
 			finished = true;
@@ -97,6 +97,8 @@ public class ClientLoginThread extends Thread{
 		else if (code == Constants.SERVER_LOGIN_INCORRECT_PASSWORD) {
 			received = 1;
 			finished = true;
+			success=false;
+
 
 
 		}
@@ -104,6 +106,8 @@ public class ClientLoginThread extends Thread{
 			
 			received = 1;
 			finished = true;
+			success=false;
+
 
 		}
 	
