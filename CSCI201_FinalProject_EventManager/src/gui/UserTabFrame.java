@@ -99,7 +99,7 @@ public class UserTabFrame extends JFrame {
 	public UserTabFrame() {
 		listening.start();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 356, 480);
+		setBounds(100, 100, 400, 550);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -131,7 +131,7 @@ public class UserTabFrame extends JFrame {
 		
 		
 		firstPanel = new UserEventFeedPanel(event_feed_list);
-		firstPanel.setBounds(20, 6, 285, 349);
+		firstPanel.setBounds(20, 6, 350, 400);
 		panel1.add(firstPanel);
 		tabbedPane.addTab("Event Feed", null, panel1, null);
 		
@@ -171,10 +171,10 @@ public class UserTabFrame extends JFrame {
 		profileName.setBounds(17, 31, 124, 33);
 		panel3.add(profileName);
 
-		JLabel lblPicturePlaceholder = new JLabel("Picture PlaceHolder");
+		JLabel lblPicturePlaceholder = new JLabel();
 		Environment.currentUser.setProfilePicture();
 		lblPicturePlaceholder.setIcon(Environment.currentUser.getProfilePicture());
-		lblPicturePlaceholder.setBounds(240, 20, 65, 44);
+		lblPicturePlaceholder.setBounds(235, 20, 70, 50);
 		panel3.add(lblPicturePlaceholder);
 
 		JButton editProfileButton = new JButton("Edit Profile");
@@ -323,7 +323,7 @@ public class UserTabFrame extends JFrame {
 		JList<Event> jlist3 = new JList<Event>(userEventsListModel);
 		
 		UserEventsPanel uep = new UserEventsPanel(jlist3);
-		uep.setBounds(17, 148, 198, 207);
+		uep.setBounds(15, 148, 360, 207);
 		panel3.add(uep);
 
 		

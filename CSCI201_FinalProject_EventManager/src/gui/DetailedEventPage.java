@@ -61,17 +61,17 @@ public class DetailedEventPage extends JDialog {
 		JLabel event_name = new JLabel(event.getName());
 		event_name.setFont(new Font("Helvetica Neue", Font.PLAIN, 18));
 		event_name.setVerticalAlignment(SwingConstants.TOP);
-		event_name.setBounds(253, 27, 165, 60);
+		event_name.setBounds(200, 27, 250, 60);
 		contentPane.add(event_name);
 		
 		JLabel event_desc = new JLabel("<html>" + event.getDescription() + "<br>" + event.getClub() + "</html>");
 		event_desc.setFont(new Font("Helvetica Neue", Font.PLAIN, 13));
-		event_desc.setBounds(18, 110, 165, 143);
+		event_desc.setBounds(18, 80, 180, 150);
 		contentPane.add(event_desc);
 		
 		num_attending = new JLabel("Attendees: " + event.getNumAttending());
 		num_attending.setFont(new Font("Helvetica Neue", Font.PLAIN, 13));
-		num_attending.setBounds(18, 140, 165, 143);
+		num_attending.setBounds(18, 140, 200, 140);
 		contentPane.add(num_attending);
 		
 		Date d = event.getTime();
