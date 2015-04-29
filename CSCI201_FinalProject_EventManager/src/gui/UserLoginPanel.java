@@ -38,7 +38,7 @@ public class UserLoginPanel extends JFrame {
 	private JButton loginButton;
 	private JButton guestButton;
 
-	UserLoginPanel() {
+	public UserLoginPanel() {
 		super("Event Manager");
 		setSize(500, 700);
 		setLocation(500, 100);

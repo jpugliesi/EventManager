@@ -37,7 +37,7 @@ public class AdminLoginPanel extends JFrame {
 	
 	
 
-	AdminLoginPanel() {
+	public AdminLoginPanel() {
 		
 		
 		

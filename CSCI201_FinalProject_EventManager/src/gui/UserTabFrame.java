@@ -238,7 +238,7 @@ public class UserTabFrame extends JFrame {
 						//update GUI
 						profileName.setText(fullname);
 						//create new User and set profile picture
-						User newUser = new User(fullname, username, password, false, 1);
+						User newUser = new User(fullname, username, password, false, jcb.getSelectedIndex()+1);
 						newUser.setUserID(Environment.currentUser.getUserID());
 						int profile_id = jcb.getSelectedIndex() + 1;
 						//newUser.setProfilePictureID(profile_id);

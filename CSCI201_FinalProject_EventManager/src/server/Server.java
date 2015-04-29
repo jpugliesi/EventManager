@@ -1,5 +1,8 @@
 package server;
 
+import gui.AdminLoginPanel;
+import gui.UserLoginPanel;
+
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -30,6 +33,8 @@ public class Server {
 		try{
 			db = new Database("localhost", true);
 			System.out.println("Starting Server");
+			new UserLoginPanel();
+			new AdminLoginPanel();
 			ss = new ServerSocket(6789);
 			//ListenServerThread lst = new ListenServerThread(this);
 			//lst.start(); - unnecessary
@@ -55,6 +60,8 @@ public class Server {
 					System.out.println("IOE closing ServerSocket: " + ioe.getMessage());
 				}
 			}
+			System.out.println("here");
+			
 		}
 		
 		
@@ -101,6 +108,7 @@ public class Server {
 	
 	public static void main(String [] args){
 		new Server();
+
 	}
 
 }
