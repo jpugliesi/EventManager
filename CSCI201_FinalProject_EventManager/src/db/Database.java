@@ -604,7 +604,7 @@ public class Database {
 		Vector<Event> event_feed = new Vector<Event>();
 
 		try {
-			String sql = "SELECT * FROM events LIMIT 10";
+			String sql = "SELECT * FROM events LIMIT 25";
 			Statement s = conn.createStatement();
 
 			ResultSet rs = s.executeQuery(sql);
