@@ -53,7 +53,7 @@ public class DetailedEventPage extends JDialog {
 		}
 		
 		JLabel eventImage = new JLabel();
-		eventImage.setIcon(new ImageIcon(image));
+		eventImage.setIcon(event.getProfilePicture());
 		
 		eventImage.setBounds(33, 41, 71, 43);
 		contentPane.add(eventImage);
