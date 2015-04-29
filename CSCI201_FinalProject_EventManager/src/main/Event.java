@@ -28,6 +28,7 @@ public class Event implements Serializable{
 	}
 	
 	public Event(){
+		eventName = "";
 		this.setProfilePicture();
 	}
 	
@@ -78,6 +79,10 @@ public class Event implements Serializable{
 		else if (eventName.contains("ACM")){
 			this.profilePicture = Constants.ACM;
 		}
+		else{
+			this.profilePicture = Constants.USC;
+		}
+		
 		
 		
 		

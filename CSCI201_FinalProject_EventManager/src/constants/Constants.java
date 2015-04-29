@@ -6,8 +6,7 @@ public class Constants {
 	
 	
 	public static ImageIcon [] PROFILE_PICTURES = {new ImageIcon("profile_pictures/boy1.png"), new ImageIcon("profile_pictures/boy2.png"), new ImageIcon("profile_pictures/man1.png"), new ImageIcon("profile_pictures/man2.png"), new ImageIcon("profile_pictures/woman1.png"), new ImageIcon("profile_pictures/woman2.png"), new ImageIcon("profile_pictures/woman3.png"), new ImageIcon("profile_pictures/dog1.png"), new ImageIcon("profile_pictures/dog2.png"), new ImageIcon("profile_pictures/dog3.png"), new ImageIcon("profile_pictures/dog4.png"), new ImageIcon("profile_pictures/dog5.png")};
-	//public static ImageIcon [] EVENT_PICTURES = {new ImageIcon("profile_pictures/acmEvent.png"), new ImageIcon("profile_pictures/autoEvent.png"), new ImageIcon("profile_pictures/badmintonEvent.png"), new ImageIcon("profile_pictures/baseballEvent.png"), new ImageIcon("profile_pictures/dronesEvent.png"), new ImageIcon("profile_pictures/woman2.png"), new ImageIcon("profile_pictures/woman3.png"), new ImageIcon("profile_pictures/dog1.png"), new ImageIcon("profile_pictures/dog2.png"), new ImageIcon("profile_pictures/dog3.png"), new ImageIcon("profile_pictures/dog4.png"), new ImageIcon("profile_pictures/dog5.png")};
-	
+	public static ImageIcon [] EVENT_ICONS = {};
 	
 	//Login Codes
 	//Database.checkLogin(String username, String password_hash) returns User
@@ -135,6 +134,7 @@ public class Constants {
 	public static ImageIcon PRIX = new ImageIcon("profile_pictures/prixEvent.png");
 	public static ImageIcon SURF = new ImageIcon("profile_pictures/surfEvent.png");
 	public static ImageIcon TAEK = new ImageIcon("profile_pictures/taekEvent.png");
+	public static ImageIcon USC = new ImageIcon("profile_pictures/icon.gif");
 
 
 
