@@ -93,11 +93,11 @@ public class UserEventFeedPanel extends JScrollPane {
 			//setIcon(imageIcon);
 			
 	        this.event_info.setText("<html><b>" + event.getName() + "</b><br>" + event.getDescription() + "</html>");
-	        try {
-				this.event_info.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("icon.gif"))));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+	        //try {
+				this.event_info.setIcon(event.getProfilePicture());
+		//	} catch (IOException e) {
+			//	e.printStackTrace();
+			//}
 	 
 	        if (isSelected) {
 	            setBackground(list.getSelectionBackground());

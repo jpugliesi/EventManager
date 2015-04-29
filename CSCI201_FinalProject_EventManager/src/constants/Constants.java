@@ -116,6 +116,25 @@ public class Constants {
 	public static ImageIcon DOG4 = new ImageIcon("profile_pictures/dog4.png");
 	public static ImageIcon DOG5 = new ImageIcon("profile_pictures/dog5.png");
 	public static ImageIcon DOG6 = new ImageIcon("profile_pictures/dog6.png");
+	
+	
+	public static ImageIcon ACM = new ImageIcon("profile_pictures/acmEvent.png");
+	public static ImageIcon AUTO = new ImageIcon("profile_pictures/autoEvent.png");
+	public static ImageIcon BADMINTON = new ImageIcon("profile_pictures/badmintonEvent.png");
+	public static ImageIcon BASEBALL = new ImageIcon("profile_pictures/baseballEvent.png");
+	public static ImageIcon DRONES = new ImageIcon("profile_pictures/dronesEvent.png");
+	public static ImageIcon FENCING = new ImageIcon("profile_pictures/fencingEvent.png");
+	public static ImageIcon FRISBEE = new ImageIcon("profile_pictures/frisbeeEvent.png");
+	public static ImageIcon GM = new ImageIcon("profile_pictures/gmEvent.png");
+	public static ImageIcon HIKE = new ImageIcon("profile_pictures/hikeEvent.png");
+	public static ImageIcon LAVA = new ImageIcon("profile_pictures/lavaEvent.png");
+	public static ImageIcon LEADER = new ImageIcon("profile_pictures/leaderEvent.png");
+	public static ImageIcon MARKET = new ImageIcon("profile_pictures/marketEvent.png");
+	public static ImageIcon PRIX = new ImageIcon("profile_pictures/prixEvent.png");
+	public static ImageIcon SURF = new ImageIcon("profile_pictures/surfEvent.png");
+	public static ImageIcon TAEK = new ImageIcon("profile_pictures/taekEvent.png");
+
+
 
 
 	
