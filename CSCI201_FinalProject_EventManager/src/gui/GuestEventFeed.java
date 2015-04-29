@@ -23,7 +23,7 @@ public class GuestEventFeed extends JDialog{
 	
 	
 	public GuestEventFeed(){
-		setSize(350,500);
+		setSize(400,500);
 		mainPanel = new JPanel();
 		mainPanel.setLayout(null);
 		
@@ -39,7 +39,7 @@ public class GuestEventFeed extends JDialog{
 		feedJL = new JList<Event>(dlm);
 		
 		jsp = new UserEventFeedPanel(feedJL);
-		jsp.setBounds(20, 6, 285, 349);
+		jsp.setBounds(20, 6, 350, 400);
 		mainPanel.add(jsp);
 		this.add(mainPanel);
 		setVisible(true);
