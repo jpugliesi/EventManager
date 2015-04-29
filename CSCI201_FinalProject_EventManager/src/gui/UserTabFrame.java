@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -191,7 +192,12 @@ public class UserTabFrame extends JFrame {
 				JLabel label3 = new JLabel("password");
 				JTextField jtf1 = new JTextField(20);
 				JTextField jtf2 = new JTextField(20);
-				JTextField jtf3 = new JTextField(20);
+				JPasswordField jtf3 = new JPasswordField(20);
+				
+				jtf1.setText(Environment.currentUser.getFullName());
+				jtf2.setText(Environment.currentUser.getUserName());
+				jtf3.setText(Environment.currentUser.getPassword());
+				
 				JPanel jp1 = new JPanel();
 				JPanel jp2 = new JPanel();
 				JPanel jp3 = new JPanel();
