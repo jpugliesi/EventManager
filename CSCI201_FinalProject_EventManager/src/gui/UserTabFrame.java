@@ -233,13 +233,12 @@ public class UserTabFrame extends JFrame {
 						profileName.setText(fullname);
 						//create new User and set profile picture
 						User newUser = new User(fullname, username, password, false, 1);
+						newUser.setUserID(Environment.currentUser.getUserID());
 						int profile_id = jcb.getSelectedIndex() + 1;
 						//newUser.setProfilePictureID(profile_id);
 						Environment.currentUser.setProfilePictureID(profile_id);
 						Environment.currentUser.setProfilePicture();
 						lblPicturePlaceholder.setIcon(Environment.currentUser.getProfilePicture());
-						
-						
 						
 						//initiate update thread
 						ClientUpdateProfileThread updateThread = new ClientUpdateProfileThread(newUser);
