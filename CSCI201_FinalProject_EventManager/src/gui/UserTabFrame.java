@@ -168,8 +168,8 @@ public class UserTabFrame extends JFrame {
 
 		JLabel profileName = new JLabel(Environment.currentUser.getFullName());
 		profileName.setHorizontalAlignment(SwingConstants.LEFT);
-		profileName.setFont(new Font("Helvetica Neue", Font.BOLD, 21));
-		profileName.setBounds(17, 31, 124, 33);
+		profileName.setFont(new Font("Helvetica Neue", Font.BOLD, 20));
+		profileName.setBounds(17, 31, 150, 33);
 		panel3.add(profileName);
 
 		JLabel lblPicturePlaceholder = new JLabel();
