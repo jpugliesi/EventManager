@@ -979,7 +979,7 @@ public class Database {
 		
 		//Add Events
 		this.createEvent(new Event("Fencing Tournament", "TCC", new GregorianCalendar(2009, 1, 1, 9, 55).getTime(), "USC Fencing", "Get together to teach fencing to people of all experience levels.", 16, 2));
-		this.createEvent(new Event("Game of Drones", "SAL 101", new GregorianCalendar(2015, 4, 11, 7, 00).getTime(), "Viterbi School of Engineering Student Organizations", "ASME, AIAA, and USC Aerial Robotics are teaming up to bring you Game of Drones.", 0, 2));
+		this.createEvent(new Event("Game of Drones", "SAL 101", new GregorianCalendar(2015, 4, 11, 7, 00).getTime(), "Viterbi School of Engineering Student Organizations", "ASME, AIAA, and USC Aerial Robotics are teaming up to bring you Game of Drones.", 41, 2));
 		this.createEvent(new Event("Adventure Club Hike in Santa Monica", "Maliby, CA", new GregorianCalendar(2015, 5, 2, 10, 00).getTime(), "Adventure Club", "Come with us for a fun hike through the mountains above beautiful Malibu, CA.", 11, 5));
 		this.createEvent(new Event("Badminton Tournament", "Lyons Center", new GregorianCalendar(2015, 4, 29, 14, 00).getTime(), "Badminton Club", "Come have fun at our biggest tournament of the year!", 45, 5));
 		this.createEvent(new Event("Long Beach Grand Prix", "Long Beach, CA", new GregorianCalendar(2015, 4, 30, 16, 00).getTime(), "USC Racing", "Come watch us smoke the competition in this Pac12 matchup!", 21, 2));
